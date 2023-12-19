@@ -1,125 +1,91 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
-  <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
 
-    <title>Thêm thương hiệu</title>
-    <meta content="" name="description" />
-    <meta content="" name="keywords" />
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <!-- Favicons -->
-    <link href="/admin/assets/img/favicon.png" rel="icon" />
-    <link
-      href="/admin/assets/img/apple-touch-icon.png"
-      rel="apple-touch-icon"
-    />
+  <title>Thêm thương hiệu</title>
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-      rel="stylesheet"
-    />
+  <!-- Favicons -->
+  <link href="/admun/assets/img/favicon.png" rel="icon" />
+  <link href="/admun/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-    <!-- Vendor CSS Files -->
-    <link
-      href="/admin/assets/vendor/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="/admin/assets/vendor/bootstrap-icons/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link
-      href="/admin/assets/vendor/boxicons/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link href="/admin/assets/vendor/quill/quill.snow.css" rel="stylesheet" />
-    <link href="/admin/assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
-    <link
-      href="/admin/assets/vendor/remixicon/remixicon.css"
-      rel="stylesheet"
-    />
-    <link
-      href="/admin/assets/vendor/simple-datatables/style.css"
-      rel="stylesheet"
-    />
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet" />
 
-    <!-- Template Main CSS File -->
-    <link href="/admin/assets/css/style.css" rel="stylesheet" />
-  </head>
+  <!-- Vendor CSS Files -->
+  <link href="/admun/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/simple-datatables/style.css" rel="stylesheet" />
 
-  <body>
-    <!-- ======= Header ======= -->
-    <div th:replace="admin/fragments/header :: header"></div>
-    <!-- End Header -->
+  <!-- Template Main CSS File -->
+  <link href="/admun/assets/css/style.css" rel="stylesheet" />
+</head>
 
-    <!-- ======= Sidebar ======= -->
-    <div th:replace="admin/fragments/sidebar :: sidebar"></div>
-    <!-- End Sidebar-->
+<body>
+  <!-- ======= Header ======= -->
+  <div th:replace="admin/fragments/header :: header"></div>
+  <!-- End Header -->
 
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h2>Xác nhận thêm thương hiệu</h2>
+  <!-- ======= Sidebar ======= -->
+  <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+  <!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h2>Xác nhận thêm thương hiệu</h2>
+    </div>
+    <div class="container shadow p-5">
+      <div class="row pb-2">
+        <h2>Thêm mới thương hiệu</h2>
       </div>
-      <div class="container shadow p-5">
-        <div class="row pb-2">
-          <h2>Thêm mới thương hiệu</h2>
-        </div>
-        <!-- Thêm vào trong thẻ form để hiển thị thông báo lỗi -->
-        <div th:if="${error}" class="alert alert-danger" role="alert">
-          <span th:text="${error}"></span>
-        </div>
-        <form
-          role="form"
-          method="post"
-          th:action="@{/admin/add-brand}"
-          th:object="${brand}" enctype="multipart/form-data"
-        >
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label>Tên thương hiệu:</label>
-              <input
-                type="text"
-                name="BrandName"
-                class="form-control mb-3"
-                th:field="*{BrandName}"
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label>Logo:</label>
-              <input
-                id="exampleInputEmail"
-                type="file"
-                name="fileImag"
-                class="form-control mb-3"
-              />
-            </div>
+      <!-- Thêm vào trong thẻ form để hiển thị thông báo lỗi -->
+      <div th:if="${error}" class="alert alert-danger" role="alert">
+        <span th:text="${error}"></span>
+      </div>
+      <form role="form" method="post" th:action="@{/admin/add-brand}" th:object="${brand}"
+        enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Tên thương hiệu:</label>
+            <input type="text" name="BrandName" class="form-control mb-3" th:field="*{BrandName}" />
           </div>
-          <button type="submit" name="them" class="btn btn-lg btn-primary p-2">
-            <i class="bi bi-file-plus-fill"></i>Lưu
-          </button>
-          <a href="/admin/brand" class="btn btn-lg btn-warning p-2">Quay lại</a>
-        </form>
-      </div>
-    </main>
-    <!-- End #main -->
+          <div class="form-group col-md-6">
+            <label>Logo:</label>
+            <input id="exampleInputEmail" type="file" name="fileImag" class="form-control mb-3" />
+          </div>
+        </div>
+        <button type="submit" name="them" class="btn btn-lg btn-primary p-2">
+          <i class="bi bi-file-plus-fill"></i>Lưu
+        </button>
+        <a href="/admin/brand" class="btn btn-lg btn-warning p-2">Quay lại</a>
+      </form>
+    </div>
+  </main>
+  <!-- End #main -->
 
-    <!-- ======= Footer ======= -->
-    <div th:replace="admin/fragments/footer :: footer"></div>
-    <!-- End Footer -->
+  <!-- ======= Footer ======= -->
+  <div th:replace="admin/fragments/footer :: footer"></div>
+  <!-- End Footer -->
 
-    <a
-      href="#"
-      class="back-to-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <!-- Vendor JS Files -->
-    <div th:replace="admin/fragments/script :: script"></div>
-    </html>
-    
-  </body>
+  <!-- Vendor JS Files -->
+  <div th:replace="admin/fragments/script :: script"></div>
+
+</html>
+
+</body>
+
 </html>

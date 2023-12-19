@@ -80,7 +80,8 @@ public class ProductController {
 
     @PostMapping("/add-product")
     public String save(@ModelAttribute("product") Product product, BindingResult bindingResult,
-            @RequestParam("fileImages") MultipartFile file, Model model) {
+            @RequestParam("fileAvatar") MultipartFile fileAvatar,
+            @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
 
         if (bindingResult.hasErrors()) {
             // Nếu có lỗi hợp lệ, trả về trang thêm sản phẩm với thông báo lỗi
@@ -92,7 +93,7 @@ public class ProductController {
         }
 
         if (product.getProductName() == null || product.getProductName().trim().isEmpty() ||
-                file.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
+                fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
                 || product.getQuantity() == null) {
             // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
             // trang thêm sản phẩm
@@ -106,10 +107,28 @@ public class ProductController {
 
         // Tiến hành thêm sản phẩm nếu không có lỗi
         try {
-            // upload file
-            this.storageService.store(file);
-            String fileName = file.getOriginalFilename();
-            product.setImages(fileName);
+            // upload file và lưu vào trường avatar
+            this.storageService.store(fileAvatar);
+            String fileNameAvatar = fileAvatar.getOriginalFilename();
+            product.setAvatar(fileNameAvatar);
+    
+            for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
+                this.storageService.store(fileImages[i]);
+                String fileName = fileImages[i].getOriginalFilename();
+    
+                switch (i) {
+                    case 0:
+                        product.setImg1(fileName);
+                        break;
+                    case 1:
+                        product.setImg2(fileName);
+                        break;
+                    case 2:
+                        product.setImg3(fileName);
+                        break;
+                }
+            }
+    
             if (this.productService.create(product)) {
                 return "redirect:/admin/product";
             }
@@ -132,8 +151,9 @@ public class ProductController {
     }
 
     @PostMapping("/edit-product")
-    public String update(@ModelAttribute("product") Product product, BindingResult bindingResult,
-            @RequestParam("fileImages") MultipartFile file, Model model) {
+    public String edit(@ModelAttribute("product") Product product, BindingResult bindingResult,
+            @RequestParam("fileAvatar") MultipartFile fileAvatar,
+            @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
 
         if (bindingResult.hasErrors()) {
             // Nếu có lỗi hợp lệ, trả về trang sửa sản phẩm với thông báo lỗi
@@ -145,7 +165,7 @@ public class ProductController {
         }
 
         if (product.getProductName() == null || product.getProductName().trim().isEmpty() ||
-                file.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
+                fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
                 || product.getQuantity() == null) {
             // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
             // trang sửa sản phẩm
@@ -157,13 +177,31 @@ public class ProductController {
             return "admin/product/edit";
         }
 
-        // Tiến hành cập nhật sản phẩm nếu không có lỗi
+        // Tiến hành thêm sản phẩm nếu không có lỗi
         try {
-            // upload file
-            this.storageService.store(file);
-            String fileName = file.getOriginalFilename();
-            product.setImages(fileName);
-            if (this.productService.update(product)) {
+            // upload file và lưu vào trường avatar
+            this.storageService.store(fileAvatar);
+            String fileNameAvatar = fileAvatar.getOriginalFilename();
+            product.setAvatar(fileNameAvatar);
+    
+            for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
+                this.storageService.store(fileImages[i]);
+                String fileName = fileImages[i].getOriginalFilename();
+    
+                switch (i) {
+                    case 0:
+                        product.setImg1(fileName);
+                        break;
+                    case 1:
+                        product.setImg2(fileName);
+                        break;
+                    case 2:
+                        product.setImg3(fileName);
+                        break;
+                }
+            }
+    
+            if (this.productService.create(product)) {
                 return "redirect:/admin/product";
             }
         } catch (Exception e) {
