@@ -1,0 +1,115 @@
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org" 
+  xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
+    <head th:replace="admin/fragments/head :: head"></head>
+
+    <body>
+      <div th:replace="admin/fragments/header :: header"></div>
+
+      <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+      <main id="main" class="main">
+        <div class="pagetitle">
+          <h1>Danh sách sản phẩm</h1>
+        </div>
+        <!-- End Page Title -->
+        <p>
+          <a type="button" class="btn btn-success" href="/admin/add-product">
+            <i class="bi bi-file-earmark-text me-1"></i>Thêm sản phẩm</a
+          >
+        </p>
+        <section class="section dashboard">
+          <div class="row">
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+                <div class="card-body mt-4">
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th class="col-1 text-center">#</th>
+                        <th class="col-2 text-center">Tên sản phẩm</th>
+                        <th class="col-1 text-center">Hình ảnh</th>
+                        <th class="col-1 text-center">Giá tiền</th>
+                        <th class="col-1 text-center">Giá tiền sale</th>
+                        <th class="col-1 text-center">Số lượng</th>
+                        <th class="col-1 text-center">Danh mục</th>
+                        <th class="col-1 text-center">Thương hiệu</th>
+                        <!-- <th class="col-2 text-center">Thời gian đăng</th> -->
+                        <th class="col-2 text-center">Chức năng</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="product, iterStat : ${listProducts}">
+                        <td
+                          th:text="${iterStat.count}"
+                          class="text-center"
+                          scope="row"
+                        ></td>
+                        <td
+                          th:text="${product.ProductName}"
+                          class="text-center"
+                        ></td>
+                        <td class="text-center">
+                          <img
+                            th:src="@{'/uploads/'+${product.Images}}"
+                            style="max-width: 40px"
+                            class="img-fluid"
+                          />
+                        </td>
+                        <td class="text-center">
+                          <span th:text="${product.Price}"></span>vnđ
+                        </td>
+                        <td
+                          th:text="${product.SalePrice}"
+                          class="text-center"
+                        ></td>
+                        <td class="text-center">
+                          <span th:text="${product.Quantity}"></span> cái
+                        </td>
+                        <td
+                          th:text="${product.category.CatName}"
+                          class="text-center"
+                        ></td>
+                        <td
+                          th:text="${product.brand.BrandName}"
+                          class="text-center"
+                        ></td>
+                        <!-- <td class="text-center">
+                            <span th:text="${product.CreatedDate}"></span>
+                          </td>
+                          -->
+                        <td class="text-center">
+                          <a
+                            th:href="@{/admin/edit-product/{ProductID}(ProductID=${product.ProductID})}"
+                            class="btn btn-primary btn-sm"
+                            ><i class="bi bi-pencil"></i
+                          ></a>
+                          <a
+                            onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
+                            th:href="@{/admin/delete-product/{ProductID}(ProductID=${product.ProductID})}"
+                            class="btn btn-danger btn-sm"
+                            ><i class="bi bi-trash"></i
+                          ></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <!-- End #main -->
+
+      <div th:replace="admin/fragments/footer :: footer"></div>
+
+      <a
+        href="#"
+        class="back-to-top d-flex align-items-center justify-content-center"
+        ><i class="bi bi-arrow-up-short"></i
+      ></a>
+
+      <div th:replace="admin/fragments/script :: script"></div>
+    </body>
+  </html>
