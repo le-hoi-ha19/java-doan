@@ -84,4 +84,10 @@ public class UserServiceImpl implements UserService {
             return false; // Trả về false nếu có lỗi xảy ra
         }
     }
+
+    @Override
+    public List<User> getCustomerUsers() {
+        return userRepository.findCustomerUsers();
+    }
+
 }

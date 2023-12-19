@@ -32,8 +32,8 @@ public class Post {
     private String Img3;
     @Column(name = "Abstract")
     private String Abstract;
-    // @Column (name = "CreatedDate")
-    // private Date CreatedDate;
+    @Column (name = "CreatedDate")
+    private Date CreatedDate;
     @ManyToOne
     @JoinColumn(name = "CatID", referencedColumnName = "CatID")
     private Category category;
@@ -102,13 +102,13 @@ public class Post {
         this.Abstract = Abstract;
     }
 
-    // public Date getCreatedDate() {
-    //     return this.CreatedDate;
-    // }
+    public Date getCreatedDate() {
+        return this.CreatedDate;
+    }
 
-    // public void setCreatedDate(Date CreatedDate) {
-    //     this.CreatedDate = CreatedDate;
-    // }
+    public void setCreatedDate(Date CreatedDate) {
+        this.CreatedDate = CreatedDate;
+    }
 
     public Category getCategory() {
         return this.category;
@@ -118,7 +118,7 @@ public class Post {
         this.category = category;
     }
 
-    public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Abstract, Category category) {
+    public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Abstract, Date CreatedDate, Category category) {
         super();
         this.PostID = PostID;
         this.Title = Title;
@@ -128,7 +128,7 @@ public class Post {
         this.Img2 = Img2;
         this.Img3 = Img3;
         this.Abstract = Abstract;
-        // this.CreatedDate = CreatedDate;
+        this.CreatedDate = CreatedDate;
         this.category = category;
     }
 

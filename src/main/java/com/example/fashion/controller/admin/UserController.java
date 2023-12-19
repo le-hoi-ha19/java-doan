@@ -22,7 +22,7 @@ import com.example.fashion.services.UserRoleService;
 import com.example.fashion.services.UserService;
 
 @Controller
-@RequestMapping("/admin") 
+@RequestMapping("/admin")
 public class UserController {
 
 	@Autowired
@@ -38,7 +38,7 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/login")
 	public String login() {
@@ -64,11 +64,20 @@ public class UserController {
 		user.setEnabled(true);
 
 		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+		user.setPassword(encodedPassword);
 
 		if (this.userService.createWithUserRole(user)) {
 			return "redirect:admin/login";
 		}
-		return "admin/register"; 
+		return "admin/register";
 	}
+
+	@GetMapping("/user")
+	public String user(Model model) {
+		List<User> customerUsers = userService.getCustomerUsers();
+		model.addAttribute("customerUsers", customerUsers);
+		return "admin/user/index";
+	}
+
+	
 }

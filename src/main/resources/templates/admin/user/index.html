@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Quản lý tài khoản khách hàng</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="/admun/assets/img/favicon.png" rel="icon" />
+    <link href="/admun/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="/admun/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="/admun/assets/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div th:replace="admin/fragments/header :: header"></div>
+
+    <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Danh sách tài khoản</h1>
+            <nav></nav>
+        </div>
+        <!-- End Page Title -->
+        <section class="section dashboard">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card recent-sales overflow-auto">
+                        <div class="card-body mt-4">
+                            <table class="table table-borderless datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-1 text-center">#</th>
+                                        <th class="col-2 text-center">Tên khách hàng</th>
+                                        <th class="col-1 text-center">Email</th>
+                                        <th class="col-1 text-center">Số điện thoại</th>
+                                        <th class="col-1 text-center">Địa chỉ</th>
+                                        <th class="col-1 text-center">Tài khoản</th>
+                                        <th class="col-1 text-center">Giới tính</th>
+                                        <th class="col-2 text-center">Ảnh đại diện</th>
+                                        <th class="col-1 text-center">Tình trạng</th>
+                                        <th class="col-1 text-center">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="user, iterStat : ${customerUsers}">
+                                        <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
+                                        <td th:text="${user.fullname}" class="text-center"></td>
+                                        <td th:text="${user.email}" class="text-center"></td>
+                                        <td th:text="${user.telephone}" class="text-center"></td>
+                                        <td th:text="${user.address}" class="text-center"></td>
+                                        <td th:text="${user.username}" class="text-center"></td>
+                                        <td class="text-center">
+                                            <span th:if="${user.gender}">Nam</span>
+                                            <span th:if="${not user.gender}">Nữ</span>
+                                        </td>                                        
+                                        <td class="text-center">
+                                            <img th:src="@{'/uploads/'+${user.images}}" style="max-width: 40px" class="img-fluid" />
+                                          </td>
+                                        <td th:text="${user.enabled ? 'Hoạt động' : 'Không hoạt động'}"
+                                            class="text-center"></td>
+                                        <!-- <td class="text-center">
+                                            <a onclick="return confirm('Bạn có chắc chắn muốn xoá?')"
+                                                th:href="@{/admin/delete-user/{userId}(userId=${user.id})}"
+                                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- End #main -->
+
+    <div th:replace="admin/fragments/footer :: footer"></div>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <div th:replace="admin/fragments/script :: script"></div>
+</body>
+
+</html>
