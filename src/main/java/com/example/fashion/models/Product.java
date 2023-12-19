@@ -31,13 +31,19 @@ public class Product {
 	private Double SalePrice;
 	@Column(name = "Quantity")
 	private Integer Quantity;
-	@Column(name = "Images")
-	private String Images;
+	@Column(name = "Avatar")
+	private String Avatar;
+	@Column(name = "Img1")
+	private String Img1;
+	@Column(name = "Img2")
+	private String Img2;
+	@Column(name = "Img3")
+	private String Img3;
 	@Column(name = "Description", length = 4000)
 	private String Description;
-	@OneToMany(mappedBy= "products")
+	@OneToMany(mappedBy = "products")
 	private Set<OrderDetail> orderDetails;
-	@OneToMany(mappedBy= "products")
+	@OneToMany(mappedBy = "products")
 	private Set<CartItem> cartItems;
 	@ManyToOne
 	@JoinColumn(name = "CatID", referencedColumnName = "CatID")
@@ -45,29 +51,9 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "BrandID", referencedColumnName = "BrandID")
 	private Brand brand;
-	
-
-	public Product() {
-
-	}
-
-	public Product(Long ProductID, String ProductName, Double Price, String Images,
-			String Description, Category category, Brand brand, Double SalePrice, Integer Quantity, Set<OrderDetail> orderDetails) {
-		super();
-		this.ProductID = ProductID;
-		this.ProductName = ProductName;
-		this.Price = Price;
-		this.Images = Images;
-		this.Description = Description;
-		this.category = category;
-		this.brand = brand;
-		this.SalePrice = SalePrice;
-		this.Quantity = Quantity;
-		this.orderDetails = orderDetails;
-	}
 
 	public Long getProductID() {
-		return ProductID;
+		return this.ProductID;
 	}
 
 	public void setProductID(Long ProductID) {
@@ -75,7 +61,7 @@ public class Product {
 	}
 
 	public String getProductName() {
-		return ProductName;
+		return this.ProductName;
 	}
 
 	public void setProductName(String ProductName) {
@@ -83,31 +69,15 @@ public class Product {
 	}
 
 	public Double getPrice() {
-		return Price;
+		return this.Price;
 	}
 
 	public void setPrice(Double Price) {
 		this.Price = Price;
 	}
 
-	public String getImages() {
-		return Images;
-	}
-
-	public void setImages(String Images) {
-		this.Images = Images;
-	}
-
-	public String getDescription() {
-		return Description;
-	}
-
-	public void setDescription(String Description) {
-		this.Description = Description;
-	}
-
 	public Double getSalePrice() {
-		return SalePrice;
+		return this.SalePrice;
 	}
 
 	public void setSalePrice(Double SalePrice) {
@@ -115,15 +85,71 @@ public class Product {
 	}
 
 	public Integer getQuantity() {
-		return Quantity;
+		return this.Quantity;
 	}
 
 	public void setQuantity(Integer Quantity) {
 		this.Quantity = Quantity;
 	}
 
+	public String getAvatar() {
+		return this.Avatar;
+	}
+
+	public void setAvatar(String Avatar) {
+		this.Avatar = Avatar;
+	}
+
+	public String getImg1() {
+		return this.Img1;
+	}
+
+	public void setImg1(String Img1) {
+		this.Img1 = Img1;
+	}
+
+	public String getImg2() {
+		return this.Img2;
+	}
+
+	public void setImg2(String Img2) {
+		this.Img2 = Img2;
+	}
+
+	public String getImg3() {
+		return this.Img3;
+	}
+
+	public void setImg3(String Img3) {
+		this.Img3 = Img3;
+	}
+
+	public String getDescription() {
+		return this.Description;
+	}
+
+	public void setDescription(String Description) {
+		this.Description = Description;
+	}
+
+	public Set<OrderDetail> getOrderDetails() {
+		return this.orderDetails;
+	}
+
+	public void setOrderDetails(Set<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
+	public Set<CartItem> getCartItems() {
+		return this.cartItems;
+	}
+
+	public void setCartItems(Set<CartItem> cartItems) {
+		this.cartItems = cartItems;
+	}
+
 	public Category getCategory() {
-		return category;
+		return this.category;
 	}
 
 	public void setCategory(Category category) {
@@ -131,18 +157,35 @@ public class Product {
 	}
 
 	public Brand getBrand() {
-		return brand;
+		return this.brand;
 	}
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
 
-	public Set<OrderDetail> getOrderDetails() {
-		return orderDetails;
+	public Product(Long ProductID, String ProductName, Double Price, Double SalePrice, Integer Quantity, String Avatar,
+			String Img1, String Img2, String Img3, String Description, Set<OrderDetail> orderDetails,
+			Set<CartItem> cartItems, Category category, Brand brand) {
+		super();
+		this.ProductID = ProductID;
+		this.ProductName = ProductName;
+		this.Price = Price;
+		this.SalePrice = SalePrice;
+		this.Quantity = Quantity;
+		this.Avatar = Avatar;
+		this.Img1 = Img1;
+		this.Img2 = Img2;
+		this.Img3 = Img3;
+		this.Description = Description;
+		this.orderDetails = orderDetails;
+		this.cartItems = cartItems;
+		this.category = category;
+		this.brand = brand;
 	}
 
-	public void setOrderDetails(Set<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
+	public Product() {
+
 	}
+
 }

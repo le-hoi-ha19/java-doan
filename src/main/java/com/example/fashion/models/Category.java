@@ -23,19 +23,11 @@ public class Category {
 	@OneToMany(mappedBy = "category")
 	private Set<Product> products;
 
-	public Category() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Category(Integer CatID, String CatName, Set<Product> products) {
-		super();
-		this.CatID = CatID;
-		this.CatName = CatName;
-		this.products = products;
-	}
+	@OneToMany(mappedBy = "category")
+	private Set<Post> posts;
 
 	public Integer getCatID() {
-		return CatID;
+		return this.CatID;
 	}
 
 	public void setCatID(Integer CatID) {
@@ -43,7 +35,7 @@ public class Category {
 	}
 
 	public String getCatName() {
-		return CatName;
+		return this.CatName;
 	}
 
 	public void setCatName(String CatName) {
@@ -51,10 +43,31 @@ public class Category {
 	}
 
 	public Set<Product> getProducts() {
-		return products;
+		return this.products;
 	}
 
 	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
+
+	public Set<Post> getPosts() {
+		return this.posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
+
+	public Category(Integer CatID, String CatName, Set<Product> products, Set<Post> posts) {
+		super();
+		this.CatID = CatID;
+		this.CatName = CatName;
+		this.products = products;
+		this.posts = posts;
+	}
+
+	public Category() {
+		// TODO Auto-generated constructor stub
+	}
+
 }
