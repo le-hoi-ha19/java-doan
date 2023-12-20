@@ -1,79 +1,87 @@
 package com.example.fashion.services.impl;
-// package com.example.fashion.services.Impl;
 
-// import java.util.Set;
+import java.util.Set;
 
-// import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-// import com.example.fashion.models.Cart;
-// import com.example.fashion.models.CartItem;
-// import com.example.fashion.models.Product;
-// import com.example.fashion.repository.CartItemRepository;
-// import com.example.fashion.repository.CartRepository;
-// import com.example.fashion.services.CartService;
+import com.example.fashion.models.Cart;
+import com.example.fashion.models.CartItem;
+import com.example.fashion.models.Product;
+import com.example.fashion.models.User;
+import com.example.fashion.repository.CartItemRepository;
+import com.example.fashion.repository.CartRepository;
+import com.example.fashion.repository.ProductRepository;
+import com.example.fashion.repository.UserRepository;
+import com.example.fashion.services.CartService;
 
-// public class CartServiceImpl implements CartService{
+@Service
+public class CartServiceImpl implements CartService {
 
-//     @Autowired
-//     private CartRepository cartRepository;
+    @Autowired
+    private CartRepository cartRepository;
 
-//     @Autowired
-//     private CartItemRepository cartItemRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
-//     @Override
-//     public Cart addItemToCart(Product product, Integer Quantity) {
-//         Set<CartItem> cartItems = cart.getCartItems();
-//         CartItem cartItem = findCartItem(cartItems, product.getProductID());
-//         if (cartItems == null) {
-//             cartItems = new HashSet<>();
-//             if (cartItem == null) {
-//                 cartItem = new CartItem();
-//                 cartItem.setProduct(product);
-//                 cartItem.setTotalPrice(quantity * product.getCostPrice());
-//                 cartItem.setQuantity(quantity);
-//                 cartItem.setCart(cart);
-//                 cartItems.add(cartItem);
-//                 itemRepository.save(cartItem);
-//             }
-//         } else {
-//             if (cartItem == null) {
-//                 cartItem = new CartItem();
-//                 cartItem.setProduct(product);
-//                 cartItem.setTotalPrice(quantity * product.getCostPrice());
-//                 cartItem.setQuantity(quantity);
-//                 cartItem.setCart(cart);
-//                 cartItems.add(cartItem);
-//                 itemRepository.save(cartItem);
-//             } else {
-//                 cartItem.setQuantity(cartItem.getQuantity() + quantity);
-//                 cartItem.setTotalPrice(cartItem.getTotalPrice() + ( quantity * product.getCostPrice()));
-//                 itemRepository.save(cartItem);
-//             }
-//         }
-//         cart.setCartItem(cartItems);
+    @Autowired
+    private UserRepository userRepository;
 
-//         int totalItems = totalItems(cart.getCartItem());
-//         double totalPrice = totalPrice(cart.getCartItem());
+    @Autowired
+    ProductRepository productRepository;
 
-//         cart.setTotalPrices(totalPrice);
-//         cart.setTotalItems(totalItems);
-//         cart.setCustomer(customer);
+    @Override
+    public Boolean addItemToCart(Product product, Integer Quantity, User user) {
+        try {
+            // Kiểm tra xem user đã có giỏ hàng chưa
+            Cart cart = (Cart) user.getCarts();
+            if (cart == null) {
+                // Nếu chưa có, tạo một giỏ hàng mới
+                cart = new Cart();
+                cart.setUser(user);
+                user.setCarts((Set<Cart>) cart);
+            }
 
-//         return cartRepository.save(cart);
-//     }
+            // Tạo một cart item và thêm vào giỏ hàng
+            CartItem cartItem = new CartItem();
+            cartItem.setCart(cart);
+            cartItem.setProduct(product);
 
-//     @Override
-//     public Cart updateItemInCart(Product product, Integer Quantity) {
-//         // TODO Auto-generated method stub
-//         throw new UnsupportedOperationException("Unimplemented method 'updateItemInCart'");
-//     }
+            // Thực hiện tính số lượng và giá tiền của sản phẩm
+            int quantity = 1;
+            cartItem.setQuantity(Quantity);
 
-//     @Override
-//     public Cart deleteItemFromCart(Product product) {
-//         // TODO Auto-generated method stub
-//         throw new UnsupportedOperationException("Unimplemented method 'deleteItemFromCart'");
-//     }
+            // Tính giá tiền cho sản phẩm (giả sử có giá tiền trong đối tượng Product)
+            Double totalsPrice = product.getPrice() * Quantity;
+            cartItem.setTotalPrice(totalsPrice);
 
+            // Lưu cart item
+            this.cartItemRepository.save(cartItem);
 
-    
-// }
+            // Cập nhật tổng số lượng và tổng giá tiền của giỏ hàng
+            cart.setTotalsItem(cart.getTotalsItem() + quantity);
+            cart.setTotalsPrice(cart.getTotalsPrice() + totalsPrice);
+
+            // Lưu giỏ hàng
+            this.cartRepository.save(cart);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean updateItemInCart(Product product, Integer Quantity, User user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateItemInCart'");
+    }
+
+    @Override
+    public Boolean deleteItemFromCart(Product product, User user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteItemFromCart'");
+    }
+
+}

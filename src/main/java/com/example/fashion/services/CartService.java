@@ -3,13 +3,14 @@ package com.example.fashion.services;
 
 import com.example.fashion.models.Cart;
 import com.example.fashion.models.Product;
+import com.example.fashion.models.User;
 
 public interface CartService {
 
-    Cart addItemToCart(Product product, Integer Quantity);
+    Boolean addItemToCart(Product product, Integer Quantity, User user);
 
-    Cart updateItemInCart(Product product, Integer Quantity);
+    Boolean updateItemInCart(Product product, Integer Quantity, User user);
 
-    Cart deleteItemFromCart(Product product);
-    
+    Boolean deleteItemFromCart(Product product, User user);
+   
 }

@@ -3,11 +3,13 @@ package com.example.fashion.controller.customer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.fashion.models.Brand;
 import com.example.fashion.models.Category;
@@ -30,8 +32,9 @@ public class ShopController {
     private ProductService productService;
 
     @GetMapping("/shop")
-    public String shop(Model model) {
-        List<Product> listProducts = this.productService.getAll();
+    public String shop(Model model, @RequestParam(name = "pageNo",  defaultValue = "1") Long pageNo ) {
+
+        Page<Product> listProducts = this.productService.getAll(pageNo);
         model.addAttribute("listProducts", listProducts);
         List<Category> categories = this.categoryService.getAll();
         model.addAttribute("categories", categories);
