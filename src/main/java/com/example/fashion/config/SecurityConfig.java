@@ -26,10 +26,8 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests((auth) -> auth.requestMatchers("/*").permitAll()
-				.requestMatchers("/admin/login/**").permitAll()
-				.requestMatchers("/admin/register/**").permitAll()
-				.requestMatchers("/admin/**")
+				.authorizeHttpRequests((auth) -> auth.requestMatchers("/**").permitAll()
+						.requestMatchers("/admin/login/**").permitAll().requestMatchers("/admin/**")
 						.hasAuthority("ADMIN").anyRequest().authenticated())
 				.formLogin(login -> login.loginPage("/admin/login").loginProcessingUrl("/admin/login")
 						.usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/admin", true))

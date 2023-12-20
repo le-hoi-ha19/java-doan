@@ -3,6 +3,7 @@ package com.example.fashion.services.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -88,6 +89,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getCustomerUsers() {
         return userRepository.findCustomerUsers();
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        try {
+            // Xóa các vai trò của người dùng từ bảng liên kết
+            User user = findByID(id);
+            Set<UserRole> userRoles = user.getUserRoles();
+            for (UserRole userRole : userRoles) {
+                userRoleRepository.delete(userRole);
+            }
+
+            // Xóa người dùng
+            userRepository.delete(user);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

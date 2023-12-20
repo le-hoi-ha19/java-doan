@@ -39,7 +39,7 @@
 
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Danh sách tài khoản</h1>
+            <h1>Danh sách tài khoản khách hàng</h1>
             <nav></nav>
         </div>
         <!-- End Page Title -->
@@ -74,17 +74,17 @@
                                         <td class="text-center">
                                             <span th:if="${user.gender}">Nam</span>
                                             <span th:if="${not user.gender}">Nữ</span>
-                                        </td>                                        
+                                        </td>
                                         <td class="text-center">
-                                            <img th:src="@{'/uploads/'+${user.images}}" style="max-width: 40px" class="img-fluid" />
-                                          </td>
+                                            <img th:src="@{'/uploads/'+${user.images}}" style="max-width: 40px"
+                                                class="img-fluid" />
+                                        </td>
                                         <td th:text="${user.enabled ? 'Hoạt động' : 'Không hoạt động'}"
                                             class="text-center"></td>
-                                        <!-- <td class="text-center">
-                                            <a onclick="return confirm('Bạn có chắc chắn muốn xoá?')"
-                                                th:href="@{/admin/delete-user/{userId}(userId=${user.id})}"
+                                        <td class="text-center">
+                                            <a th:href="@{/admin/delete-user/{id}(id=${user.id})}" onclick="return  confirm('Bạn có chắc chắn muốn xoá?')"
                                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-                                        </td> -->
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -95,6 +95,7 @@
         </section>
     </main>
     <!-- End #main -->
+
 
     <div th:replace="admin/fragments/footer :: footer"></div>
 
