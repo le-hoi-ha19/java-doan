@@ -32,14 +32,25 @@ public class ShopController {
     private ProductService productService;
 
     @GetMapping("/shop")
-    public String shop(Model model, @RequestParam(name = "pageNo",  defaultValue = "1") Long pageNo ) {
-
+    public String shop(Model model, @RequestParam(name = "pageNo", defaultValue = "1") Long pageNo) {
         Page<Product> listProducts = this.productService.getAll(pageNo);
-        model.addAttribute("listProducts", listProducts);
+
+        if (listProducts != null) {
+            model.addAttribute("totalPage", listProducts.getTotalPages());
+            model.addAttribute("currentPage", pageNo);
+            model.addAttribute("listProducts", listProducts);
+        }
+
         List<Category> categories = this.categoryService.getAll();
-        model.addAttribute("categories", categories);
+        if (categories != null) {
+            model.addAttribute("categories", categories);
+        }
+
         List<Brand> listBra = this.brandService.getAll();
-        model.addAttribute("listBra", listBra);
+        if (listBra != null) {
+            model.addAttribute("listBra", listBra);
+        }
+
         return "shop/index";
     }
 

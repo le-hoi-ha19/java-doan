@@ -279,7 +279,8 @@
                                                     <div class="product_content">
                                                         <span class="product_price"
                                                             th:text="${product.Price}"></span>VNĐ
-                                                        <h3 class="product_title"><a href="single-product.html"
+                                                        <h3 class="product_title"><a
+                                                                th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
                                                                 th:text="${product.ProductName}"></a></h3>
                                                     </div>
                                                     <div class="product_info">
@@ -820,24 +821,26 @@
                             <div class="pagination_style">
                                 <div class="item_page">
                                     <form action="#">
-                                        <label for="page_select">show</label>
+                                        <!-- <label for="page_select">show</label>
                                         <select id="page_select">
                                             <option value="1">9</option>
                                             <option value="2">10</option>
                                             <option value="3">11</option>
                                         </select>
-                                        <span>Products by page</span>
+                                        <span>Products by page</span> -->
                                     </form>
                                 </div>
                                 <div class="page_number">
-                                    <span>Pages: </span>
+                                    <span>Trang: </span>
                                     <ul>
                                         <li>«</li>
-                                        <li class="current_number">1</li>
-                                        <li><a href="#">2</a></li>
+                                        <li th:each="i:${#numbers.sequence(1,totalPage)}"
+                                            th:classappend="${currentPage == i ? 'active' :''}"><a
+                                                th:href="@{'?pageNo='+${i}}" th:text="${i}"></a></li>
                                         <li>»</li>
                                     </ul>
                                 </div>
+
                             </div>
                             <!--pagination style end-->
                         </div>

@@ -25,8 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
     // @Override
     // public List<Product> findTop5ByOrderByidDesc() {
-    //     // TODO Auto-generated method stub
-    //     return this.productRepository.findAll();
+    // // TODO Auto-generated method stub
+    // return this.productRepository.findAll();
     // }
 
     @Override
@@ -69,13 +69,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAll(Long pageNo) {
-        Pageable pageable = PageRequest.of(0, 9);
+        int pageSize = 9; // Số lượng sản phẩm trên mỗi trang
+        Pageable pageable = PageRequest.of(pageNo.intValue() - 1, pageSize);
         return this.productRepository.findAll(pageable);
     }
 
     // @Override
     // public List<Product> searchProduct(String keyword) {
-    //     return this.productRepository.searchProduct(keyword);
+    // return this.productRepository.searchProduct(keyword);
     // }
 
 }
