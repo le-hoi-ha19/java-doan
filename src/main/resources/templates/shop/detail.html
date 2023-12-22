@@ -59,11 +59,11 @@
                     </li>
                     <li>
                       <a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2" aria-selected="false"><img
-                        th:src="@{'/uploads/'+${Product.Img2}}"  alt="" /></a>
+                          th:src="@{'/uploads/'+${Product.Img2}}" alt="" /></a>
                     </li>
                     <li>
                       <a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3" aria-selected="false"><img
-                        th:src="@{'/uploads/'+${Product.Img3}}" alt="" /></a>
+                          th:src="@{'/uploads/'+${Product.Img3}}" alt="" /></a>
                     </li>
                   </ul>
                 </div>
@@ -75,7 +75,7 @@
                         <img src="\assets\img\cart\span-new.png" alt="" />
                       </div>
                       <div class="view_img">
-                        <a class="large_view" th:href="@{'/uploads/'+${Product.Avatar}}" ><i
+                        <a class="large_view" th:href="@{'/uploads/'+${Product.Avatar}}"><i
                             class="fa fa-search-plus"></i></a>
                       </div>
                     </div>
@@ -94,7 +94,7 @@
                   </div>
                   <div class="tab-pane fade" id="p_tab3" role="tabpanel">
                     <div class="modal_img">
-                      <a href="#"><img th:src="@{'/uploads/'+${Product.Img3}}"alt="" /></a>
+                      <a href="#"><img th:src="@{'/uploads/'+${Product.Img3}}" alt="" /></a>
                       <div class="img_icone">
                         <img src="\assets\img\cart\span-new.png" alt="" />
                       </div>
@@ -124,8 +124,10 @@
                   <div class="product_desc"></div>
 
                   <div class="content_price mb-15">
-                    <span th:text="${Product.Price - Product.SalePrice} + 'VNĐ'"></span>
-                    <span class="old-price" th:text="${Product.Price} + 'VNĐ'"></span>
+                    <span
+                      th:text="${#numbers.formatDecimal(Product.Price - Product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                    <span class="old-price"
+                      th:text="${#numbers.formatDecimal(Product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                   </div>
                   <div class="box_quantity mb-20">
                     <label>Số lượng</label>

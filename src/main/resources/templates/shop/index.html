@@ -277,8 +277,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="product_content">
-                                                        <span class="product_price"
-                                                            th:text="${product.Price}"></span>VNĐ
+                                                        <span class="product_price" th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                                                         <h3 class="product_title"><a
                                                                 th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
                                                                 th:text="${product.ProductName}"></a></h3>
