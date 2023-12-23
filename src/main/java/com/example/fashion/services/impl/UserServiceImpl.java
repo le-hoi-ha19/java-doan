@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Boolean createWithUserRoleCUSTOMER(User user) {
         try {
             // Lưu User vào cơ sở dữ liệu

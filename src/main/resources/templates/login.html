@@ -54,7 +54,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="account_form">
                                 <h2>Đăng nhập</h2>
-                                <form action="#">
+                                <form th:action="@{/login}">
                                     <p>
                                         <label>Tên đăng nhập <span>*</span></label>
                                         <input type="text" name="username">
@@ -80,7 +80,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="account_form register">
                                 <h2>Đăng ký</h2>
-                                <form action="#">
+                                <form th:action="@{/login}" th:object="${user}" enctype="multipart/form-data">
                                     <p>
                                         <label>Họ và tên <span>*</span></label>
                                         <input type="text" name="fullname">
@@ -136,7 +136,7 @@
                                         <input type="password" name="password">
                                     </p>
                                     <div class="login_submit">
-                                        <button type="submit">Register</button>
+                                        <button type="submit">Đăng ký</button>
                                     </div>
                                 </form>
                             </div>

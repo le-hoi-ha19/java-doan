@@ -41,26 +41,26 @@ public class LoginController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/login")
-    public String Login() {
+    public String login() {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String Register(@ModelAttribute("user") User user,
-            @RequestParam("imagec") MultipartFile file) {
+    // @PostMapping("/login")
+    // public String register(@ModelAttribute("user") User user,
+    //         @RequestParam("imagec") MultipartFile file) {
 
-        this.storageService.store(file);
-        String fileName = file.getOriginalFilename();
-        user.setImages(fileName);
-        user.setEnabled(true);
+    //     this.storageService.store(file);
+    //     String fileName = file.getOriginalFilename();
+    //     user.setImages(fileName);
+    //     user.setEnabled(true);
 
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+    //     String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+    //     user.setPassword(encodedPassword);
 
-        if (this.userService.createWithUserRoleCUSTOMER(user)) {
-            return "redirect:login";
-        }
-        return "login";
+    //     if (this.userService.createWithUserRoleCUSTOMER(user)) {
+    //         return "redirect:login";
+    //     }
+    //     return "login";
 
-    }
+    // }
 }
