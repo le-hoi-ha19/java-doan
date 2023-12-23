@@ -3,6 +3,7 @@ package com.example.fashion.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.LogoutDsl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.example.fashion.config.CustomUserDetailService;
 
 @Configuration
+@Order(1)
 @EnableWebSecurity
 public class SecurityConfig {
 	@Autowired
@@ -27,6 +29,8 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests((auth) -> auth.requestMatchers("/**").permitAll()
+						.requestMatchers("/shop/**").permitAll()
+						.requestMatchers("/cart/**").permitAll()
 						.requestMatchers("/admin/login/**").permitAll().requestMatchers("/admin/**")
 						.hasAuthority("ADMIN").anyRequest().authenticated())
 				.formLogin(login -> login.loginPage("/admin/login").loginProcessingUrl("/admin/login")
