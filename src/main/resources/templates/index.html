@@ -43,11 +43,11 @@
               <!--wishlist block start-->
               <div class="sidebar_widget wishlist mb-35">
                 <div class="block_title">
-                  <h3><a href="#">Wishlist</a></h3>
+                  <h3><a href="#">Danh sách yêu thích</a></h3>
                 </div>
                 <div class="cart_item">
                   <div class="cart_img">
-                    <a href="#"><img src="assets\img\cart\cart.jpg" alt="" /></a>
+                    <a href="#"><img src="\assets\img\cart\cart.jpg" alt="" /></a>
                   </div>
                   <div class="cart_info">
                     <a href="#">lorem ipsum dolor</a>
@@ -58,22 +58,9 @@
                     <a title="Remove this item" href="#"><i class="fa fa-times-circle"></i></a>
                   </div>
                 </div>
-                <div class="cart_item">
-                  <div class="cart_img">
-                    <a href="#"><img src="assets\img\cart\cart2.jpg" alt="" /></a>
-                  </div>
-                  <div class="cart_info">
-                    <a href="#">Quisque ornare dui</a>
-                    <span class="cart_price">$105.00</span>
-                    <span class="quantity">Qty: 1</span>
-                  </div>
-                  <div class="cart_remove">
-                    <a title="Remove this item" href="#"><i class="fa fa-times-circle"></i></a>
-                  </div>
-                </div>
                 <div class="block_content">
-                  <p>2 products</p>
-                  <a href="#">» My wishlists</a>
+                  <p>2 sản phẩm</p>
+                  <a href="#">» Sản phẩm yêu thích</a>
                 </div>
               </div>
               <!--wishlist block end-->
@@ -92,12 +79,12 @@
               <!--newsletter block start-->
               <div class="sidebar_widget newsletter mb-35">
                 <div class="block_title">
-                  <h3>newsletter</h3>
+                  <h3>Bản tin</h3>
                 </div>
                 <form action="#">
-                  <p>Sign up for your newsletter</p>
-                  <input placeholder="Your email address" type="text" />
-                  <button type="submit">Subscribe</button>
+                  <p>Đăng ký nhận bản tin của bạn</p>
+                  <input placeholder="Địa chỉ email của bạn" type="text" />
+                  <button type="submit">Đăng ký</button>
                 </form>
               </div>
               <!--newsletter block end-->
@@ -182,7 +169,8 @@
                           </div>
                         </div>
                         <div class="product_content">
-                          <span class="product_price" th:text="${product.Price}"></span>
+                          <span class="product_price"
+                            th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                           <h3 class="product_title">
                             <a href="single-product.html" th:text="${product.ProductName}">
                             </a>
@@ -191,7 +179,7 @@
                         <div class="product_info">
                           <ul>
                             <li>
-                              <a href="#" title=" Add to Wishlist ">Add to Wishlist</a>
+                              <a href="#" title=" Add to Wishlist ">Thêm yêu thích</a>
                             </li>
                             <li>
                               <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view"
@@ -216,7 +204,8 @@
                     <div class="col-lg-3" th:each="product : ${listViewsProducts}">
                       <div class="single_product">
                         <div class="product_thumb">
-                          <a href="single-product.html"><img th:src="@{'/uploads/'+${product.Avatar}}" /></a>
+                          <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
+                              th:src="@{'/uploads/'+${product.Avatar}}" /></a>
                           <div class="hot_img">
                             <img src="assets\img\cart\span-hot.png" alt="" />
                           </div>
@@ -227,19 +216,21 @@
                           </div>
                         </div>
                         <div class="product_content">
-                          <span class="product_price" th:text="${product.Price}"></span>
+                          <span class="product_price"
+                            th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                           <h3 class="product_title">
-                            <a href="single-product.html" th:text="${product.ProductName}"></a>
+                            <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
+                              th:text="${product.ProductName}"></a>
                           </h3>
                         </div>
                         <div class="product_info">
                           <ul>
                             <li>
-                              <a href="#" title=" Add to Wishlist ">Add to Wishlist</a>
+                              <a href="#" title=" Add to Wishlist ">Thêm yêu thích</a>
                             </li>
                             <li>
-                              <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View
-                                Detail</a>
+                              <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">Xem chi
+                                tiết</a>
                             </li>
                           </ul>
                         </div>

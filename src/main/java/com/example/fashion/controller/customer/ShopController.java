@@ -58,6 +58,15 @@ public class ShopController {
     public String detail(Model model, @PathVariable("ProductID") Long ProductID) {
         Product product = this.productService.findByID(ProductID);
         model.addAttribute("Product", product);
+        List<Category> categories = this.categoryService.getAll();
+        if (categories != null) {
+            model.addAttribute("categories", categories);
+        }
+
+        List<Brand> listBra = this.brandService.getAll();
+        if (listBra != null) {
+            model.addAttribute("listBra", listBra);
+        }
         return "shop/detail";
     }
 }

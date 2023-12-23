@@ -25,9 +25,9 @@ public class CartController {
 
     @GetMapping("/cart")
     public String index(@ModelAttribute("cart") Cart cart, Model model) {
-        if (cart.getCartItems().isEmpty()) {
-            model.addAttribute("check", "Không có sản phẩm trong giỏ hàng");
-        }
+        // if (cart.getCartItems().isEmpty()) {
+        //     model.addAttribute("check", "Không có sản phẩm trong giỏ hàng");
+        // }
         model.addAttribute("cart", cart);
         return "cart/index";
     }
