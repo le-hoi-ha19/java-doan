@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.example.fashion.config.CustomUserDetailService;
 
 @Configuration
-@Order(1)
 @EnableWebSecurity
 public class SecurityConfig {
 	@Autowired
@@ -31,7 +30,8 @@ public class SecurityConfig {
 				.authorizeHttpRequests((auth) -> auth.requestMatchers("/**").permitAll()
 						.requestMatchers("/shop/**").permitAll()
 						.requestMatchers("/cart/**").permitAll()
-						.requestMatchers("/admin/login/**").permitAll().requestMatchers("/admin/**")
+						.requestMatchers("/admin/login/**").permitAll()
+						.requestMatchers("/admin/**")
 						.hasAuthority("ADMIN").anyRequest().authenticated())
 				.formLogin(login -> login.loginPage("/admin/login").loginProcessingUrl("/admin/login")
 						.usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/admin", true))
