@@ -66,17 +66,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody th:if="${check == null}">
-                                                <tr>
+                                                <tr h:each="cartItem : ${cart.cartItem}">
                                                     <td class="product_remove"><a href="#"><i
                                                                 class="fa fa-trash-o"></i></a></td>
                                                     <td class="product_thumb"><a href="#"><img
-                                                                src="assets\img\cart\cart17.jpg" alt></a></td>
-                                                    <td class="product_name"><a href="#">Handbag
-                                                            fringilla</a></td>
-                                                    <td class="product-price">£65.00</td>
+                                                                th:src="@{'/uploads/'+${cartItem.product.Avatar}}" alt></a></td>
+                                                    <td class="product_name"><a href="#" th:text="${cartItem.product.ProductName}"></a></td>
+                                                    <td class="product-price" th:text="${#numbers.formatDecimal(cartItem.product.Price - cartItem.product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td> ></td>
                                                     <td class="product_quantity"><input min="0" max="100" value="1"
                                                             type="number"></td>
-                                                    <td class="product_total">£130.00</td>
+                                                    <td class="product_total" th:text="${#numbers.formatDecimal(cartItem.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>></td>
                                                 </tr>
                                             </tbody>
                                         </table>

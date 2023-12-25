@@ -31,15 +31,15 @@ public class CartServiceImpl implements CartService {
     ProductRepository productRepository;
 
     @Override
-    public Boolean addItemToCart(Product product, Integer Quantity, User user) {
+    public Boolean addItemToCart(Product product, Integer quantity) {
         try {
-            // Kiểm tra xem user đã có giỏ hàng chưa
-            Cart cart = (Cart) user.getCarts();
+            // Kiểm tra xem có giỏ hàng nào tồn tại không
+            Cart cart = cartRepository.findCartByUserIdIsNull();
+
             if (cart == null) {
-                // Nếu chưa có, tạo một giỏ hàng mới
+                // Nếu không có, tạo một giỏ hàng mới
                 cart = new Cart();
-                cart.setUser(user);
-                user.setCarts((Set<Cart>) cart);
+                cartRepository.save(cart);
             }
 
             // Tạo một cart item và thêm vào giỏ hàng
@@ -48,22 +48,21 @@ public class CartServiceImpl implements CartService {
             cartItem.setProduct(product);
 
             // Thực hiện tính số lượng và giá tiền của sản phẩm
-            int quantity = 1;
-            cartItem.setQuantity(Quantity);
+            cartItem.setQuantity(quantity);
 
             // Tính giá tiền cho sản phẩm (giả sử có giá tiền trong đối tượng Product)
-            Double totalsPrice = product.getPrice() * Quantity;
-            cartItem.setTotalPrice(totalsPrice);
+            Double totalPrice = product.getPrice() * quantity;
+            cartItem.setTotalPrice(totalPrice);
 
             // Lưu cart item
-            this.cartItemRepository.save(cartItem);
+            cartItemRepository.save(cartItem);
 
             // Cập nhật tổng số lượng và tổng giá tiền của giỏ hàng
             cart.setTotalsItem(cart.getTotalsItem() + quantity);
-            cart.setTotalsPrice(cart.getTotalsPrice() + totalsPrice);
+            cart.setTotalsPrice(cart.getTotalsPrice() + totalPrice);
 
             // Lưu giỏ hàng
-            this.cartRepository.save(cart);
+            cartRepository.save(cart);
 
             return true;
         } catch (Exception e) {
@@ -73,13 +72,13 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Boolean updateItemInCart(Product product, Integer Quantity, User user) {
+    public Boolean updateItemInCart(Product product, Integer Quantity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateItemInCart'");
     }
 
     @Override
-    public Boolean deleteItemFromCart(Product product, User user) {
+    public Boolean deleteItemFromCart(Product product) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteItemFromCart'");
     }

@@ -1,8 +1,10 @@
 package com.example.fashion.models;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,10 +23,10 @@ public class CartItem {
     private Integer Quantity;
     @Column(name = "TotalsPrice")
     private Double TotalsPrice;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
     private Product products;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "CartID", referencedColumnName = "CartID")
     private Cart carts;
 
