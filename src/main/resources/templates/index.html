@@ -415,25 +415,3 @@
 </body>
 
 </html>
-<script th:inline="javascript">
-  $(document).ready(function () {
-    $('a[data-toggle="modal"]').on("click", function () {
-      var ProductID = $(this).data("id");
-      // Sử dụng AJAX để lấy thông tin sản phẩm từ server
-      $.ajax({
-        url: "/api/product/" + ProductID, // Thay đổi URL theo cấu trúc API của bạn
-        type: "GET",
-        success: function (product) {
-          // Cập nhật thông tin sản phẩm trong modal
-          $("#modalProductImage").attr("src", "/uploads/" + product.Avatar);
-          $("#modalProductName").text(product.ProductName);
-          $("#modalProductPrice").text("$" + product.Price);
-          // Cập nhật các thông tin khác nếu cần
-        },
-        error: function () {
-          console.error("Failed to fetch product details.");
-        },
-      });
-    });
-  });
-</script>
