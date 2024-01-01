@@ -18,22 +18,26 @@
 //     @Autowired
 //     private CustomUserDetailService customUserDetailService;
 
+//     @Autowired 
+// 	private CustomSuccessHandler customSuccessHandler;
+
 //     @Bean
 //     public PasswordEncoder customerPasswordEncoder() {
 //         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 //     }
 
-//     @Bean
-//     public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
-//         http.requestMatchers("/**")
-//                 .hasAuthority("CUSTOMER").anyRequest().authenticated()
-//                 .formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login")
-//                         .usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/", true)
-//                         .permitAll())
-//                 .and()
-//                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
-//                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout"));
-//         return http.build();
+//     @Bean(name = "customSecurityFilterChain")
+// 	SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
+// 		// http.csrf(csrf -> csrf.disable())
+// 		// 		.authorizeHttpRequests((auth) -> auth.requestMatchers("/**").permitAll()
+// 		// 				.requestMatchers("/login/**")
+// 		// 				.hasAuthority("CUSTOMER").anyRequest().authenticated())
+// 		// 		.formLogin(login -> login.loginPage("/login").loginProcessingUrl("/login")
+//         //         .usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/", true)
+// 		// 				.permitAll())
+// 		// 		.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login"))
+// 		// 		.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login?logout"));
+// 		return http.build();
 
-//     }
+// 	}
 // }

@@ -1,5 +1,6 @@
 package com.example.fashion.services.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.example.fashion.repository.CartRepository;
 import com.example.fashion.repository.ProductRepository;
 import com.example.fashion.repository.UserRepository;
 import com.example.fashion.services.CartService;
+import com.example.fashion.services.ProductService;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -28,59 +30,60 @@ public class CartServiceImpl implements CartService {
     private UserRepository userRepository;
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductService productService;
 
     @Override
-    public Boolean addItemToCart(Product product, Integer quantity) {
-        try {
-            // Kiểm tra xem có giỏ hàng nào tồn tại không
-            Cart cart = cartRepository.findCartByUserIdIsNull();
-
-            if (cart == null) {
-                // Nếu không có, tạo một giỏ hàng mới
-                cart = new Cart();
-                cartRepository.save(cart);
-            }
-
-            // Tạo một cart item và thêm vào giỏ hàng
-            CartItem cartItem = new CartItem();
-            cartItem.setCart(cart);
-            cartItem.setProduct(product);
-
-            // Thực hiện tính số lượng và giá tiền của sản phẩm
-            cartItem.setQuantity(quantity);
-
-            // Tính giá tiền cho sản phẩm (giả sử có giá tiền trong đối tượng Product)
-            Double totalPrice = product.getPrice() * quantity;
-            cartItem.setTotalPrice(totalPrice);
-
-            // Lưu cart item
-            cartItemRepository.save(cartItem);
-
-            // Cập nhật tổng số lượng và tổng giá tiền của giỏ hàng
-            cart.setTotalsItem(cart.getTotalsItem() + quantity);
-            cart.setTotalsPrice(cart.getTotalsPrice() + totalPrice);
-
-            // Lưu giỏ hàng
-            cartRepository.save(cart);
-
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public Cart addItemToCart(Long ProductID, String sessionToken, int Quantity) {
+        Cart cart = new Cart();
+		CartItem cartItem = new CartItem();
+		cartItem.setQuantity(Quantity);
+		cartItem.setProducts(productService.findByID(ProductID));
+		cart.getCartItems().add(cartItem);
+		cart.setSessionToken(sessionToken);
+		return cartRepository.save(cart);
     }
 
     @Override
-    public Boolean updateItemInCart(Product product, Integer Quantity) {
+    public Cart updateItemInCart(Long ProductID, String sessionToken, int Quantity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateItemInCart'");
     }
 
     @Override
-    public Boolean deleteItemFromCart(Product product) {
+    public Cart deleteItemFromCart(Long ProductID, String sessionToken) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteItemFromCart'");
     }
+
+    @Override
+    public Cart addToExistingCart(Long ProductID, String sessionToken, int Quantity) {
+        Cart cart = cartRepository.findBySessionToken(sessionToken);
+		Product p = productService.findByID(ProductID);
+		Boolean productDoesExistInTheCart = false;
+		if (cart != null) {
+		    Set<CartItem> items = cart.getCartItems();
+			for (CartItem item : items) {
+				if (item.getProducts().equals(p)) {
+					productDoesExistInTheCart = true;
+					item.setQuantity(item.getQuantity() + Quantity);
+					cart.setCartItems(items);
+					return cartRepository.saveAndFlush(cart);  
+				}
+				
+			}
+		}
+		if(!productDoesExistInTheCart && (cart != null))
+		{
+			CartItem cartItem1 = new CartItem();
+			cartItem1.setQuantity(Quantity);
+			cartItem1.setProducts(p);
+			cart.getCartItems().add(cartItem1);
+			return cartRepository.saveAndFlush(cart);
+		}
+		
+		return this.addItemToCart(ProductID, sessionToken, Quantity);
+    }
+
+   
 
 }

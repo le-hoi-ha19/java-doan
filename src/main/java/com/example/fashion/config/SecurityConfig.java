@@ -16,11 +16,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.example.fashion.config.CustomUserDetailService;
 
 @Configuration
-@Order(1)
 @EnableWebSecurity
 public class SecurityConfig {
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
+
+	@Autowired 
+	private CustomSuccessHandler customSuccessHandler;
 
 	@Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -32,18 +34,22 @@ public class SecurityConfig {
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests((auth) -> auth.requestMatchers("/*").permitAll()
 						.requestMatchers("/shop/**").permitAll()
+						.requestMatchers("/contact/**").permitAll()
 						.requestMatchers("/shop-detail/**").permitAll()
 						.requestMatchers("/cart/**").permitAll()
 						.requestMatchers("/admin/login/**").permitAll()
 						.requestMatchers("/admin/**")
 						.hasAuthority("ADMIN").anyRequest().authenticated())
 				.formLogin(login -> login.loginPage("/admin/login").loginProcessingUrl("/admin/login")
-						.usernameParameter("username").passwordParameter("password").defaultSuccessUrl("/admin", true).permitAll())
+				.usernameParameter("username").passwordParameter("password").
+				defaultSuccessUrl("/admin",true))
 				.logout(logout -> logout.logoutUrl("/admin-logout").logoutSuccessUrl("/admin/login"))
 				.logout(logout -> logout.logoutUrl("/admin-logout").logoutSuccessUrl("/admin/login?logout"));
 		return http.build();
 
 	}
+
+	
 
 	@Bean
 	WebSecurityCustomizer webSecurityCustomizer() {

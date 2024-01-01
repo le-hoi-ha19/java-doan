@@ -90,11 +90,11 @@
               <!--newsletter block end-->
 
               <!--sidebar banner-->
-              <div class="sidebar_widget bottom">
+              <!-- <div class="sidebar_widget bottom">
                 <div class="banner_img">
                   <a href="#"><img src="assets\img\banner\banner9.jpg" alt="" /></a>
                 </div>
-              </div>
+              </div> -->
               <!--sidebar banner end-->
             </div>
             <div class="col-lg-9 col-md-12">
@@ -107,11 +107,7 @@
                     <div class="slider_content">
                       <div class="slider_content_inner">
                         <h1>Women's Fashion</h1>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit.
-                        </p>
-                        <a href="#">shop now</a>
+                        <a href="#">Mua sắm ngay</a>
                       </div>
                     </div>
                   </div>
@@ -125,7 +121,7 @@
                           Lorem ipsum dolor sit amet, consectetur adipisicing
                           elit.
                         </p>
-                        <a href="#">shop now</a>
+                        <a href="#">Mua sắm ngay</a>
                       </div>
                     </div>
                   </div>
@@ -139,7 +135,7 @@
                           Lorem ipsum dolor sit amet, consectetur adipisicing
                           elit.
                         </p>
-                        <a href="#">shop now</a>
+                        <a href="#">Mua sắm ngay</a>
                       </div>
                     </div>
                   </div>
@@ -203,7 +199,7 @@
                 <div class="row">
                   <div class="product_active owl-carousel">
                     <div class="col-lg-3" th:each="product : ${listViewsProducts}">
-                      <form th:action="@{/add-to-card}" method="post">
+                      <form th:action="@{/add-to-cart}" method="post">
                         <div class="single_product">
                           <div class="product_thumb">
                             <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
@@ -212,7 +208,8 @@
                               <img src="assets\img\cart\span-hot.png" alt="" />
                             </div>
                             <div class="product_action">
-                              <input type="submit" class="cart" value="Thêm vào giỏ hàng">
+                              <input type="hidden" th:value="${product.ProductID}" name="ProductID">
+                              <input type="submit" class="fa fa-shopping-cart" value="Thêm vào giỏ hàng">
                             </div>
                           </div>
                           <div class="product_content">
@@ -243,7 +240,7 @@
               <!--featured product end-->
 
               <!--banner area start-->
-              <div class="banner_area mb-60">
+              <!-- <div class="banner_area mb-60">
                 <div class="row">
                   <div class="col-lg-6 col-md-6">
                     <div class="single_banner">
@@ -262,7 +259,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <!--banner area end-->
 
               <!--brand logo strat-->

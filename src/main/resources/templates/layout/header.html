@@ -44,12 +44,19 @@
               <li><a href="/cart" title="My cart">Giỏ hàng</a></li>
               <ul>
                 <ul>
-                  <li style="display: inline-block; margin-right: 1px">
-                    <a href="/login" title="Login">Đăng nhập</a>
-                  </li>
-                  <li style="display: inline-block">|</li>
-                  <li style="display: inline-block; margin-left: 1px">
-                    <a href="/register" title="Register">Đăng ký</a>
+                  <li class="login-box">
+                    <select id="" class="selectpicker show-tick form-control" data-placeholder="Đăng nhập"
+                      onchange="location = this.value;">
+                      <option sec:authorize="isAuthenticated()" th:value="@{/logout}" th:text="${#authentication.name}">
+                      </option>
+                      <option th:unless="${#authentication.name == null}" value="@{/login}">
+                        Đăng nhập
+                      </option>
+                      <option th:if="${#authentication.name != null}" value="@{/logout}">
+                        Đăng xuất
+                      </option>
+                      <option value="@{/register}">Đăng ký</option>
+                    </select>
                   </li>
                 </ul>
               </ul>
@@ -170,7 +177,7 @@
                   </li>
 
                   <li>
-                    <a href="blog.html">blog</a>
+                    <a href="blog.html">Tin tức</a>
                     <div class="mega_menu jewelry">
                       <div class="mega_items jewelry">
                         <ul>

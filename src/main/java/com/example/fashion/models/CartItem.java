@@ -30,8 +30,44 @@ public class CartItem {
     @JoinColumn(name = "CartID", referencedColumnName = "CartID")
     private Cart carts;
 
-    public CartItem() {
+    public Long getCI_ID() {
+        return this.CI_ID;
+    }
 
+    public void setCI_ID(Long CI_ID) {
+        this.CI_ID = CI_ID;
+    }
+
+    public Integer getQuantity() {
+        return this.Quantity;
+    }
+
+    public void setQuantity(Integer Quantity) {
+        this.Quantity = Quantity;
+    }
+
+    public Double getTotalsPrice() {
+        return this.TotalsPrice;
+    }
+
+    public void setTotalsPrice(Double TotalsPrice) {
+        this.TotalsPrice = TotalsPrice;
+    }
+
+    public Product getProducts() {
+        return this.products;
+    }
+
+    public void setProducts(Product products) {
+        this.products = products;
+    }
+
+    public Cart getCarts() {
+        return this.carts;
+    }
+
+    public void setCarts(Cart carts) {
+        this.carts = carts;
     }
 
     public CartItem(Long CI_ID, Integer Quantity, Double TotalsPrice, Product products, Cart carts) {
@@ -43,43 +79,9 @@ public class CartItem {
         this.carts = carts;
     }
 
-    public Long getCI_ID() {
-        return CI_ID;
+    public CartItem() {
+
     }
 
-    public void setCI_ID(Long CI_ID) {
-        this.CI_ID = CI_ID;
-    }
-
-    public Integer getQuantity() {
-        return Quantity;
-    }
-
-    public void setQuantity(Integer Quantity) {
-        this.Quantity = Quantity;
-    }
-
-    public Double getTotalsPrice() {
-        return TotalsPrice;
-    }
-
-    public void setTotalPrice(Double TotalsPrice) {
-        this.TotalsPrice = TotalsPrice;
-    }
-
-    public Product getProduct() {
-        return products;
-    }
-
-    public void setProduct(Product products) {
-        this.products = products;
-    }
-
-    public Cart getCart() {
-        return carts;
-    }
-
-    public void setCart (Cart carts) {
-        this.carts = carts;
-    }
+   
 }

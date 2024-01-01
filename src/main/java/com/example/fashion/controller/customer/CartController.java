@@ -1,6 +1,7 @@
 package com.example.fashion.controller.customer;
 
 import java.security.Principal;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,40 +34,25 @@ public class CartController {
     private ProductService productService;
 
     @GetMapping("/cart")
-    public String index(@ModelAttribute("cart") Cart cart, Model model, HttpSession session) {
-        if (cart.getCartItems() == null || cart.getCartItems().isEmpty()) {
-            model.addAttribute("check", "Không có sản phẩm trong giỏ hàng");
-        }
-        session.setAttribute("totalsItem", cart.getTotalsItem());
-        model.addAttribute("subTotal", cart.getTotalsPrice());
-        model.addAttribute("cart", cart);
+    public String index(HttpServletRequest request, Model model) {
         return "cart/index";
     }
 
     @PostMapping("/add-to-cart")
-    public String addItemToCart(
-            @RequestParam("id") Long ProductID,
-            @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer Quantity,
-            HttpServletRequest request) {
+	public String addToCart(HttpServletRequest request, Model model, @RequestParam("ProductID") Long ProductID,
+			@RequestParam("quantity") int Quantity) {
 
-        // if (principal == null) {
-        // return "redirect:/login";
-        // }
+		// sessiontToken
+		String sessionToken = (String) request.getSession(true).getAttribute("sessiontToken");
+		if (sessionToken == null) {
 
-        Cart cart = (Cart) request.getAttribute("cart");
-        if (cart == null) {
-            cart = new Cart();
-            request.setAttribute("cart", cart);
-        }
-
-        Product product = productService.findByID(ProductID);
-        // String username = principal.getName();
-        // User user = userService.findByUsername(username);
-
-        this.cartService.addItemToCart(product, Quantity);
-
-        // Chuyển hướng người dùng trở lại trang trước đó
-        return "redirect:" + request.getHeader("Referer");
-    }
+			sessionToken = UUID.randomUUID().toString();
+			request.getSession().setAttribute("sessiontToken", sessionToken);
+			cartService.addItemToCart(ProductID, sessionToken, Quantity);
+		} else {
+			cartService.addToExistingCart(ProductID, sessionToken, Quantity);
+		}
+		return "redirect:/";
+	}
 
 }

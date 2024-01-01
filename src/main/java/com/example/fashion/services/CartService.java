@@ -7,10 +7,12 @@ import com.example.fashion.models.User;
 
 public interface CartService {
 
-    Boolean addItemToCart(Product product, Integer quantity);
+    Cart addItemToCart(Long ProductID, String sessionToken, int Quantity);
 
-    Boolean updateItemInCart(Product product, Integer quantity);
+    Cart addToExistingCart(Long ProductID, String sessionToken, int Quantity);
 
-    Boolean deleteItemFromCart(Product product);
+    Cart updateItemInCart(Long ProductID, String sessionToken, int Quantity);
+
+    Cart deleteItemFromCart(Long ProductID, String sessionToken);
    
 }
