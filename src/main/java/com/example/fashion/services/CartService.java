@@ -1,18 +1,16 @@
 package com.example.fashion.services;
 
+import java.util.List;
 
 import com.example.fashion.models.Cart;
+import com.example.fashion.models.CartItem;
 import com.example.fashion.models.Product;
 import com.example.fashion.models.User;
 
 public interface CartService {
 
-    Cart addItemToCart(Long ProductID, String sessionToken, int Quantity);
+    List<Cart> getAll();
 
-    Cart addToExistingCart(Long ProductID, String sessionToken, int Quantity);
+    Cart findByID(Long CartID);
 
-    Cart updateItemInCart(Long ProductID, String sessionToken, int Quantity);
-
-    Cart deleteItemFromCart(Long ProductID, String sessionToken);
-   
 }

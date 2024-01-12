@@ -1,5 +1,6 @@
 package com.example.fashion.controller.customer;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.fashion.models.Brand;
+import com.example.fashion.models.Cart;
 import com.example.fashion.models.Category;
 import com.example.fashion.models.Product;
+import com.example.fashion.models.User;
 import com.example.fashion.services.BrandService;
 import com.example.fashion.services.CategoryService;
 import com.example.fashion.services.ProductService;
 import com.example.fashion.services.StorageService;
+import com.example.fashion.services.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ShopController {
@@ -30,6 +37,22 @@ public class ShopController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(value = { "/index", "/shop-detail" }, method = RequestMethod.POST)
+    public String home(Model model, Principal principal, HttpSession session) {
+        if (principal != null) {
+            session.setAttribute("username", principal.getName());
+            User user = userService.findByUsername(principal.getName());
+            Cart cart = (Cart) user.getCarts();
+            session.setAttribute("totalItems", cart.getTotalsItem());
+        } else {
+            session.removeAttribute("username");
+        }
+        return "shop/detail";
+    }
 
     @GetMapping("/shop")
     public String shop(Model model, @RequestParam(name = "pageNo", defaultValue = "1") Long pageNo) {

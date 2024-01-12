@@ -80,7 +80,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="account_form register">
                                 <h2>Đăng ký</h2>
-                                <form th:action="@{/login}" th:object="${user}" enctype="multipart/form-data">
+                                <form th:action="@{/register}" th:object="${user}" enctype="multipart/form-data">
                                     <p>
                                         <label>Họ và tên <span>*</span></label>
                                         <input type="text" name="fullname">
@@ -107,8 +107,8 @@
                                         <input type="text" name="address">
                                     </p>
                                     <div class="col-12">
-                                        <label for="yourImages" class="form-label">Hình ảnh</label>
-                                        <input type="file" name="imagec" class="form-control" id="yourImages"
+                                        <label for="yourImages" class="form-label">Ảnh đại diện</label>
+                                        <input type="file" name="imaget" class="form-control" id="yourImages"
                                             required />
                                         <div class="invalid-feedback">
                                             Vui lòng chọn hình ảnh!

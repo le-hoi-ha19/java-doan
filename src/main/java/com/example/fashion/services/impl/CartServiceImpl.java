@@ -1,6 +1,7 @@
 package com.example.fashion.services.impl;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import com.example.fashion.repository.ProductRepository;
 import com.example.fashion.repository.UserRepository;
 import com.example.fashion.services.CartService;
 import com.example.fashion.services.ProductService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -33,57 +36,15 @@ public class CartServiceImpl implements CartService {
     private ProductService productService;
 
     @Override
-    public Cart addItemToCart(Long ProductID, String sessionToken, int Quantity) {
-        Cart cart = new Cart();
-		CartItem cartItem = new CartItem();
-		cartItem.setQuantity(Quantity);
-		cartItem.setProducts(productService.findByID(ProductID));
-		cart.getCartItems().add(cartItem);
-		cart.setSessionToken(sessionToken);
-		return cartRepository.save(cart);
+    public List<Cart> getAll() {
+        return this.cartRepository.findAll();
     }
 
     @Override
-    public Cart updateItemInCart(Long ProductID, String sessionToken, int Quantity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateItemInCart'");
+    public Cart findByID(Long CartID) {
+        return this.cartRepository.findById(CartID).get();
     }
 
-    @Override
-    public Cart deleteItemFromCart(Long ProductID, String sessionToken) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteItemFromCart'");
-    }
-
-    @Override
-    public Cart addToExistingCart(Long ProductID, String sessionToken, int Quantity) {
-        Cart cart = cartRepository.findBySessionToken(sessionToken);
-		Product p = productService.findByID(ProductID);
-		Boolean productDoesExistInTheCart = false;
-		if (cart != null) {
-		    Set<CartItem> items = cart.getCartItems();
-			for (CartItem item : items) {
-				if (item.getProducts().equals(p)) {
-					productDoesExistInTheCart = true;
-					item.setQuantity(item.getQuantity() + Quantity);
-					cart.setCartItems(items);
-					return cartRepository.saveAndFlush(cart);  
-				}
-				
-			}
-		}
-		if(!productDoesExistInTheCart && (cart != null))
-		{
-			CartItem cartItem1 = new CartItem();
-			cartItem1.setQuantity(Quantity);
-			cartItem1.setProducts(p);
-			cart.getCartItems().add(cartItem1);
-			return cartRepository.saveAndFlush(cart);
-		}
-		
-		return this.addItemToCart(ProductID, sessionToken, Quantity);
-    }
-
-   
+    
 
 }

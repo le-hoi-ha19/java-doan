@@ -61,8 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByID(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByID'");
+        return this.userRepository.findById(id).get();
     }
 
     @Override

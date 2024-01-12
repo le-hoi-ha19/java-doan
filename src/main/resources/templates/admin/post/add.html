@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+  <title>Thêm bài viết</title>
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
+
+  <!-- Favicons -->
+  <link href="/admun/assets/img/favicon.png" rel="icon" />
+  <link href="/admun/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet" />
+
+  <!-- Vendor CSS Files -->
+  <link href="/admun/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="/admun/assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+
+  <!-- Template Main CSS File -->
+  <link href="/admun/assets/css/style.css" rel="stylesheet" />
+  <style>
+    html * {
+      box-sizing: border-box;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .upload {
+      &__box {
+        padding: 40px;
+      }
+
+      &__inputfile {
+        width: .1px;
+        height: .1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+
+      &__btn {
+        display: inline-block;
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+        min-width: 116px;
+        padding: 5px;
+        transition: all .3s ease;
+        cursor: pointer;
+        border: 2px solid;
+        background-color: #4045ba;
+        border-color: #4045ba;
+        border-radius: 10px;
+        line-height: 26px;
+        font-size: 14px;
+
+        &:hover {
+          background-color: unset;
+          color: #4045ba;
+          transition: all .3s ease;
+        }
+
+        &-box {
+          margin-bottom: 10px;
+        }
+      }
+
+      &__img {
+        &-wrap {
+          display: flex;
+          flex-wrap: wrap;
+          margin: 0 -10px;
+        }
+
+        &-box {
+          width: 200px;
+          padding: 0 10px;
+          margin-bottom: 12px;
+        }
+
+        &-close {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background-color: rgba(0, 0, 0, 0.5);
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          text-align: center;
+          line-height: 24px;
+          z-index: 1;
+          cursor: pointer;
+
+          &:after {
+            content: '\2716';
+            font-size: 14px;
+            color: white;
+          }
+        }
+      }
+    }
+
+    .img-bg {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+      padding-bottom: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <div th:replace="admin/fragments/header :: header"></div>
+  <!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+  <!-- End Sidebar-->
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h2>Xác nhận thêm bài viết</h2>
+    </div>
+    <div class="container shadow p-5">
+      <div class="row pb-2">
+        <h2>Thêm mới bài viết</h2>
+      </div>
+      <!-- Thêm vào trong thẻ form để hiển thị thông báo lỗi -->
+      <div th:if="${error}" class="alert alert-danger" role="alert">
+        <span th:text="${error}"></span>
+      </div>
+      <form role="form" method="post" th:action="@{/admin/add-post}" th:object="${post}"
+        enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Tên bài viết:</label>
+            <input type="text" name="Title" class="form-control mb-3" th:field="*{Title}" />
+          </div>
+          <div class="form-group col-md-6">
+            <div class="upload__box">
+              <div class="upload__btn-box">
+                <label class="upload__btn">
+                  <p>Tải hình ảnh</p>
+                  <input type="file" multiple="" data-max_length="20" name="fileImages" class="upload__inputfile" />
+                </label>
+              </div>
+              <div class="upload__img-wrap"></div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label>Hình ảnh đại diện:</label>
+            <input type="file" id="fileAvatar" name="fileAvatar" class="form-control mb-3" />
+            <span class="alert-danger"></span>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label>Thể loại:</label>
+            <select class="form-control mb-3" th:field="*{category.CatID}">
+              <option th:each="category : ${listCat}" th:value="${category.CatID}" th:text="${category.CatName}">
+              </option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Mô tả:</label>
+            <input type="text" name="Abstract" class="form-control mb-3" th:field="*{Abstract}" />
+          </div>
+          <div class="form-group col-md-6">
+            <label>Ngày đăng bài:</label>
+            <input type="date" name="CreatedDate" class="form-control mb-3" th:field="*{CreatedDate}" />
+          </div>
+          <div class="form-group col-md-6">
+            <label>Nội dung bài viết:</label>
+            <textarea name="Contents" class="form-control mb-3" th:field="*{Contents}">
+              </textarea>
+          </div>
+        </div>
+        <button type="submit" name="them" class="btn btn-lg btn-primary p-2">
+          <i class="bi bi-file-plus-fill"></i>Lưu
+        </button>
+        <a href="/admin/post" class="btn btn-lg btn-warning p-2">Quay lại</a>
+      </form>
+    </div>
+  </main>
+  <!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <div th:replace="admin/fragments/footer :: footer"></div>
+  <!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <div th:replace="admin/fragments/script :: script"></div>
+</body>
+
+</html>
+<script>
+  jQuery(document).ready(function () {
+    ImgUpload();
+  });
+
+  function ImgUpload() {
+    var imgWrap = "";
+    var imgArray = [];
+
+    $('.upload__inputfile').each(function () {
+      $(this).on('change', function (e) {
+        imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+        var maxLength = $(this).attr('data-max_length');
+
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        var iterator = 0;
+        filesArr.forEach(function (f, index) {
+
+          if (!f.type.match('image.*')) {
+            return;
+          }
+
+          if (imgArray.length > maxLength) {
+            return false
+          } else {
+            var len = 0;
+            for (var i = 0; i < imgArray.length; i++) {
+              if (imgArray[i] !== undefined) {
+                len++;
+              }
+            }
+            if (len > maxLength) {
+              return false;
+            } else {
+              imgArray.push(f);
+
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                imgWrap.append(html);
+                iterator++;
+              }
+              reader.readAsDataURL(f);
+            }
+          }
+        });
+      });
+    });
+
+    $('body').on('click', ".upload__img-close", function (e) {
+      var file = $(this).parent().data("file");
+      for (var i = 0; i < imgArray.length; i++) {
+        if (imgArray[i].name === file) {
+          imgArray.splice(i, 1);
+          break;
+        }
+      }
+      $(this).parent().parent().remove();
+    });
+  }
+</script>

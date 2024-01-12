@@ -7,7 +7,5 @@ import com.example.fashion.models.Cart;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long>{
-
-    Cart findBySessionToken(String sessionToken);
     
 }

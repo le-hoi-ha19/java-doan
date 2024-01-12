@@ -59,11 +59,11 @@
                     </li>
                     <li>
                       <a data-toggle="tab" href="#p_tab2" role="tab" aria-controls="p_tab2" aria-selected="false"><img
-                        th:src="@{'/uploads/'+${Product.Img2}}"  alt="" /></a>
+                          th:src="@{'/uploads/'+${Product.Img2}}" alt="" /></a>
                     </li>
                     <li>
                       <a data-toggle="tab" href="#p_tab3" role="tab" aria-controls="p_tab3" aria-selected="false"><img
-                        th:src="@{'/uploads/'+${Product.Img3}}" alt="" /></a>
+                          th:src="@{'/uploads/'+${Product.Img3}}" alt="" /></a>
                     </li>
                   </ul>
                 </div>
@@ -75,7 +75,7 @@
                         <img src="\assets\img\cart\span-new.png" alt="" />
                       </div>
                       <div class="view_img">
-                        <a class="large_view" th:href="@{'/uploads/'+${Product.Avatar}}" ><i
+                        <a class="large_view" th:href="@{'/uploads/'+${Product.Avatar}}"><i
                             class="fa fa-search-plus"></i></a>
                       </div>
                     </div>
@@ -94,7 +94,7 @@
                   </div>
                   <div class="tab-pane fade" id="p_tab3" role="tabpanel">
                     <div class="modal_img">
-                      <a href="#"><img th:src="@{'/uploads/'+${Product.Img3}}"alt="" /></a>
+                      <a href="#"><img th:src="@{'/uploads/'+${Product.Img3}}" alt="" /></a>
                       <div class="img_icone">
                         <img src="\assets\img\cart\span-new.png" alt="" />
                       </div>
@@ -108,9 +108,10 @@
               </div>
             </div>
             <div class="col-lg-7 col-md-6">
-              <form role="form" method="post" enctype="multipart/form-data">
+              <form role="form" method="post" th:action="@{/addcart}" th:object="${Product}">
+                <input type="hidden" th:value="${Product.ProductID}" name="ProductID">
                 <div class="product_d_right">
-                  <h1 th:text="${Product.ProductName}"></h1>
+                  <h1 th:text="${Product.ProductName}" ></h1>
                   <!-- <div class="product_ratting mb-10">
                             <ul>
                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
@@ -124,42 +125,22 @@
                   <div class="product_desc"></div>
 
                   <div class="content_price mb-15">
-                    <span th:text="${#numbers.formatDecimal(Product.Price - Product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
-                    <span class="old-price" th:text="${#numbers.formatDecimal(Product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                    <span
+                      th:text="${#numbers.formatDecimal(Product.Price - Product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'" name="TotalsPrice"></span>
+                    <span class="old-price"
+                      th:text="${#numbers.formatDecimal(Product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                   </div>
                   <div class="box_quantity mb-20">
                     <label>Số lượng</label>
-                    <input min="0" max="100" value="1" type="number" />
+                    <input name="Quantity" min="1" max="100" value="1" type="number" />
                     <button type="submit">
                       <i class="fa fa-shopping-cart"></i>Thêm giỏ hàng
                     </button>
-                    <a href="#" title="add to wishlist"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    <a href="#" title="yêu thích"><i class="fa fa-heart" aria-hidden="true"></i></a>
                   </div>
-                  <!-- <div class="product_d_size mb-20">
-                                                    <label for="group_1">size</label>
-                                                    <select name="size" id="group_1">
-                                                        <option value="1">S</option>
-                                                        <option value="2">M</option>
-                                                        <option value="3">L</option>
-                                                    </select>
-                                                </div> -->
-
-                  <!-- <div class="sidebar_widget color">
-                                                    <h2>Choose Color</h2>
-                                                     <div class="widget_color">
-                                                        <ul>
-                                                            <li><a href="#"></a></li>
-                                                            <li><a href="#"></a></li>
-                                                            <li> <a href="#"></a></li>
-                                                            <li><a href="#"></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>                  -->
-
                   <div class="product_stock mb-20">
                     <p th:text="${Product.Quantity}"></p>
                     &nbsp;&nbsp;
-                    <!-- Sử dụng khoảng trắng để tạo khoảng cách -->
                     <p>sản phẩm</p>
                     <span> Trong kho </span>
                   </div>
@@ -192,8 +173,6 @@
                         aria-selected="false">Mô tả sản phẩm</a>
                     </li>
                     <li>
-                      <a data-toggle="tab" href="#sheet" role="tab" aria-controls="sheet" aria-selected="false">Bảng dữ
-                        liệu</a>
                     </li>
                     <li>
                       <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Đánh
@@ -209,44 +188,11 @@
                   </div>
 
                   <div class="tab-pane fade" id="sheet" role="tabpanel">
-                    <div class="product_d_table">
-                      <form action="#">
-                        <table>
-                          <tbody>
-                            <tr>
-                              <td class="first_child">Compositions</td>
-                              <td>Polyester</td>
-                            </tr>
-                            <tr>
-                              <td class="first_child">Styles</td>
-                              <td>Girly</td>
-                            </tr>
-                            <tr>
-                              <td class="first_child">Properties</td>
-                              <td>Short Dress</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </form>
-                    </div>
                     <div class="product_info_content">
-                      <p>
-                        Fashion has been creating well-designed collections
-                        since 2010. The brand offers feminine designs
-                        delivering stylish separates and statement dresses
-                        which have since evolved into a full ready-to-wear
-                        collection in which every item is a vital part of a
-                        woman's wardrobe. The result? Cool, easy, chic looks
-                        with youthful elegance and unmistakable signature
-                        style. All the beautiful pieces are made in Italy and
-                        manufactured with the greatest attention. Now Fashion
-                        extends to a range of accessories including shoes,
-                        hats, belts and more!
-                      </p>
                     </div>
                   </div>
                   <div class="tab-pane fade" id="reviews" role="tabpanel">
-                    <div class="product_info_content">
+                    <!-- <div class="product_info_content">
                       <p>
                         Fashion has been creating well-designed collections
                         since 2010. The brand offers feminine designs
@@ -260,8 +206,8 @@
                         extends to a range of accessories including shoes,
                         hats, belts and more!
                       </p>
-                    </div>
-                    <div class="product_info_inner">
+                    </div> -->
+                    <!-- <div class="product_info_inner">
                       <div class="product_ratting mb-10">
                         <ul>
                           <li>
@@ -287,21 +233,20 @@
                         <strong>demo</strong>
                         <p>That's OK!</p>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="product_review_form">
                       <form action="#">
-                        <h2>Add a review</h2>
+                        <h2>Thêm bài đánh giá</h2>
                         <p>
-                          Your email address will not be published. Required
-                          fields are marked
+                          Địa chỉ email của bạn sẽ không được công bố
                         </p>
                         <div class="row">
                           <div class="col-12">
-                            <label for="review_comment">Your review </label>
+                            <label for="review_comment">Đánh giá của bạn</label>
                             <textarea name="comment" id="review_comment"></textarea>
                           </div>
                           <div class="col-lg-6 col-md-6">
-                            <label for="author">Name</label>
+                            <label for="author">Tên</label>
                             <input id="author" type="text" />
                           </div>
                           <div class="col-lg-6 col-md-6">
@@ -309,7 +254,7 @@
                             <input id="email" type="text" />
                           </div>
                         </div>
-                        <button type="submit">Submit</button>
+                        <button type="submit">Gửi</button>
                       </form>
                     </div>
                   </div>

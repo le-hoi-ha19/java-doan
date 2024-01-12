@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Cửa hàng</title>
-    <meta name="description" content="">
+    <meta name="description" content>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets\img\favicon.png">
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="layere_categorie" th:each="category : ${categories}">
                                     <ul>
-                                        <a href="" th:text="${category.CatName}"></a>
+                                        <a href th:text="${category.CatName}"></a>
                                     </ul>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
 
                             <!--price slider start-->
                             <div class="sidebar_widget price">
-                                <h2>Price</h2>
+                                <h2>Giá tiền</h2>
                                 <div class="ca_search_filters">
 
                                     <input type="text" name="text" id="amount">
@@ -100,11 +100,11 @@
                             <!--wishlist block start-->
                             <div class="sidebar_widget wishlist mb-30">
                                 <div class="block_title">
-                                    <h3><a href="#">Yêu thích</a></h3>
+                                    <h3><a href="#">Danh sách yêu thích</a></h3>
                                 </div>
                                 <div class="cart_item">
                                     <div class="cart_img">
-                                        <a href="#"><img src="assets\img\cart\cart.jpg" alt=""></a>
+                                        <a href="#"><img src="\assets\img\cart\cart.jpg" alt /></a>
                                     </div>
                                     <div class="cart_info">
                                         <a href="#">lorem ipsum dolor</a>
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="cart_item">
                                     <div class="cart_img">
-                                        <a href="#"><img src="assets\img\cart\cart2.jpg" alt=""></a>
+                                        <a href="#"><img src="assets\img\cart\cart2.jpg" alt></a>
                                     </div>
                                     <div class="cart_info">
                                         <a href="#">Quisque ornare dui</a>
@@ -129,8 +129,8 @@
                                     </div>
                                 </div>
                                 <div class="block_content">
-                                    <p>2 products</p>
-                                    <a href="#">» My wishlists</a>
+                                    <p>2 sản phẩm</p>
+                                    <a href="#">» Sản phẩm yêu thích</a>
                                 </div>
                             </div>
                             <!--wishlist block end-->
@@ -149,12 +149,12 @@
                             <!--newsletter block start-->
                             <div class="sidebar_widget newsletter mb-30">
                                 <div class="block_title">
-                                    <h3>newsletter</h3>
+                                    <h3>Bản tin</h3>
                                 </div>
                                 <form action="#">
-                                    <p>Sign up for your newsletter</p>
-                                    <input placeholder="Your email address" type="text">
-                                    <button type="submit">Subscribe</button>
+                                    <p>Đăng ký nhận bản tin của bạn</p>
+                                    <input placeholder="Địa chỉ email của bạn" type="text" />
+                                    <button type="submit">Đăng ký</button>
                                 </form>
                             </div>
                             <!--newsletter block end-->
@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="special_product_inner mb-20">
                                     <div class="special_p_thumb">
-                                        <a href="single-product.html"><img src="assets\img\cart\cart3.jpg" alt=""></a>
+                                        <a href="single-product.html"><img src="assets\img\cart\cart3.jpg" alt></a>
                                     </div>
                                     <div class="small_p_desc">
                                         <div class="product_ratting">
@@ -178,7 +178,8 @@
                                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                                             </ul>
                                         </div>
-                                        <h3><a href="single-product.html">Lorem ipsum dolor</a></h3>
+                                        <h3><a href="single-product.html">Lorem
+                                                ipsum dolor</a></h3>
                                         <div class="special_product_proce">
                                             <span class="old_price">$124.58</span>
                                             <span class="new_price">$118.35</span>
@@ -187,7 +188,7 @@
                                 </div>
                                 <div class="special_product_inner">
                                     <div class="special_p_thumb">
-                                        <a href="single-product.html"><img src="assets\img\cart\cart18.jpg" alt=""></a>
+                                        <a href="single-product.html"><img src="assets\img\cart\cart18.jpg" alt></a>
                                     </div>
                                     <div class="small_p_desc">
                                         <div class="product_ratting">
@@ -199,7 +200,8 @@
                                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                                             </ul>
                                         </div>
-                                        <h3><a href="single-product.html">Printed Summer</a></h3>
+                                        <h3><a href="single-product.html">Printed
+                                                Summer</a></h3>
                                         <div class="special_product_proce">
                                             <span class="old_price">$124.58</span>
                                             <span class="new_price">$118.35</span>
@@ -209,12 +211,11 @@
                             </div>
                             <!--special product end-->
 
-
                         </div>
                         <div class="col-lg-9 col-md-12">
                             <!--banner slider start-->
                             <div class="banner_slider mb-35">
-                                <img src="assets\img\banner\bannner10.jpg" alt="">
+                                <img src="assets\img\banner\bannner10.jpg" alt>
                             </div>
                             <!--banner slider start-->
 
@@ -242,14 +243,17 @@
                                     <form action="#">
                                         <label>Sort By</label>
                                         <select name="orderby" id="short">
-                                            <option selected="" value="1">Position</option>
+                                            <option selected value="1">Position</option>
                                             <option value="1">Price: Lowest</option>
                                             <option value="1">Price: Highest</option>
                                             <option value="1">Product Name:Z</option>
-                                            <option value="1">Sort by price:low</option>
-                                            <option value="1">Product Name: Z</option>
+                                            <option value="1">Sort by
+                                                price:low</option>
+                                            <option value="1">Product Name:
+                                                Z</option>
                                             <option value="1">In stock</option>
-                                            <option value="1">Product Name: A</option>
+                                            <option value="1">Product Name:
+                                                A</option>
                                             <option value="1">In stock</option>
                                         </select>
                                     </form>
@@ -267,27 +271,26 @@
                                                     <div class="product_thumb">
                                                         <a
                                                             th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
-                                                                th:src="@{'/uploads/'+${product.Avatar}}" alt=""></a>
+                                                                th:src="@{'/uploads/'+${product.Avatar}}" alt></a>
                                                         <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt="">
-                                                        </div>
-                                                        <div class="product_action">
-                                                            <a href="#"> <i class="fa fa-shopping-cart"></i> Thêm vào
-                                                                giỏ hàng</a>
+                                                            <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>
                                                     <div class="product_content">
-                                                        <span class="product_price" th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                                        <span class="product_price"
+                                                            th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                                                         <h3 class="product_title"><a
                                                                 th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
                                                                 th:text="${product.ProductName}"></a></h3>
                                                     </div>
                                                     <div class="product_info">
                                                         <ul>
-                                                            <li><a href="#" title=" Add to Wishlist ">Add to
+                                                            <li><a href="#" title=" Add to Wishlist ">Add
+                                                                    to
                                                                     Wishlist</a></li>
                                                             <li><a href="#" data-toggle="modal" data-target="#modal_box"
-                                                                    title="Quick view">Xem chi tiết</a></li>
+                                                                    title="Quick view">Xem
+                                                                    chi tiết</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -300,9 +303,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product2.jpg" alt=""></a>
+                                                                src="assets\img\product\product2.jpg" alt></a>
                                                         <div class="hot_img">
-                                                            <img src="assets\img\cart\span-hot.png" alt="">
+                                                            <img src="assets\img\cart\span-hot.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -318,16 +321,30 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Lorem ipsum dolor</a></h3>
+                                                            <h3><a href="single-product.html">Lorem
+                                                                    ipsum
+                                                                    dolor</a></h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select" type="checkbox">
-                                                            <label for="select">Select to compare</label>
+                                                            <label for="select">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -356,9 +373,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product3.jpg" alt=""></a>
+                                                                src="assets\img\product\product3.jpg" alt></a>
                                                         <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt="">
+                                                            <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -374,17 +391,31 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Quisque ornare dui</a>
+                                                            <h3><a href="single-product.html">Quisque
+                                                                    ornare
+                                                                    dui</a>
                                                             </h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select1" type="checkbox">
-                                                            <label for="select1">Select to compare</label>
+                                                            <label for="select1">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -414,9 +445,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product4.jpg" alt=""></a>
+                                                                src="assets\img\product\product4.jpg" alt></a>
                                                         <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt="">
+                                                            <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -432,16 +463,29 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Maecenas sit amet</a></h3>
+                                                            <h3><a href="single-product.html">Maecenas
+                                                                    sit amet</a></h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select2" type="checkbox">
-                                                            <label for="select2">Select to compare</label>
+                                                            <label for="select2">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -471,9 +515,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product5.jpg" alt=""></a>
+                                                                src="assets\img\product\product5.jpg" alt></a>
                                                         <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt="">
+                                                            <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -489,17 +533,32 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Sed non luctus turpis</a>
+                                                            <h3><a href="single-product.html">Sed
+                                                                    non
+                                                                    luctus
+                                                                    turpis</a>
                                                             </h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select3" type="checkbox">
-                                                            <label for="select3">Select to compare</label>
+                                                            <label for="select3">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -529,9 +588,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product6.jpg" alt=""></a>
+                                                                src="assets\img\product\product6.jpg" alt></a>
                                                         <div class="hot_img">
-                                                            <img src="assets\img\cart\span-hot.png" alt="">
+                                                            <img src="assets\img\cart\span-hot.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -547,17 +606,31 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Donec dignissim eget</a>
+                                                            <h3><a href="single-product.html">Donec
+                                                                    dignissim
+                                                                    eget</a>
                                                             </h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select4" type="checkbox">
-                                                            <label for="select4">Select to compare</label>
+                                                            <label for="select4">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -587,9 +660,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product7.jpg" alt=""></a>
+                                                                src="assets\img\product\product7.jpg" alt></a>
                                                         <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt="">
+                                                            <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -605,16 +678,30 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Lorem ipsum dolor</a></h3>
+                                                            <h3><a href="single-product.html">Lorem
+                                                                    ipsum
+                                                                    dolor</a></h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select5" type="checkbox">
-                                                            <label for="select5">Select to compare</label>
+                                                            <label for="select5">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -644,9 +731,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product8.jpg" alt=""></a>
+                                                                src="assets\img\product\product8.jpg" alt></a>
                                                         <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt="">
+                                                            <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -662,16 +749,30 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Donec ac congue</a></h3>
+                                                            <h3><a href="single-product.html">Donec
+                                                                    ac
+                                                                    congue</a></h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select6" type="checkbox">
-                                                            <label for="select6">Select to compare</label>
+                                                            <label for="select6">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -701,9 +802,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product9.jpg" alt=""></a>
+                                                                src="assets\img\product\product9.jpg" alt></a>
                                                         <div class="hot_img">
-                                                            <img src="assets\img\cart\span-hot.png" alt="">
+                                                            <img src="assets\img\cart\span-hot.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -719,16 +820,29 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Curabitur sodales</a></h3>
+                                                            <h3><a href="single-product.html">Curabitur
+                                                                    sodales</a></h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select7" type="checkbox">
-                                                            <label for="select7">Select to compare</label>
+                                                            <label for="select7">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -758,9 +872,9 @@
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
                                                         <a href="single-product.html"><img
-                                                                src="assets\img\product\product1.jpg" alt=""></a>
+                                                                src="assets\img\product\product1.jpg" alt></a>
                                                         <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt="">
+                                                            <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -776,16 +890,30 @@
                                                             </ul>
                                                         </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Lorem ipsum dolor</a></h3>
+                                                            <h3><a href="single-product.html">Lorem
+                                                                    ipsum
+                                                                    dolor</a></h3>
                                                         </div>
-                                                        <p class="design"> in quibusdam accusantium qui nostrum
-                                                            consequuntur, officia, quidem ut placeat. Officiis, incidunt
-                                                            eos recusandae! Facilis aliquam vitae blanditiis quae
-                                                            perferendis minus eligendi</p>
+                                                        <p class="design">
+                                                            in quibusdam
+                                                            accusantium qui
+                                                            nostrum
+                                                            consequuntur,
+                                                            officia, quidem
+                                                            ut placeat.
+                                                            Officiis,
+                                                            incidunt
+                                                            eos recusandae!
+                                                            Facilis aliquam
+                                                            vitae blanditiis
+                                                            quae
+                                                            perferendis
+                                                            minus eligendi</p>
 
                                                         <p class="compare">
                                                             <input id="select8" type="checkbox">
-                                                            <label for="select8">Select to compare</label>
+                                                            <label for="select8">Select
+                                                                to compare</label>
                                                         </p>
                                                         <div class="content_price">
                                                             <span>$118.00</span>
@@ -855,7 +983,6 @@
     <!--footer area start-->
     <div th:replace="layout/footer :: footer"></div>
     <!--footer area end-->
-
 
     <!-- modal area start -->
     <!-- <div class="modal fade" id="modal_box" tabindex="-1" role="dialog" aria-hidden="true">
@@ -960,8 +1087,6 @@
     </div> -->
 
     <!-- modal area end -->
-
-
 
     <!-- all js here -->
     <script th:replace="layout/script :: script"></script>

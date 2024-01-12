@@ -18,38 +18,40 @@ import com.example.fashion.config.CustomUserDetailService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	@Autowired
-	private CustomUserDetailService customUserDetailService;
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
 
-	@Autowired 
-	private CustomSuccessHandler customSuccessHandler;
+    @Autowired
+    private CustomSuccessHandler successHandler;
 
-	@Bean
+    @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-	@Bean
-	SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests((auth) -> auth.requestMatchers("/*").permitAll()
-						.requestMatchers("/shop/**").permitAll()
-						.requestMatchers("/contact/**").permitAll()
-						.requestMatchers("/shop-detail/**").permitAll()
-						.requestMatchers("/cart/**").permitAll()
-						.requestMatchers("/admin/login/**").permitAll()
-						.requestMatchers("/admin/**")
-						.hasAuthority("ADMIN").anyRequest().authenticated())
-				.formLogin(login -> login.loginPage("/admin/login").loginProcessingUrl("/admin/login")
-				.usernameParameter("username").passwordParameter("password").
-				defaultSuccessUrl("/admin",true))
-				.logout(logout -> logout.logoutUrl("/admin-logout").logoutSuccessUrl("/admin/login"))
-				.logout(logout -> logout.logoutUrl("/admin-logout").logoutSuccessUrl("/admin/login?logout"));
-		return http.build();
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+            .authorizeRequests(authorize -> authorize
+                .requestMatchers("/*", "/shop/**", "/contact/**", "/shop-detail/**", "/cart/**").permitAll()
+                .requestMatchers("/admin/login/**").permitAll()
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated())
+            .formLogin(login -> login
+                .loginPage("/admin/login")
+                .loginProcessingUrl("/admin/login")
+                .successHandler(successHandler)
+                .permitAll())
+            .logout(logout -> logout
+                .logoutUrl("/admin-logout")
+                .logoutSuccessUrl("/admin/login?logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true))
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                .accessDeniedPage("/access-denied"));
 
-	}
-
-	
+        return http.build();
+    }
 
 	@Bean
 	WebSecurityCustomizer webSecurityCustomizer() {

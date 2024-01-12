@@ -26,7 +26,7 @@ public class CartItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
     private Product products;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "CartID", referencedColumnName = "CartID")
     private Cart carts;
 
@@ -79,8 +79,15 @@ public class CartItem {
         this.carts = carts;
     }
 
+   
+    
+
     public CartItem() {
 
+    }
+
+    public Cart setCarts() {
+        return null;
     }
 
    

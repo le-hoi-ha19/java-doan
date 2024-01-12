@@ -45,22 +45,21 @@ public class LoginController {
         return "login";
     }
 
-    // @PostMapping("/login")
-    // public String register(@ModelAttribute("user") User user,
-    //         @RequestParam("imagec") MultipartFile file) {
+    @PostMapping("/register") 
+	public String save(@ModelAttribute("user") User user,
+			@RequestParam("imaget") MultipartFile file) {
 
-    //     this.storageService.store(file);
-    //     String fileName = file.getOriginalFilename();
-    //     user.setImages(fileName);
-    //     user.setEnabled(true);
+		this.storageService.store(file);
+		String fileName = file.getOriginalFilename();
+		user.setImages(fileName);
+		user.setEnabled(true);
 
-    //     String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-    //     user.setPassword(encodedPassword);
+		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
 
-    //     if (this.userService.createWithUserRoleCUSTOMER(user)) {
-    //         return "redirect:login";
-    //     }
-    //     return "login";
-
-    // }
+		if (this.userService.createWithUserRoleCUSTOMER(user)) {
+			return "redirect:admin/login";
+		}
+		return "login";
+	}
 }

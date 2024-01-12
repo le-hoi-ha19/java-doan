@@ -2,6 +2,8 @@ package com.example.fashion.models;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +35,7 @@ public class Post {
     @Column(name = "Abstract")
     private String Abstract;
     @Column (name = "CreatedDate")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date CreatedDate;
     @ManyToOne
     @JoinColumn(name = "CatID", referencedColumnName = "CatID")

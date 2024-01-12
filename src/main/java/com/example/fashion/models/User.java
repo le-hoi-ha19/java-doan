@@ -39,6 +39,8 @@ public class User {
 	private String telephone;
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private Set<UserRole> userRoles;
+	@OneToMany(mappedBy = "user")
+	private Set<Cart> carts;
 
 	public Long getId() {
 		return this.id;
@@ -136,8 +138,15 @@ public class User {
 		this.userRoles = userRoles;
 	}
 
-	public User(Long id, String username, String password, Boolean enabled, String fullname, String images,
-			Boolean gender, String address, String email, String telephone, Set<UserRole> userRoles) {
+	public Set<Cart> getCarts() {
+		return this.carts;
+	}
+
+	public void setCarts(Set<Cart> carts) {
+		this.carts = carts;
+	}
+
+	public User(Long id, String username, String password, Boolean enabled, String fullname, String images, Boolean gender, String address, String email, String telephone, Set<UserRole> userRoles, Set<Cart> carts) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -150,7 +159,10 @@ public class User {
 		this.email = email;
 		this.telephone = telephone;
 		this.userRoles = userRoles;
+		this.carts = carts;
 	}
+
+	
 
 	public User() {
 
