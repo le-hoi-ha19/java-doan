@@ -1,8 +1,7 @@
 package com.example.fashion.models;
 
 import java.sql.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,7 +22,7 @@ public class Post {
     private Long PostID;
     @Column(name = "Title")
     private String Title;
-    @Column(name = "Contents")
+    @Column(name = "Contents", length = 100000)
     private String Contents;
     @Column(name = "Avatar")
     private String Avatar;
@@ -32,14 +32,16 @@ public class Post {
     private String Img2;
     @Column(name = "Img3")
     private String Img3;
-    @Column(name = "Abstract")
+    @Column(name = "Abstract", length = 100000)
     private String Abstract;
     @Column (name = "CreatedDate")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date CreatedDate;
     @ManyToOne
-    @JoinColumn(name = "CatID", referencedColumnName = "CatID")
-    private Category category;
+    @JoinColumn(name = "BrandID", referencedColumnName = "BrandID")
+    private Brand brand;
+
+    @OneToMany(mappedBy = "post")
+	private Set<Comment> comment;
 
     public Long getPostID() {
         return this.PostID;
@@ -113,15 +115,23 @@ public class Post {
         this.CreatedDate = CreatedDate;
     }
 
-    public Category getCategory() {
-        return this.category;
+    public Brand getBrand() {
+        return this.brand;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
-    public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Abstract, Date CreatedDate, Category category) {
+    public Set<Comment> getComment() {
+        return this.comment;
+    }
+
+    public void setComment(Set<Comment> comment) {
+        this.comment = comment;
+    }
+
+    public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Abstract, Date CreatedDate, Brand brand, Set<Comment> comment) {
         super();
         this.PostID = PostID;
         this.Title = Title;
@@ -132,8 +142,13 @@ public class Post {
         this.Img3 = Img3;
         this.Abstract = Abstract;
         this.CreatedDate = CreatedDate;
-        this.category = category;
+        this.brand = brand;
+        this.comment = comment;
     }
+
+    
+
+   
 
     public Post() {
 

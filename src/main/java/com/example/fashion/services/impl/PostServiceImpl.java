@@ -3,6 +3,9 @@ package com.example.fashion.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.fashion.models.Post;
@@ -60,5 +63,19 @@ public class PostServiceImpl implements PostService {
         }
         return false;
     }
+
+    @Override
+    public Page<Post> getAll(Long pageNo) {
+        int pageSize = 6; // Số lượng sản phẩm trên mỗi trang
+        Pageable pageable = PageRequest.of(pageNo.intValue() - 1, pageSize);
+        return this.postRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Post> list3Post() {
+        return this.postRepository.list3Post();
+    }
+
+
 
 }

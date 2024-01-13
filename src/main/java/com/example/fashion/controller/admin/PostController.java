@@ -17,19 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.fashion.models.Brand;
 import com.example.fashion.models.Category;
 import com.example.fashion.models.Post;
-import com.example.fashion.models.Product;
 import com.example.fashion.services.BrandService;
 import com.example.fashion.services.CategoryService;
 import com.example.fashion.services.PostService;
-import com.example.fashion.services.ProductService;
 import com.example.fashion.services.StorageService;
 
 @Controller
 @RequestMapping("/admin")
 public class PostController {
-
-    @Autowired
-    private CategoryService categoryService;
 
     @Autowired
     private BrandService brandService;
@@ -42,9 +37,8 @@ public class PostController {
 
     @GetMapping("/post")
     public String index(Model model) {
-
-        List<Post> listPost = this.postService.getAll();
-        model.addAttribute("listPost", listPost);
+        List<Post> lpost = this.postService.getAll();
+        model.addAttribute("lpost", lpost);
         return "/admin/post/index";
     }
 
@@ -53,159 +47,140 @@ public class PostController {
 
         Post post = new Post();
         model.addAttribute("post", post);
-        List<Category> listCat = this.categoryService.getAll();
-        model.addAttribute("listCat", listCat);
         List<Brand> listBra = this.brandService.getAll();
         model.addAttribute("listBra", listBra);
         return "admin/post/add";
     }
 
-    //  @GetMapping("/add-product")
-    // public String add(Model model) {
+    @PostMapping("/add-post")
+    public String save(@ModelAttribute("post") Post post, BindingResult bindingResult,
+            @RequestParam("fileAvatars") MultipartFile fileAvatars,
+            @RequestParam("fileImagek") MultipartFile[] fileImagek, Model model) {
 
-    //     Product product = new Product();
-    //     model.addAttribute("product", product);
-    //     List<Category> listCat = this.categoryService.getAll();
-    //     model.addAttribute("listCat", listCat);
-    //     List<Brand> listBra = this.brandService.getAll();
-    //     model.addAttribute("listBra", listBra);
-    //     return "admin/product/add";
-    // }
+        if (bindingResult.hasErrors()) {
+            List<Brand> listBra = this.brandService.getAll();
+            model.addAttribute("listBra", listBra);
+            return "admin/post/add";
+        }
 
-    // @PostMapping("/add-product")
-    // public String save(@ModelAttribute("product") Product product, BindingResult bindingResult,
-    //         @RequestParam("fileAvatar") MultipartFile fileAvatar,
-    //         @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
+        if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getAbstract() == null
+                || post.getCreatedDate() == null
+                || post.getContents() == null) {
+            model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
+            List<Brand> listBra = this.brandService.getAll();
+            model.addAttribute("listBra", listBra);
+            return "admin/product/add";
+        }
 
-    //     if (bindingResult.hasErrors()) {
-    //         // Nếu có lỗi hợp lệ, trả về trang thêm sản phẩm với thông báo lỗi
-    //         List<Category> listCat = this.categoryService.getAll();
-    //         model.addAttribute("listCat", listCat);
-    //         List<Brand> listBra = this.brandService.getAll();
-    //         model.addAttribute("listBra", listBra);
-    //         return "admin/product/add";
-    //     }
+        try {
+            // upload file và lưu vào trường avatar
+            this.storageService.store(fileAvatars);
+            String fileNameAvatars = fileAvatars.getOriginalFilename();
+            post.setAvatar(fileNameAvatars);
 
-    //     if (product.getProductName() == null || product.getProductName().trim().isEmpty() ||
-    //             fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
-    //             || product.getQuantity() == null) {
-    //         // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
-    //         // trang thêm sản phẩm
-    //         model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
-    //         List<Category> listCat = this.categoryService.getAll();
-    //         model.addAttribute("listCat", listCat);
-    //         List<Brand> listBra = this.brandService.getAll();
-    //         model.addAttribute("listBra", listBra);
-    //         return "admin/product/add";
-    //     }
+            for (int i = 0; i < Math.min(fileImagek.length, 3); i++) {
+                this.storageService.store(fileImagek[i]);
+                String fileName = fileImagek[i].getOriginalFilename();
 
-    //     // Tiến hành thêm sản phẩm nếu không có lỗi
-    //     try {
-    //         // upload file và lưu vào trường avatar
-    //         this.storageService.store(fileAvatar);
-    //         String fileNameAvatar = fileAvatar.getOriginalFilename();
-    //         product.setAvatar(fileNameAvatar);
-    
-    //         for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
-    //             this.storageService.store(fileImages[i]);
-    //             String fileName = fileImages[i].getOriginalFilename();
-    
-    //             switch (i) {
-    //                 case 0:
-    //                     product.setImg1(fileName);
-    //                     break;
-    //                 case 1:
-    //                     product.setImg2(fileName);
-    //                     break;
-    //                 case 2:
-    //                     product.setImg3(fileName);
-    //                     break;
-    //             }
-    //         }
-    
-    //         if (this.productService.create(product)) {
-    //             return "redirect:/admin/product";
-    //         }
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
+                switch (i) {
+                    case 0:
+                        post.setImg1(fileName);
+                        break;
+                    case 1:
+                        post.setImg2(fileName);
+                        break;
+                    case 2:
+                        post.setImg3(fileName);
+                        break;
+                }
+            }
 
-    //     return "admin/product/add";
-    // }
+            if (this.postService.create(post)) {
+                return "redirect:/admin/post";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "admin/post/add";
+    }
 
     // @GetMapping("/edit-product/{ProductID}")
     // public String edit(Model model, @PathVariable("ProductID") Long ProductID) {
-    //     Product product = this.productService.findByID(ProductID);
-    //     model.addAttribute("Product", product);
-    //     List<Category> listCat = this.categoryService.getAll();
-    //     model.addAttribute("listCat", listCat);
-    //     List<Brand> listBra = this.brandService.getAll();
-    //     model.addAttribute("listBra", listBra);
-    //     return "admin/product/edit";
+    // Product product = this.productService.findByID(ProductID);
+    // model.addAttribute("Product", product);
+    // List<Category> listCat = this.categoryService.getAll();
+    // model.addAttribute("listCat", listCat);
+    // List<Brand> listBra = this.brandService.getAll();
+    // model.addAttribute("listBra", listBra);
+    // return "admin/product/edit";
     // }
 
     // @PostMapping("/edit-product")
-    // public String edit(@ModelAttribute("product") Product product, BindingResult bindingResult,
-    //         @RequestParam("fileAvatar") MultipartFile fileAvatar,
-    //         @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
+    // public String edit(@ModelAttribute("product") Product product, BindingResult
+    // bindingResult,
+    // @RequestParam("fileAvatar") MultipartFile fileAvatar,
+    // @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
 
-    //     if (bindingResult.hasErrors()) {
-    //         // Nếu có lỗi hợp lệ, trả về trang sửa sản phẩm với thông báo lỗi
-    //         List<Category> listCat = this.categoryService.getAll();
-    //         model.addAttribute("listCat", listCat);
-    //         List<Brand> listBra = this.brandService.getAll();
-    //         model.addAttribute("listBra", listBra);
-    //         return "admin/product/edit";
-    //     }
-
-    //     if (product.getProductName() == null || product.getProductName().trim().isEmpty() ||
-    //             fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
-    //             || product.getQuantity() == null) {
-    //         // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
-    //         // trang sửa sản phẩm
-    //         model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
-    //         List<Category> listCat = this.categoryService.getAll();
-    //         model.addAttribute("listCat", listCat);
-    //         List<Brand> listBra = this.brandService.getAll();
-    //         model.addAttribute("listBra", listBra);
-    //         return "admin/product/edit";
-    //     }
-
-    //     // Tiến hành thêm sản phẩm nếu không có lỗi
-    //     try {
-    //         // upload file và lưu vào trường avatar
-    //         this.storageService.store(fileAvatar);
-    //         String fileNameAvatar = fileAvatar.getOriginalFilename();
-    //         product.setAvatar(fileNameAvatar);
-    
-    //         for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
-    //             this.storageService.store(fileImages[i]);
-    //             String fileName = fileImages[i].getOriginalFilename();
-    
-    //             switch (i) {
-    //                 case 0:
-    //                     product.setImg1(fileName);
-    //                     break;
-    //                 case 1:
-    //                     product.setImg2(fileName);
-    //                     break;
-    //                 case 2:
-    //                     product.setImg3(fileName);
-    //                     break;
-    //             }
-    //         }
-    
-    //         if (this.productService.create(product)) {
-    //             return "redirect:/admin/product";
-    //         }
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //     }
-
-    //     return "redirect:/admin/product/edit";
+    // if (bindingResult.hasErrors()) {
+    // // Nếu có lỗi hợp lệ, trả về trang sửa sản phẩm với thông báo lỗi
+    // List<Category> listCat = this.categoryService.getAll();
+    // model.addAttribute("listCat", listCat);
+    // List<Brand> listBra = this.brandService.getAll();
+    // model.addAttribute("listBra", listBra);
+    // return "admin/product/edit";
     // }
 
-    @GetMapping("/delete-post/{PosttID}")
+    // if (product.getProductName() == null ||
+    // product.getProductName().trim().isEmpty() ||
+    // fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice()
+    // == null
+    // || product.getQuantity() == null) {
+    // // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
+    // // trang sửa sản phẩm
+    // model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
+    // List<Category> listCat = this.categoryService.getAll();
+    // model.addAttribute("listCat", listCat);
+    // List<Brand> listBra = this.brandService.getAll();
+    // model.addAttribute("listBra", listBra);
+    // return "admin/product/edit";
+    // }
+
+    // // Tiến hành thêm sản phẩm nếu không có lỗi
+    // try {
+    // // upload file và lưu vào trường avatar
+    // this.storageService.store(fileAvatar);
+    // String fileNameAvatar = fileAvatar.getOriginalFilename();
+    // product.setAvatar(fileNameAvatar);
+
+    // for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
+    // this.storageService.store(fileImages[i]);
+    // String fileName = fileImages[i].getOriginalFilename();
+
+    // switch (i) {
+    // case 0:
+    // product.setImg1(fileName);
+    // break;
+    // case 1:
+    // product.setImg2(fileName);
+    // break;
+    // case 2:
+    // product.setImg3(fileName);
+    // break;
+    // }
+    // }
+
+    // if (this.productService.create(product)) {
+    // return "redirect:/admin/product";
+    // }
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // }
+
+    // return "redirect:/admin/product/edit";
+    // }
+
+    @GetMapping("/delete-post/{PostID}")
     public String delete(@PathVariable("PostID") Long PostID) {
         if (this.postService.delete(PostID)) {
             return "redirect:/admin/post";

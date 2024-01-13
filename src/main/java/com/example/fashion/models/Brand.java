@@ -23,21 +23,11 @@ public class Brand {
     private String Logo;
     @OneToMany(mappedBy = "brand")
     private Set<Product> products;
-
-    public Brand() {
-
-    }
-
-    public Brand(Long BrandID, String BrandName, String Logo, Set<Product> products) {
-        super();
-        this.BrandID = BrandID;
-        this.BrandName = BrandName;
-        this.Logo = Logo;
-        this.products = products;
-    }
+    @OneToMany(mappedBy = "brand")
+	private Set<Post> posts;
 
     public Long getBrandID() {
-        return BrandID;
+        return this.BrandID;
     }
 
     public void setBrandID(Long BrandID) {
@@ -45,7 +35,7 @@ public class Brand {
     }
 
     public String getBrandName() {
-        return BrandName;
+        return this.BrandName;
     }
 
     public void setBrandName(String BrandName) {
@@ -53,19 +43,42 @@ public class Brand {
     }
 
     public String getLogo() {
-        return Logo;
+        return this.Logo;
     }
 
     public void setLogo(String Logo) {
         this.Logo = Logo;
     }
 
-    public Set<Product> getProducts(){
-    return products;
+    public Set<Product> getProducts() {
+        return this.products;
     }
 
-    public void setProducts(Set<Product> products){
-    this.products = products;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
+
+    public Set<Post> getPosts() {
+        return this.posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Brand(Long BrandID, String BrandName, String Logo, Set<Product> products, Set<Post> posts) {
+        super();
+        this.BrandID = BrandID;
+        this.BrandName = BrandName;
+        this.Logo = Logo;
+        this.products = products;
+        this.posts = posts;
+    }
+
+    public Brand() {
+
+    }
+
+    
 
 }

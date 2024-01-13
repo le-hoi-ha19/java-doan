@@ -236,11 +236,10 @@
                                     </ul>
                                 </div>
                                 <div class="page_amount">
-                                    <p>Showing 1–9 of 21 results</p>
+                                    <p>Hiển thị 1–9 sản phẩm trên <span th:text="${totalProducts}"></span> kết quả</p>
                                 </div>
-
                                 <div class="select_option">
-                                    <form action="#">
+                                    <!-- <form action="#">
                                         <label>Sort By</label>
                                         <select name="orderby" id="short">
                                             <option selected value="1">Position</option>
@@ -256,7 +255,7 @@
                                                 A</option>
                                             <option value="1">In stock</option>
                                         </select>
-                                    </form>
+                                    </form> -->
                                 </div>
                             </div>
                             <!--shop toolbar end-->
@@ -278,17 +277,16 @@
                                                     </div>
                                                     <div class="product_content">
                                                         <span class="product_price"
-                                                            th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                                            th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                                                         <h3 class="product_title"><a
                                                                 th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
                                                                 th:text="${product.ProductName}"></a></h3>
                                                     </div>
                                                     <div class="product_info">
                                                         <ul>
-                                                            <li><a href="#" title=" Add to Wishlist ">Add
-                                                                    to
-                                                                    Wishlist</a></li>
-                                                            <li><a href="#" data-toggle="modal" data-target="#modal_box"
+                                                            <li><a href="#" title=" Add to Wishlist ">Yêu thích</a></li>
+                                                            <li><a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
+                                                                    data-toggle="modal" data-target="#modal_box"
                                                                     title="Quick view">Xem
                                                                     chi tiết</a></li>
                                                         </ul>

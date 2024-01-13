@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
+
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -32,85 +32,66 @@ xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
   <link href="/admun/assets/css/style.css" rel="stylesheet" />
 </head>
 
-  <body>
-    <div th:replace="admin/fragments/header :: header"></div>
+<body>
+  <div th:replace="admin/fragments/header :: header"></div>
 
-    <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+  <div th:replace="admin/fragments/sidebar :: sidebar"></div>
 
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h1>Danh sách thương hiệu</h1>
-        <nav></nav>
-      </div>
-      <!-- End Page Title -->
-      <p>
-        <a type="button" class="btn btn-success" href="/admin/add-brand"
-          ><i class="bi bi-file-earmark-text me-1"></i>Thêm thương hiệu</a
-        >
-      </p>
-      <section class="section dashboard">
-        <div class="row">
-          <div class="col-12">
-            <div class="card recent-sales overflow-auto">
-              <div class="card-body mt-4">
-                <table class="table table-borderless datatable">
-                  <thead>
-                    <tr>
-                      <th class="col-1 text-center">#</th>
-                      <th class="col-2 text-center">Tên thương hiệu</th>
-                      <th class="col-1 text-center">Logo</th>
-                      <th class="col-1 text-center">Chức năng</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="brand, iterStat : ${list}">
-                      <td
-                        th:text="${iterStat.count}"
-                        class="text-center"
-                        scope="row"
-                      ></td>
-                      <td
-                        th:text="${brand.BrandName}"
-                        class="text-primary"
-                      ></td>
-                      <td class="text-center">
-                        <img
-                            th:src="@{'/uploads/'+${brand.Logo}}"
-                            style="max-width: 40px"
-                            class="img-fluid"
-                          />
-                      </td>
-                      <td class="text-center">
-                        <a th:href="@{/admin/edit-brand/{BrandID}(BrandID=${brand.BrandID})}"
-                        class="btn btn-primary btn-sm"
-                          ><i class="bi bi-pencil"></i
-                        ></a>
-                        <a
-                          onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
-                          th:href="@{/admin/delete-brand/{BrandID}(BrandID=${brand.BrandID})}"
-                          class="btn btn-danger btn-sm"
-                          ><i class="bi bi-trash"></i
-                        ></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Danh sách thương hiệu</h1>
+      <nav></nav>
+    </div>
+    <!-- End Page Title -->
+    <p>
+      <a type="button" class="btn btn-success" href="/admin/add-brand"><i class="bi bi-file-earmark-text me-1"></i>Thêm
+        thương hiệu</a>
+    </p>
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-12">
+          <div class="card recent-sales overflow-auto">
+            <div class="card-body mt-4">
+              <table class="table table-borderless datatable">
+                <thead>
+                  <tr>
+                    <th class="col-1 text-center">#</th>
+                    <th class="col-2 text-center">Tên thương hiệu</th>
+                    <th class="col-1 text-center">Logo</th>
+                    <th class="col-1 text-center">Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="brand, iterStat : ${list}">
+                    <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
+                    <td th:text="${brand.BrandName}" class="text-primary"></td>
+                    <td class="text-center">
+                      <img th:src="@{'/uploads/'+${brand.Logo}}" style="max-width: 40px" class="img-fluid" />
+                    </td>
+                    <td class="text-center">
+                      <a th:href="@{/admin/edit-brand/{BrandID}(BrandID=${brand.BrandID})}"
+                        class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                      <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
+                        th:href="@{/admin/delete-brand/{BrandID}(BrandID=${brand.BrandID})}"
+                        class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      </section>
-    </main>
-    <!-- End #main -->
+      </div>
+    </section>
+  </main>
+  <!-- End #main -->
 
-    <div th:replace="admin/fragments/footer :: footer"></div>
+  <div th:replace="admin/fragments/footer :: footer"></div>
 
-    <a
-      href="#"
-      class="back-to-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <div th:replace="admin/fragments/script :: script"></div>
-  </body>
+  <div th:replace="admin/fragments/script :: script"></div>
+</body>
+
 </html>

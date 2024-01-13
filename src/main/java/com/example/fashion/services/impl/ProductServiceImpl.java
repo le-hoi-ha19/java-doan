@@ -74,6 +74,16 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.findAll(pageable);
     }
 
+    @Override
+    public List<Product> list6Products() {
+        return this.productRepository.list6Products();
+    }
+
+    @Override
+    public long countTotalProducts() {
+        return productRepository.countTotalProducts();
+    }
+
     // @Override
     // public List<Product> searchProduct(String keyword) {
     // return this.productRepository.searchProduct(keyword);

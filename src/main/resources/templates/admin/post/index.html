@@ -1,79 +1,73 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="admin/fragments/head :: head"></head>
 
-  <body>
-    <div th:replace="admin/fragments/header :: header"></div>
+<head th:replace="admin/fragments/head :: head"></head>
 
-    <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+<body>
+  <div th:replace="admin/fragments/header :: header"></div>
 
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h1>Danh sách bài viết</h1>
-      </div>
-      <!-- End Page Title -->
-      <p>
-        <a type="button" class="btn btn-success" href="/admin/add-post">
-          <i class="bi bi-file-earmark-text me-1"></i>Thêm bài viết</a>
-      </p>
-      <section class="section dashboard">
-        <div class="row">
-          <div class="col-12">
-            <div class="card recent-sales overflow-auto">
-              <div class="card-body mt-4">
-                <table class="table table-borderless datatable">
-                  <thead>
-                    <tr>
-                      <th class="col-1 text-center">#</th>
-                      <th class="col-2 text-center">Tiêu đề</th>
-                      <th class="col-2 text-center">Hình ảnh</th>
-                      <th class="col-2 text-center">Mô tả</th>
-                      <th class="col-1 text-center">Ngày đăng bài</th>
-                      <th class="col-1 text-center">Thể loại</th>
-                      <th class="col-1 text-center">Chức năng</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="post, iterStat : ${listPost}">
-                      <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
-                      <td th:text="${post.Title}" class="text-center"></td>
-                      <td class="text-center">
-                        <img th:src="@{'/uploads/'+${post.Avatar}}" style="max-width: 40px" class="img-fluid" />
-                      </td>
-                      <td class="text-center"></td>
-                      <td th:text="${product.Abstract}" class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td th:text="${post.category.CatName}" class="text-center"></td>
-                      <!-- <td class="text-center">
-                              <span th:text="${product.CreatedDate}"></span>
-                            </td>
-                            -->
-                      <td class="text-center">
-                        <a th:href="@{/admin/edit-post/{PostID}(PostID=${post.PostID})}"
-                          class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                        <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
-                          th:href="@{/admin/delete-post/{PostID}(PostID=${post.PostID})}"
-                          class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+  <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Danh sách bài viết</h1>
+    </div>
+    <!-- End Page Title -->
+    <p>
+      <a type="button" class="btn btn-success" href="/admin/add-post">
+        <i class="bi bi-file-earmark-text me-1"></i>Thêm bài viết</a>
+    </p>
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-12">
+          <div class="card recent-sales overflow-auto">
+            <div class="card-body mt-4">
+              <table class="table table-borderless datatable">
+                <thead>
+                  <tr>
+                    <th class="col-1 text-center">#</th>
+                    <th class="col-1 text-center">Tiêu đề</th>
+                    <th class="col-2 text-center">Hình ảnh</th>
+                    <th class="col-2 text-center">Mô tả</th>
+                    <th class="col-1 text-center">Ngày đăng bài</th>
+                    <th class="col-1 text-center">Thể loại</th>
+                    <th class="col-1 text-center">Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="post, iterStat : ${lpost}">
+                    <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
+                    <td th:text="${post.Title}" class="text-center"></td>
+                    <td class="text-center">
+                      <img th:src="@{'/uploads/'+${post.Avatar}}" style="max-width: 40px" class="img-fluid" />
+                    </td>
+                    <td class="text-center" th:text="${#strings.length(post.Abstract) > 30 ? #strings.substring(post.Abstract, 0, 30) + '...' : post.Abstract}"></td>
+                    <td  class="text-center" th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${post.brand.BrandName}" class="text-center"></td>
+                    <td class="text-center">
+                      <a th:href="@{/admin/edit-post/{PostID}(PostID=${post.PostID})}" class="btn btn-primary btn-sm"><i
+                          class="bi bi-pencil"></i></a>
+                      <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
+                        th:href="@{/admin/delete-post/{PostID}(PostID=${post.PostID})}" class="btn btn-danger btn-sm"><i
+                          class="bi bi-trash"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      </section>
-    </main>
-    <!-- End #main -->
+      </div>
+    </section>
+  </main>
+  <!-- End #main -->
 
-    <div th:replace="admin/fragments/footer :: footer"></div>
+  <div th:replace="admin/fragments/footer :: footer"></div>
 
-    <a
-      href="#"
-      class="back-to-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-    <div th:replace="admin/fragments/script :: script"></div>
-  </body>
+  <div th:replace="admin/fragments/script :: script"></div>
+</body>
+
 </html>

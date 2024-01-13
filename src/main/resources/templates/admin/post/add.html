@@ -146,8 +146,7 @@
       <div th:if="${error}" class="alert alert-danger" role="alert">
         <span th:text="${error}"></span>
       </div>
-      <form role="form" method="post" th:action="@{/admin/add-post}" th:object="${post}"
-        enctype="multipart/form-data">
+      <form role="form" method="post" th:action="@{/admin/add-post}" th:object="${post}" enctype="multipart/form-data">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label>Tên bài viết:</label>
@@ -158,7 +157,7 @@
               <div class="upload__btn-box">
                 <label class="upload__btn">
                   <p>Tải hình ảnh</p>
-                  <input type="file" multiple="" data-max_length="20" name="fileImages" class="upload__inputfile" />
+                  <input type="file" multiple="" data-max_length="20" name="fileImagek" class="upload__inputfile" />
                 </label>
               </div>
               <div class="upload__img-wrap"></div>
@@ -167,15 +166,14 @@
 
           <div class="form-group col-md-6">
             <label>Hình ảnh đại diện:</label>
-            <input type="file" id="fileAvatar" name="fileAvatar" class="form-control mb-3" />
+            <input type="file" id="fileAvatars" name="fileAvatars" class="form-control mb-3" />
             <span class="alert-danger"></span>
           </div>
 
           <div class="form-group col-md-6">
-            <label>Thể loại:</label>
-            <select class="form-control mb-3" th:field="*{category.CatID}">
-              <option th:each="category : ${listCat}" th:value="${category.CatID}" th:text="${category.CatName}">
-              </option>
+            <label>Thương hiệu:</label>
+            <select class="form-control mb-3" th:field="*{brand.BrandID}">
+              <option th:each="brand : ${listBra}" th:value="${brand.BrandID}" th:text="${brand.BrandName}"></option>
             </select>
           </div>
           <div class="form-group col-md-6">
@@ -184,7 +182,7 @@
           </div>
           <div class="form-group col-md-6">
             <label>Ngày đăng bài:</label>
-            <input type="date" name="CreatedDate" class="form-control mb-3" th:field="*{CreatedDate}" />
+            <input type="text" name="CreatedDate" class="form-control mb-3" th:field="*{CreatedDate}" />
           </div>
           <div class="form-group col-md-6">
             <label>Nội dung bài viết:</label>

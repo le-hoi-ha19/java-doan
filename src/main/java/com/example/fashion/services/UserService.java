@@ -17,4 +17,6 @@ public interface UserService {
 
     Boolean delete (Long id);
 
+	long countTotalUsers();
+
 }

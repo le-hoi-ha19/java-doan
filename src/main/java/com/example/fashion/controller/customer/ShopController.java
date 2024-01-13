@@ -74,6 +74,9 @@ public class ShopController {
             model.addAttribute("listBra", listBra);
         }
 
+        long totalProducts = this.productService.countTotalProducts();
+        model.addAttribute("totalProducts", totalProducts);
+
         return "shop/index";
     }
 
@@ -90,6 +93,11 @@ public class ShopController {
         if (listBra != null) {
             model.addAttribute("listBra", listBra);
         }
+
+        long totalProducts = this.productService.countTotalProducts();
+        model.addAttribute("totalProducts", totalProducts);
+        List<Product> listProducts = this.productService.getAll();
+        model.addAttribute("listProducts", listProducts);
         return "shop/detail";
     }
 }

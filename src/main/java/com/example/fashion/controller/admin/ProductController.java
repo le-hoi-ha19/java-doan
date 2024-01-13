@@ -44,21 +44,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    // @Converter(autoApply = true)
-    // public class LocalDateTimeConverter implements
-    // AttributeConverter<LocalDateTime, Timestamp> {
-
-    // @Override
-    // public Timestamp convertToDatabaseColumn(LocalDateTime attribute) {
-    // return attribute == null ? null : Timestamp.valueOf(attribute);
-    // }
-
-    // @Override
-    // public LocalDateTime convertToEntityAttribute(Timestamp dbData) {
-    // return dbData == null ? null : dbData.toLocalDateTime();
-    // }
-    // }
-
     @GetMapping("/product")
     public String index(Model model) {
         List<Product> listProducts = this.productService.getAll();

@@ -111,4 +111,10 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+    @Override
+    public long countTotalUsers() {
+        return this.userRepository.countCustomerUsers();
+
+    }
+
 }

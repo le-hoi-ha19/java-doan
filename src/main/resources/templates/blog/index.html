@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -48,175 +48,30 @@
                         <!--blog area start-->
                         <div class="blog_area">
                             <div class="row">   
-                                <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-4 col-md-6" th:each="post : ${listPost}">
                                     <div class="single_blog">
                                         <div class="blog_thumb">
-                                            <a href="blog-details.html"><img src="assets\img\blog\blog3.jpg" alt=""></a>
+                                            <a  th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}"><img th:src="@{'/uploads/'+${post.Avatar}}" style="width: 250px; height: 250px;" alt=""></a>
                                         </div>
                                         <div class="blog_content">
                                             <div class="blog_post">
                                                 <ul>
                                                     <li>
-                                                        <a href="#">Tech</a>
+                                                        <a href="#" th:text="${post.brand.BrandName}"></a>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <h3><a href="blog-details.html">When an unknown took a galley of type.</a></h3>
-                                            <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
+                                            <h3><a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}" th:text="${post.Title}"></a></h3>
+                                            <p th:text="${#strings.length(post.Abstract) > 30 ? #strings.substring(post.Abstract, 0, 30) + '...' : post.Abstract}"></p>
                                             <div class="post_footer">
                                                 <div class="post_meta">
                                                     <ul>
-                                                        <li>Jun 20, 2018</li>
-                                                        <li>3 Comments</li>
+                                                        <li th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></li>
+                                                        <li>3 bình luận</li>
                                                     </ul>
                                                 </div>
                                                 <div class="Read_more">
-                                                    <a href="blog-details.html">Read more  <i class="fa fa-angle-double-right"></i></a>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single_blog">
-                                        <div class="blog_thumb">
-                                            <a href="blog-details.html"><img src="assets\img\blog\blog4.jpg" alt=""></a>
-                                        </div>
-                                        <div class="blog_content">
-                                            <div class="blog_post">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">Men</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <h3><a href="blog-details.html">When an unknown took a galley of type.</a></h3>
-                                            <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
-                                            <div class="post_footer">
-                                                <div class="post_meta">
-                                                    <ul>
-                                                        <li>Jun 20, 2018</li>
-                                                        <li>3 Comments</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="Read_more">
-                                                    <a href="blog-details.html">Read more  <i class="fa fa-angle-double-right"></i></a>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single_blog">
-                                        <div class="blog_thumb">
-                                            <a href="blog-details.html"><img src="assets\img\blog\blog1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="blog_content">
-                                            <div class="blog_post">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">Women</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <h3><a href="blog-details.html">When an unknown took a galley of type.</a></h3>
-                                            <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
-                                            <div class="post_footer">
-                                                <div class="post_meta">
-                                                    <ul>
-                                                        <li>Jun 20, 2018</li>
-                                                        <li>3 Comments</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="Read_more">
-                                                    <a href="blog-details.html">Read more  <i class="fa fa-angle-double-right"></i></a>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single_blog">
-                                        <div class="blog_thumb">
-                                            <a href="blog-details.html"><img src="assets\img\blog\blog2.jpg" alt=""></a>
-                                        </div>
-                                        <div class="blog_content">
-                                            <div class="blog_post">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">fashion</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <h3><a href="blog-details.html">When an unknown took a galley of type.</a></h3>
-                                            <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
-                                            <div class="post_footer">
-                                                <div class="post_meta">
-                                                    <ul>
-                                                        <li>Jun 20, 2018</li>
-                                                        <li>3 Comments</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="Read_more">
-                                                    <a href="blog-details.html">Read more  <i class="fa fa-angle-double-right"></i></a>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single_blog">
-                                        <div class="blog_thumb">
-                                            <a href="blog-details.html"><img src="assets\img\blog\blog5.jpg" alt=""></a>
-                                        </div>
-                                        <div class="blog_content">
-                                            <div class="blog_post">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">featured</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <h3><a href="blog-details.html">When an unknown took a galley of type.</a></h3>
-                                            <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
-                                            <div class="post_footer">
-                                                <div class="post_meta">
-                                                    <ul>
-                                                        <li>Jun 20, 2018</li>
-                                                        <li>3 Comments</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="Read_more">
-                                                    <a href="blog-details.html">Read more  <i class="fa fa-angle-double-right"></i></a>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single_blog">
-                                        <div class="blog_thumb">
-                                            <a href="blog-details.html"><img src="assets\img\blog\blog11.jpg" alt=""></a>
-                                        </div>
-                                        <div class="blog_content">
-                                            <div class="blog_post">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">Tech</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <h3><a href="blog-details.html">When an unknown took a galley of type.</a></h3>
-                                            <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
-                                            <div class="post_footer">
-                                                <div class="post_meta">
-                                                    <ul>
-                                                        <li>Jun 20, 2018</li>
-                                                        <li>3 Comments</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="Read_more">
-                                                    <a href="blog-details.html">Read more  <i class="fa fa-angle-double-right"></i></a>
+                                                    <a  th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}">Đọc thêm  <i class="fa fa-angle-double-right"></i></a>
                                                 </div> 
                                             </div>
                                         </div>
@@ -231,11 +86,12 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="page_number">
-                                        <span>Pages: </span>
+                                        <span>Trang: </span>
                                         <ul>
                                             <li>«</li>
-                                            <li class="current_number">1</li>
-                                            <li><a href="#">2</a></li>
+                                            <li th:each="i:${#numbers.sequence(1,totalPage)}"
+                                                th:classappend="${currentPage == i ? 'curren_number' :''}"><a
+                                                    th:href="@{'?pageNo='+${i}}" th:text="${i}"></a></li>
                                             <li>»</li>
                                         </ul>
                                     </div>
@@ -247,42 +103,17 @@
                         <!--brand logo strat--> 
                         <div class="brand_logo brand_about">
                             <div class="block_title">
-                                <h3>Brands</h3>
+                                <h3>Thương hiệu</h3>
                             </div>
                             <div class="row">
                                 <div class="brand_active owl-carousel">
-                                    <div class="col-lg-2">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets\img\brand\brand1.jpg" alt=""></a>
-                                        </div>
+                                  <div class="col-lg-2" th:each="brand : ${listBra}">
+                                    <div class="single_brand">
+                                      <a href="#"><img th:src="@{'/uploads/'+${brand.logo}}" /></a>
                                     </div>
-                                    <div class="col-lg-2">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets\img\brand\brand2.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets\img\brand\brand3.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets\img\brand\brand4.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets\img\brand\brand5.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="single_brand">
-                                            <a href="#"><img src="assets\img\brand\brand6.jpg" alt=""></a>
-                                        </div>
-                                    </div>
+                                  </div>
                                 </div>
-                            </div>
+                              </div>
                         </div>       
                         <!--brand logo end-->   
                     </div>

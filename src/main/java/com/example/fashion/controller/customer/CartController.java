@@ -64,19 +64,19 @@ public class CartController {
 	}
 
 	@PostMapping("/addcart")
-public String addItemToCart(@RequestParam("ProductID") Long productID,
-                            @RequestParam("Quantity") Integer quantity,
-                            @ModelAttribute("cart") Cart cart,
-                            Model model,
-                            HttpServletRequest request) {
-    // Gọi phương thức create từ ItemService để thêm sản phẩm vào giỏ hàng
-    if (itemService.create(productID, quantity, cart)) {
-        // Nếu thêm thành công, chuyển hướng đến trang gọi yêu cầu
-        return "redirect:" + request.getHeader("Referer");
-    } else {
-        // Nếu thêm không thành công, cũng chuyển hướng đến trang gọi yêu cầu
-        return "redirect:" + request.getHeader("Referer");
-    }
-}
+	public String addItemToCart(@RequestParam("ProductID") Long productID,
+			@RequestParam("Quantity") Integer quantity,
+			@ModelAttribute("cart") Cart cart,
+			Model model,
+			HttpServletRequest request) {
+		// Gọi phương thức create từ ItemService để thêm sản phẩm vào giỏ hàng
+		if (itemService.create(productID, quantity, cart)) {
+			// Nếu thêm thành công, chuyển hướng đến trang gọi yêu cầu
+			return "redirect:" + request.getHeader("Referer");
+		} else {
+			// Nếu thêm không thành công, cũng chuyển hướng đến trang gọi yêu cầu
+			return "redirect:" + request.getHeader("Referer");
+		}
+	}
 
 }

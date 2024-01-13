@@ -21,4 +21,8 @@ public interface ProductService {
 	// List<Product> searchProduct(String keyword);
 
 	Page<Product> getAll(Long pageNo);
+
+	List<Product> list6Products();
+
+	long countTotalProducts();
 }

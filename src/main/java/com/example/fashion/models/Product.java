@@ -45,6 +45,8 @@ public class Product {
 	private Set<OrderDetail> orderDetails;
 	@OneToMany(mappedBy = "products")
 	private Set<CartItem> cartItems;
+	@OneToMany(mappedBy = "product")
+	private Set<Comment> comment;
 	@ManyToOne
 	@JoinColumn(name = "CatID", referencedColumnName = "CatID")
 	private Category category;
@@ -148,6 +150,14 @@ public class Product {
 		this.cartItems = cartItems;
 	}
 
+	public Set<Comment> getComment() {
+		return this.comment;
+	}
+
+	public void setComment(Set<Comment> comment) {
+		this.comment = comment;
+	}
+
 	public Category getCategory() {
 		return this.category;
 	}
@@ -164,9 +174,7 @@ public class Product {
 		this.brand = brand;
 	}
 
-	public Product(Long ProductID, String ProductName, Double Price, Double SalePrice, Integer Quantity, String Avatar,
-			String Img1, String Img2, String Img3, String Description, Set<OrderDetail> orderDetails,
-			Set<CartItem> cartItems, Category category, Brand brand) {
+	public Product(Long ProductID, String ProductName, Double Price, Double SalePrice, Integer Quantity, String Avatar, String Img1, String Img2, String Img3, String Description, Set<OrderDetail> orderDetails, Set<CartItem> cartItems, Set<Comment> comment, Category category, Brand brand) {
 		super();
 		this.ProductID = ProductID;
 		this.ProductName = ProductName;
@@ -180,9 +188,12 @@ public class Product {
 		this.Description = Description;
 		this.orderDetails = orderDetails;
 		this.cartItems = cartItems;
+		this.comment = comment;
 		this.category = category;
 		this.brand = brand;
 	}
+
+	
 
 	public Product() {
 

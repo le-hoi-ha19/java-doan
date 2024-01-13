@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>Chi tiết sản phẩm</title>
+  <title th:text="${Product.ProductName}"></title>
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Favicon -->
@@ -38,7 +38,7 @@
                 <ul>
                   <li><a href="/">Trang chủ</a></li>
                   <li><i class="fa fa-angle-right"></i></li>
-                  <li>Chi tiết sản phẩm</li>
+                  <li th:text="${Product.ProductName}"></li>
                 </ul>
               </div>
             </div>
@@ -111,7 +111,7 @@
               <form role="form" method="post" th:action="@{/addcart}" th:object="${Product}">
                 <input type="hidden" th:value="${Product.ProductID}" name="ProductID">
                 <div class="product_d_right">
-                  <h1 th:text="${Product.ProductName}" ></h1>
+                  <h1 th:text="${Product.ProductName}"></h1>
                   <!-- <div class="product_ratting mb-10">
                             <ul>
                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
@@ -126,7 +126,8 @@
 
                   <div class="content_price mb-15">
                     <span
-                      th:text="${#numbers.formatDecimal(Product.Price - Product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'" name="TotalsPrice"></span>
+                      th:text="${#numbers.formatDecimal(Product.Price - Product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"
+                      name="TotalsPrice"></span>
                     <span class="old-price"
                       th:text="${#numbers.formatDecimal(Product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                   </div>
@@ -235,7 +236,11 @@
                       </div>
                     </div> -->
                     <div class="product_review_form">
-                      <form action="#">
+                      <form role="form" method="post" th:action="@{/add-comment}" th:object="${Comment}">
+                        <div th:if="${successMessage}" class="alert alert-success">
+                          <p th:text="${successMessage}"></p>
+                        </div>
+                        <input type="hidden" th:value="${Product.ProductID}" name="productID">
                         <h2>Thêm bài đánh giá</h2>
                         <p>
                           Địa chỉ email của bạn sẽ không được công bố
@@ -243,18 +248,18 @@
                         <div class="row">
                           <div class="col-12">
                             <label for="review_comment">Đánh giá của bạn</label>
-                            <textarea name="comment" id="review_comment"></textarea>
+                            <textarea name="Comment" id="review_comment"></textarea>
                           </div>
                           <div class="col-lg-6 col-md-6">
                             <label for="author">Tên</label>
-                            <input id="author" type="text" />
+                            <input id="author" type="text" name="fullname" />
                           </div>
                           <div class="col-lg-6 col-md-6">
                             <label for="email">Email </label>
-                            <input id="email" type="text" />
+                            <input id="email" type="email" name="email" />
                           </div>
                         </div>
-                        <button type="submit">Gửi</button>
+                        <button type="submit" name="them">Gửi</button>
                       </form>
                     </div>
                   </div>
@@ -270,157 +275,37 @@
           <div class="row">
             <div class="col-12">
               <div class="block_title">
-                <h3>11 other products category:</h3>
+                <h3><span th:text="${totalProducts}"></span> danh mục sản phẩm khác</h3>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="single_p_active owl-carousel">
-              <div class="col-lg-3">
+              <div class="col-lg-3" th:each="product : ${listProducts}">
                 <div class="single_product">
                   <div class="product_thumb">
-                    <a href="single-product.html"><img src="\assets\img\product\product1.jpg" alt="" /></a>
-                    <div class="img_icone">
-                      <img src="\assets\img\cart\span-new.png" alt="" />
-                    </div>
+                    <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
+                        th:src="@{'/uploads/'+${product.Avatar}}" alt="" /></a>
                     <div class="product_action">
                       <a href="#">
-                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
                     </div>
                   </div>
                   <div class="product_content">
-                    <span class="product_price">$50.00</span>
+                    <span class="product_price"
+                      th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></span>
                     <h3 class="product_title">
-                      <a href="single-product.html">Curabitur sodales</a>
+                      <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
+                        th:text="${product.ProductName}"></a>
                     </h3>
                   </div>
                   <div class="product_info">
                     <ul>
                       <li>
-                        <a href="#" title=" Add to Wishlist ">Add to Wishlist</a>
+                        <a href="#" title=" Add to Wishlist ">Yêu thích</a>
                       </li>
                       <li>
-                        <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="single_product">
-                  <div class="product_thumb">
-                    <a href="single-product.html"><img src="\assets\img\product\product2.jpg" alt="" /></a>
-                    <div class="hot_img">
-                      <img src="\assets\img\cart\span-hot.png" alt="" />
-                    </div>
-                    <div class="product_action">
-                      <a href="#">
-                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
-                    </div>
-                  </div>
-                  <div class="product_content">
-                    <span class="product_price">$40.00</span>
-                    <h3 class="product_title">
-                      <a href="single-product.html">Quisque ornare dui</a>
-                    </h3>
-                  </div>
-                  <div class="product_info">
-                    <ul>
-                      <li>
-                        <a href="#" title=" Add to Wishlist ">Add to Wishlist</a>
-                      </li>
-                      <li>
-                        <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="single_product">
-                  <div class="product_thumb">
-                    <a href="single-product.html"><img src="\assets\img\product\product3.jpg" alt="" /></a>
-                    <div class="img_icone">
-                      <img src="\assets\img\cart\span-new.png" alt="" />
-                    </div>
-                    <div class="product_action">
-                      <a href="#">
-                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
-                    </div>
-                  </div>
-                  <div class="product_content">
-                    <span class="product_price">$60.00</span>
-                    <h3 class="product_title">
-                      <a href="single-product.html">Sed non turpiss</a>
-                    </h3>
-                  </div>
-                  <div class="product_info">
-                    <ul>
-                      <li>
-                        <a href="#" title=" Add to Wishlist ">Add to Wishlist</a>
-                      </li>
-                      <li>
-                        <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="single_product">
-                  <div class="product_thumb">
-                    <a href="single-product.html"><img src="\assets\img\product\product4.jpg" alt="" /></a>
-                    <div class="hot_img">
-                      <img src="\assets\img\cart\span-hot.png" alt="" />
-                    </div>
-                    <div class="product_action">
-                      <a href="#">
-                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
-                    </div>
-                  </div>
-                  <div class="product_content">
-                    <span class="product_price">$65.00</span>
-                    <h3 class="product_title">
-                      <a href="single-product.html">Duis convallis</a>
-                    </h3>
-                  </div>
-                  <div class="product_info">
-                    <ul>
-                      <li>
-                        <a href="#" title=" Add to Wishlist ">Add to Wishlist</a>
-                      </li>
-                      <li>
-                        <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3">
-                <div class="single_product">
-                  <div class="product_thumb">
-                    <a href="single-product.html"><img src="\assets\img\product\product6.jpg" alt="" /></a>
-                    <div class="img_icone">
-                      <img src="\assets\img\cart\span-new.png" alt="" />
-                    </div>
-                    <div class="product_action">
-                      <a href="#">
-                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
-                    </div>
-                  </div>
-                  <div class="product_content">
-                    <span class="product_price">$50.00</span>
-                    <h3 class="product_title">
-                      <a href="single-product.html">Curabitur sodales</a>
-                    </h3>
-                  </div>
-                  <div class="product_info">
-                    <ul>
-                      <li>
-                        <a href="#" title=" Add to Wishlist ">Add to Wishlist</a>
-                      </li>
-                      <li>
-                        <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a>
+                        <a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">Xem chi tiết</a>
                       </li>
                     </ul>
                   </div>

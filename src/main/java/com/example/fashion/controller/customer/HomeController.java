@@ -29,7 +29,7 @@ public class HomeController {
     @Autowired
     private ProductService productService;
 
-     @Autowired
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -38,23 +38,22 @@ public class HomeController {
     @Autowired
     private BrandService brandService;
 
-    // @RequestMapping(value = {"/index", "/"}, method = RequestMethod.POST)
-    // public String home(Model model, Principal principal, HttpSession session){
-    //     if(principal != null){
-    //         session.setAttribute("username", principal.getName());
-    //         User user = userService.findByUsername(principal.getName());
-    //         Cart cart = (Cart) user.getCarts();
-    //         session.setAttribute("totalsItem", cart.getTotalsItem());
-    //     }else{
-    //         session.removeAttribute("username");
-    //     }
-    //     return "index";
-    // }
+    @RequestMapping(value = { "/index", "/" }, method = RequestMethod.POST)
+    public String home(Model model, Authentication authentication, HttpSession session) {
+        if (authentication != null) {
+            session.setAttribute("username", authentication.getName());
+        } else {
+            session.setAttribute("username", "");
+        }
+        return "index";
+    }
 
     @GetMapping("/")
     public String index(Model model) {
         List<Product> listViewsProducts = this.productService.getAll();
         model.addAttribute("listViewsProducts", listViewsProducts);
+        List<Product> lstNewProducts = this.productService.list6Products();
+        model.addAttribute("lstNewProducts", lstNewProducts);
         List<Category> categories = this.categoryService.getAll();
         model.addAttribute("categories", categories);
         List<Brand> listBra = this.brandService.getAll();

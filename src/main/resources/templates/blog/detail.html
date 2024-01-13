@@ -1,0 +1,224 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title th:text="${Post.Title}"></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="\assets\img\favicon.png" />
+
+    <!-- all css here -->
+    <link rel="stylesheet" href="\assets\css\bootstrap.min.css" />
+    <link rel="stylesheet" href="\assets\css\plugin.css" />
+    <link rel="stylesheet" href="\assets\css\bundle.css" />
+    <link rel="stylesheet" href="\assets\css\style.css" />
+    <link rel="stylesheet" href="\assets\css\responsive.css" />
+    <script src="\assets\js\vendor\modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+    <!-- Add your site or application content here -->
+
+    <!--pos page start-->
+    <div class="pos_page">
+        <div class="container">
+            <!--pos page inner-->
+            <div class="pos_page_inner">
+                <!--header area -->
+                <div th:replace="layout/header :: header"></div>
+                <!--header end -->
+                <!--breadcrumbs area start-->
+                <div class="breadcrumbs_area">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb_content">
+                                <ul>
+                                    <li><a href="/">Trang chủ</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li th:text="${Post.Title}"></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--breadcrumbs area end-->
+
+                <!--blog area start-->
+                <div class="main_blog_area blog_details">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12">
+                            <div class="blog_details_left">
+                                <div class="blog_gallery">
+                                    <div class="blog_header">
+                                        <h2><a href="#" th:text="${Post.Title}"></h2>
+                                        <div class="blog__post">
+                                            <ul>
+                                                <li class="post_author">Đăng bài : admin</li>
+                                                <li class="post_date"
+                                                    th:utext="${#dates.format(Post.CreatedDate, 'dd/MM/yyyy')}"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="blog_active owl-carousel">
+                                        <div class="blog_thumb blog__hover">
+                                            <a href="#"><img th:src="@{'/uploads/'+${Post.Avatar}}" alt=""></a>
+                                        </div>
+                                        <div class="blog_thumb">
+                                            <a href="#"><img th:src="@{'/uploads/'+${Post.Img1}}" alt=""></a>
+                                        </div>
+                                        <div class="blog_thumb">
+                                            <a href="#"><img th:src="@{'/uploads/'+${Post.Img2}}" alt=""></a>
+                                        </div>
+                                        <div class="blog_thumb">
+                                            <a href="#"><img th:src="@{'/uploads/'+${Post.Img3}}" alt=""></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="blog_entry_content">
+                                        <p th:text="${Post.Contents}"></p>
+                                    </div>
+                                    <div class="blog_entry_meta">
+                                        <ul>
+                                            <li><a href="#">0 bình luận</a></li>
+                                            <li> / Thẻ: <a href="#">Thời trang</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="wishlist-share">
+                                        <h4>Chia sẻ:</h4>
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--services img area-->
+                                <div class="comments_area">
+                                    <div class="comments__title">
+                                        <h3>Để lại bình luận</h3>
+                                    </div>
+                                    <div class="comments__notes">
+                                        <p>Địa chỉ email của bạn sẽ không được công bố.</p>
+                                    </div>
+                                    <div class="product_review_form blog_form">
+                                        <form role="form" method="post" th:action="@{/add-comment}"
+                                            th:object="${Comment}">
+                                            <!-- Hiển thị thông báo thành công -->
+                                            <div th:if="${successMessage}" class="alert alert-success">
+                                                <p th:text="${successMessage}"></p>
+                                            </div>
+                                            <input type="hidden" th:value="${Post.PostID}" name="PostID">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label for="review_comment">Bình luận </label>
+                                                    <textarea name="Comment" id="review_comment"></textarea>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="author">Tên</label>
+                                                    <input id="author" type="text" name="fullname">
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="email">Email </label>
+                                                    <input id="email" type="email" name="email">
+                                                </div>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <label for="website">Trang web </label>
+                                                    <input id="website" type="text" name="website">
+                                                </div>
+                                            </div>
+                                            <button type="submit">Gửi bình luận</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-8 offset-md-2 offset-lg-0">
+                            <div class="blog_details_right">
+                                <div class="blog_widget recent-posts mb-30">
+                                </div>
+                                <div class="blog_widget widget_categoie  mb-30">
+                                    <h3>Thể loại</h3>
+                                    <ul th:each="category : ${categories}">
+                                        <li><a href="#" th:text="${category.CatName}"></a></li>
+                                    </ul>
+                                </div>
+                                <div class="blog_widget widget_categoie mb-30">
+                                    <h3>Thương hiệu</h3>
+                                    <ul th:each="brand : ${listBra}">
+                                        <li><a href="#" th:text="${brand.BrandName}"></a></li>
+                                    </ul>
+                                </div>
+                                <div class="blog_widget widget_recent  mb-30">
+                                    <h3>Tin tức mới nhất</h3> 
+                                     <div class="widget_recent_inner" th:each="post : ${listPost}">   
+                                         <div class="single_posts">
+                                             <div class="posts_thumb">
+                                                 <a href="#"><img th:src="@{'/uploads/'+${post.Avatar}}"alt=""></a>
+                                             </div>
+                                             <div class="post_content">
+                                                 <span>
+                                                     <a class="tweet_author" href="#" th:text="${post.title}"></a>
+
+                                                 </span>
+                                                 <a href="#" th:utext="${#dates.format(Post.CreatedDate, 'dd/MM/yyyy')}"></a>
+                                             </div>
+                                         </div>
+                                     </div>         
+                                 </div>
+
+                                <!-- <div class="blog_widget widget_recent  mb-30">
+                                    <h3>Bình luận</h3>
+                                    <div class="widget_recent_inner" th:each="comment : ${comments}"></div>>
+                                        <div class="single_posts">
+                                            <div class="posts_thumb">
+                                                <a href="#"><img src="\assets\img\blog\blog12.jpg" alt=""></a>
+                                            </div>
+                                            <div class="post_content">
+                                                <span>
+                                                    <a class="tweet_author" href="#"></a>
+
+                                                </span>
+                                                <a href="#" ></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--blog area end-->
+
+            </div>
+            <!--pos page inner end-->
+        </div>
+    </div>
+    <!--pos page end-->
+
+    <!--footer area start-->
+    <div th:replace="layout/footer :: footer"></div>
+    <!--footer area end-->
+
+
+
+
+
+
+    <!-- all js here -->
+    <script src="\assets\js\vendor\jquery-1.12.0.min.js"></script>
+    <script src="\assets\js\popper.js"></script>
+    <script src="\assets\js\bootstrap.min.js"></script>
+    <script src="\assets\js\ajax-mail.js"></script>
+    <script src="\assets\js\plugins.js"></script>
+    <script src="\assets\js\main.js"></script>
+</body>
+
+</html>
