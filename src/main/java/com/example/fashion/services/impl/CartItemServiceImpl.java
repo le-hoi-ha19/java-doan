@@ -57,7 +57,7 @@ public class CartItemServiceImpl implements CartItemService {
             this.cartRepository.save(cart);
             
             // int totalItems = totalsItem(cart.getCartItems());
-            double totalsPrice = totalsPrice(cart.getCartItems());
+            // double totalsPrice = totalsPrice(cart.getCartItems());
 
             // cart.setTotalsPrice(totalsPrice);
             // cart.setTotalsItem(totalItems);
