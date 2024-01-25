@@ -11,6 +11,12 @@ public interface CartService {
 
     List<Cart> getAll();
 
+    Boolean create(Cart cart);
+
     Cart findByID(Long CartID);
+
+    Boolean update(Cart cart);
+
+    Boolean delete(Long CartID);
 
 }

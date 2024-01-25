@@ -11,7 +11,7 @@ import com.example.fashion.models.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     
-    @Query(value = "SELECT p FROM Product p ORDER BY p.ProductID DESC LIMIT 6")
+    @Query(value = "SELECT p FROM Product p ORDER BY p.ProductID DESC LIMIT 9")
     List<Product> list6Products();
 
     @Query(value = "SELECT COUNT(p) FROM Product p")

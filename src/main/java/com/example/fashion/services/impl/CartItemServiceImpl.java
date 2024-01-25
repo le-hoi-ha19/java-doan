@@ -45,39 +45,6 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    @Transactional
-    public Boolean create(Long ProductID, Integer Quantity, Cart cart) {
-        try {
-            Product product = productService.findByID(ProductID);
-
-            // Nếu chưa có giỏ hàng, tạo mới giỏ hàng
-            cart = new Cart();
-            cart.setCartID((long) 1);
-            cart.setUser(userRepository.findByUsername("ad"));
-            this.cartRepository.save(cart);
-            
-            // int totalItems = totalsItem(cart.getCartItems());
-            // double totalsPrice = totalsPrice(cart.getCartItems());
-
-            // cart.setTotalsPrice(totalsPrice);
-            // cart.setTotalsItem(totalItems);
-
-            double totalPrice = (product.getPrice() - product.getSalePrice()) * Quantity;
-            CartItem cartItem = new CartItem();
-            cartItem.setCarts(cart);
-            cartItem.setProducts(product);
-            cartItem.setQuantity(Quantity);
-            cartItem.setTotalsPrice(totalPrice);
-            this.cartItemRepository.save(cartItem);
-
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
     public CartItem findByID(Long CI_ID) {
         return this.cartItemRepository.findById(CI_ID).get();
     }
@@ -104,22 +71,38 @@ public class CartItemServiceImpl implements CartItemService {
         return false;
     }
 
-    private int totalsItem(Set<CartItem> cartItems){
-        int totalItems = 0;
-        for(CartItem item : cartItems){
-            totalItems += item.getQuantity();
+    @Override
+    @Transactional
+    public Boolean create(Long ProductID, Integer Quantity, Cart cart) {
+        try {
+            Product product = productService.findByID(ProductID);
+
+            cart.setUser(userRepository.findByUsername("ad"));
+            // cart.setTotalsItem(Sum();
+            this.cartRepository.save(cart);
+
+            // Tạo một CartItem mới
+            double TotalsPrice = (product.getPrice() - product.getSalePrice()) * Quantity;
+            CartItem cartItem = new CartItem();
+            cartItem.setCarts(cart);
+            cartItem.setProducts(product);
+            cartItem.setQuantity(Quantity);
+            cartItem.setTotalsPrice(TotalsPrice); // Cập nhật tổng giá tiền của cartItem
+            this.cartItemRepository.save(cartItem);
+
+            int totalQuantity = cart.getCartItems().stream()
+                    .mapToInt(CartItem::getQuantity)
+                    .sum();
+
+            cart.setTotalsItem(totalQuantity);
+            this.cartRepository.save(cart);
+
+            // Trả về true để chỉ ra rằng quá trình tạo hoặc cập nhật thành công
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return totalItems;
-    }
-
-    private double totalsPrice(Set<CartItem> cartItems){
-        double totalPrice = 0.0;
-
-        for(CartItem item : cartItems){
-            totalPrice += item.getTotalsPrice();
-        }
-
-        return totalPrice;
     }
 
 }

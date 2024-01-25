@@ -161,14 +161,14 @@
                                      <div class="widget_recent_inner" th:each="post : ${listPost}">   
                                          <div class="single_posts">
                                              <div class="posts_thumb">
-                                                 <a href="#"><img th:src="@{'/uploads/'+${post.Avatar}}"alt=""></a>
+                                                 <a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}"><img th:src="@{'/uploads/'+${post.Avatar}}"style="max-width: 40px" alt=""></a>
                                              </div>
                                              <div class="post_content">
                                                  <span>
-                                                     <a class="tweet_author" href="#" th:text="${post.title}"></a>
+                                                     <a class="tweet_author" th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}"th:text="${post.title}"></a>
 
                                                  </span>
-                                                 <a href="#" th:utext="${#dates.format(Post.CreatedDate, 'dd/MM/yyyy')}"></a>
+                                                 <a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}" th:utext="${#dates.format(Post.CreatedDate, 'dd/MM/yyyy')}"></a>
                                              </div>
                                          </div>
                                      </div>         

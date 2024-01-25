@@ -24,13 +24,6 @@ public class CommentController {
             // Nếu có lỗi hợp lệ, trả về trang thêm danh mục với thông báo lỗi
             return "redirect:" + request.getHeader("Referer");
         }
-
-        // if (comment.getFullname() == null || comment.getFullname().isEmpty() || comment.getEmail() == null
-        //         ||  comment.getComment() == null ) {
-        //     model.addAttribute("error", "Thông tin không được để trống");
-        //     return "redirect:" + request.getHeader("Referer");
-        // }
-
         if (this.commentService.create(comment)) {
             // Thêm thông báo thành công vào model
             model.addAttribute("successMessage", "Bình luận của bạn đã được gửi thành công!");

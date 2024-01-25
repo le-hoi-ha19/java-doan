@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class Cart {
 	@Id
 	@Column(name = "CartID")
-	// @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long CartID;
 	@Column(name = "TotalsItem")
 	private Integer TotalsItem;

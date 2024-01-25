@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -64,17 +65,14 @@ public class CartController {
 	}
 
 	@PostMapping("/addcart")
-	public String addItemToCart(@RequestParam("ProductID") Long productID,
-			@RequestParam("Quantity") Integer quantity,
+	public String addItemToCart(@RequestParam("ProductID") Long ProductID,
+			@RequestParam("Quantity") Integer Quantity,
 			@ModelAttribute("cart") Cart cart,
 			Model model,
 			HttpServletRequest request) {
-		// Gọi phương thức create từ ItemService để thêm sản phẩm vào giỏ hàng
-		if (itemService.create(productID, quantity, cart)) {
-			// Nếu thêm thành công, chuyển hướng đến trang gọi yêu cầu
+		if (this.itemService.create(ProductID, Quantity, cart)) {
 			return "redirect:" + request.getHeader("Referer");
 		} else {
-			// Nếu thêm không thành công, cũng chuyển hướng đến trang gọi yêu cầu
 			return "redirect:" + request.getHeader("Referer");
 		}
 	}

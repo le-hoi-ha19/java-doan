@@ -18,6 +18,4 @@ public interface CartItemService {
 
     Boolean delete(Long CI_ID);
 
-    // CartItem findCartItem(Set<CartItem> cartItems, Long ProductID);
-
 }

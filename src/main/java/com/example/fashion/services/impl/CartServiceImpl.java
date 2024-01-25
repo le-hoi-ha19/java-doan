@@ -45,6 +45,39 @@ public class CartServiceImpl implements CartService {
         return this.cartRepository.findById(CartID).get();
     }
 
+    @Override
+    public Boolean create(Cart cart) {
+        try {
+            this.cartRepository.save(cart);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean update(Cart cart) {
+        try {
+            this.cartRepository.save(cart);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean delete(Long CartID) {
+        try {
+            this.cartRepository.delete(findByID(CartID));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     
 
 }
