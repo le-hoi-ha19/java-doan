@@ -10,7 +10,7 @@ import com.example.fashion.models.User;
 public interface CartItemService {
     List<CartItem> getAll();
 
-    Boolean create(Long ProductID, Integer Quantity, Cart cart);
+    Boolean create(Long ProductID, Integer Quantity, User user);
 
     CartItem findByID(Long CI_ID);
 

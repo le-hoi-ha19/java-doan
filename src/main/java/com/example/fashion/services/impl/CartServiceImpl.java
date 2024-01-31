@@ -48,6 +48,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public Boolean create(Cart cart) {
         try {
+            int totalQuantity = this.cartItemRepository.sumQuantityByCart(cart.getCartID());
+            cart.setTotalsItem(totalQuantity);
             this.cartRepository.save(cart);
             return true;
         } catch (Exception e) {

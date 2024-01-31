@@ -75,7 +75,9 @@
                                                         </a></td>
                                                     <td class="product_name"><a href="#"
                                                             th:text="${cartItem.products.ProductName}"></a></td>
-                                                    <td class="product-price" th:text="${#numbers.formatDecimal(cartItem.products.Price - cartItem.products.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                                                    <td class="product-price"
+                                                        th:text="${#numbers.formatDecimal(cartItem.products.Price - cartItem.products.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                                                    </td>
                                                     </td>
 
                                                     <td class="product_quantity"><input min="0" max="100"
@@ -113,18 +115,18 @@
                                             </div>
                                         </div> -->
                                 </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="coupon_code" th:each="cartItem  : ${lstItems}">
+                                <div class="col-lg-6 col-md-6" th:if="${check == null}">
+                                    <div class="coupon_code" th:each="cart  : ${listViewsCart}">
                                         <h3>Tổng giỏ hàng</h3>
                                         <div class="coupon_inner">
                                             <div class="cart_subtotal">
                                                 <p>Tổng phụ</p>
                                                 <p class="cart_amount"
-                                                    th:text="${#numbers.formatDecimal(cartItem.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                                                    th:text="${#numbers.formatDecimal(cart.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
                                                 </p>
                                             </div>
                                             <div class="cart_subtotal ">
-                                                <p>Phí ship</p>
+                                                <p>Phí vận chuyển</p>
                                                 <p class="cart_amount"><span>Tỷ giá cố định:</span>15,000 VNĐ</p>
                                             </div>
                                             <a href="#">Tính toán vận chuyển</a>
@@ -132,7 +134,7 @@
                                             <div class="cart_subtotal">
                                                 <p>Tổng cộng</p>
                                                 <p class="cart_amount"
-                                                    th:text="${#numbers.formatDecimal(cartItem.TotalsPrice + 15000, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                                                    th:text="${#numbers.formatDecimal(cart.TotalsPrice + 15000, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
                                                 </p>
                                             </div>
                                             <div class="checkout_btn">

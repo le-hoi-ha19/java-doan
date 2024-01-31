@@ -41,6 +41,8 @@ public class User {
 	private Set<UserRole> userRoles;
 	@OneToMany(mappedBy = "user")
 	private Set<Cart> carts;
+	@OneToMany(mappedBy = "user")
+	private Set<Order> orders;
 
 	public Long getId() {
 		return this.id;
@@ -146,7 +148,15 @@ public class User {
 		this.carts = carts;
 	}
 
-	public User(Long id, String username, String password, Boolean enabled, String fullname, String images, Boolean gender, String address, String email, String telephone, Set<UserRole> userRoles, Set<Cart> carts) {
+	public Set<Order> getOrders() {
+		return this.orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
+
+	public User(Long id, String username, String password, Boolean enabled, String fullname, String images, Boolean gender, String address, String email, String telephone, Set<UserRole> userRoles, Set<Cart> carts, Set<Order> orders) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -160,10 +170,10 @@ public class User {
 		this.telephone = telephone;
 		this.userRoles = userRoles;
 		this.carts = carts;
+		this.orders = orders;
 	}
 
 	
-
 	public User() {
 
 	}

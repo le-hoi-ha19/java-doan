@@ -39,9 +39,9 @@ public class HomeController {
     private BrandService brandService;
 
     @RequestMapping(value = { "/index", "/" }, method = RequestMethod.POST)
-    public String home(Model model, Authentication authentication, HttpSession session) {
-        if (authentication != null) {
-            session.setAttribute("username", authentication.getName());
+    public String home(Model model, Principal principal, HttpSession session) {
+        if (principal != null) {
+            session.setAttribute("username", principal.getName());
         } else {
             session.setAttribute("username", "");
         }
