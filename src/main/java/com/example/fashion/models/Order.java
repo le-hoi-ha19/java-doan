@@ -1,42 +1,43 @@
-    package com.example.fashion.models;
+package com.example.fashion.models;
 
-    import java.time.LocalDate;
-    import java.util.Set;
+import java.time.LocalDate;
+import java.util.Set;
 
-    import jakarta.persistence.Column;
-    import jakarta.persistence.Entity;
-    import jakarta.persistence.GeneratedValue;
-    import jakarta.persistence.GenerationType;
-    import jakarta.persistence.Id;
-    import jakarta.persistence.JoinColumn;
-    import jakarta.persistence.ManyToOne;
-    import jakarta.persistence.OneToMany;
-    import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-    @Entity
-    @Table(name = ("Orders"))
-    public class Order {
-        @Id
-        @Column(name = "OrderID")
-        // @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long OrderID;
-        @Column(name = "OrderDate")
-        private LocalDate OrderDate;
-        @Column(name = "DeliveryDate")
-        private LocalDate DeliveryDate;
-        @Column(name = "TotalPrice")
-        private Double TotalPrice;
-        @Column(name = "ShippingFee")
-        private Double ShippingFee;
-        @Column(name = "OrderStatus")
-        private String OrderStatus;
-        @Column(name = "Notes")
-        private String Notes;
-        @OneToMany(mappedBy= "orders")
-        private Set<OrderDetail> orderDetails;
-        @ManyToOne
-        @JoinColumn(name = "userId", referencedColumnName = "id")
-        private User user;
+@Entity
+@Table(name = ("Orders"))
+public class Order {
+    @Id
+    @Column(name = "OrderID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long OrderID;
+    @Column(name = "OrderDate")
+    private LocalDate OrderDate;
+    @Column(name = "DeliveryDate")
+    private LocalDate DeliveryDate;
+    @Column(name = "TotalPrice")
+    private Double TotalPrice;
+    @Column(name = "ShippingFee")
+    private Double ShippingFee;
+    @Column(name = "OrderStatus")
+    private String OrderStatus;
+    @Column(name = "Notes")
+    private String Notes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
+    private Set<OrderDetail> orderDetails;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private User user;
 
     public Long getOrderID() {
         return this.OrderID;
@@ -110,24 +111,22 @@
         this.user = user;
     }
 
-        
-
-        public Order(Long OrderID, LocalDate OrderDate, LocalDate DeliveryDate, Double TotalPrice, Double ShippingFee, String OrderStatus, String Notes, Set<OrderDetail> orderDetails, User user) {
-            super();
-            this.OrderID = OrderID;
-            this.OrderDate = OrderDate;
-            this.DeliveryDate = DeliveryDate;
-            this.TotalPrice = TotalPrice;
-            this.ShippingFee = ShippingFee;
-            this.OrderStatus = OrderStatus;
-            this.Notes = Notes;
-            this.orderDetails = orderDetails;
-            this.user = user;
-        }
-
-        public Order() {
-
-        }
-
-        
+    public Order(Long OrderID, LocalDate OrderDate, LocalDate DeliveryDate, Double TotalPrice, Double ShippingFee,
+            String OrderStatus, String Notes, Set<OrderDetail> orderDetails, User user) {
+        super();
+        this.OrderID = OrderID;
+        this.OrderDate = OrderDate;
+        this.DeliveryDate = DeliveryDate;
+        this.TotalPrice = TotalPrice;
+        this.ShippingFee = ShippingFee;
+        this.OrderStatus = OrderStatus;
+        this.Notes = Notes;
+        this.orderDetails = orderDetails;
+        this.user = user;
     }
+
+    public Order() {
+
+    }
+
+}

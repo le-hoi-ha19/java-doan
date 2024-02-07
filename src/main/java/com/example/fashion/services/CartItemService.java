@@ -18,4 +18,6 @@ public interface CartItemService {
 
     Boolean delete(Long CI_ID);
 
+    List<CartItem> findByUser(Long userID);
+
 }

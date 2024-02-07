@@ -68,7 +68,7 @@ public class UserController {
 		user.setPassword(encodedPassword);
 
 		if (this.userService.createWithUserRole(user)) {
-			return "redirect:admin/login";
+			return "redirect:admin/index";
 		}
 		return "admin/register";
 	}

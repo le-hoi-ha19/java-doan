@@ -51,72 +51,35 @@
                 <!--Checkout page section-->
                 <div class="Checkout_section">
                     <div class="checkout_form">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <form action="#">
+                        <form role="form" method="post" th:action="@{/order}" th:object="${orders}">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
                                     <h3>Chi tiết thanh toán</h3>
-                                    <div class="row">
+                                    <div class="row" th:each="cart  : ${listViewsCart}">
 
                                         <div class="col-12 mb-30">
                                             <label>Họ và tên <span>*</span></label>
-                                            <input type="text">
+                                            <input type="text" th:value="${cart.user.fullname}">
                                         </div>
                                         <div class="col-12 mb-30">
                                             <label for="country">Địa chỉ <span>*</span></label>
-                                            <select name="cuntry" id="country">
-                                                <option value="2">bangladesh</option>
-                                                <option value="3">Algeria</option>
-                                                <option value="4">Afghanistan</option>
-                                                <option value="5">Ghana</option>
-                                                <option value="6">Albania</option>
-                                                <option value="7">Bahrain</option>
-                                                <option value="8">Colombia</option>
-                                                <option value="9">Dominican Republic</option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col-12 mb-30">
-                                            <label>Street address <span>*</span></label>
-                                            <input placeholder="House number and street name" type="text">
-                                        </div>
-                                        <div class="col-12 mb-30">
-                                            <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
-                                        </div>
-                                        <div class="col-12 mb-30">
-                                            <label>Town / City <span>*</span></label>
-                                            <input type="text">
-                                        </div>
-                                        <div class="col-12 mb-30">
-                                            <label>State / County <span>*</span></label>
-                                            <input type="text">
+                                            <input th:value="${cart.user.address}" type="text">
                                         </div>
                                         <div class="col-lg-6 mb-30">
                                             <label>Số điện thoại<span>*</span></label>
-                                            <input type="text">
-
+                                            <input type="text" th:value="${cart.user.telephone}">
                                         </div>
                                         <div class="col-lg-6 mb-30">
                                             <label> Địa chỉ email <span>*</span></label>
-                                            <input type="text">
+                                            <input type="text" th:value="${cart.user.email}">
 
                                         </div>
-                                        <!-- <div class="col-12 mb-30">
-                                                        <input id="account" type="checkbox" data-target="createp_account">
-                                                        <label for="account" data-toggle="collapse" data-target="#collapseOne" aria-controls="collapseOne">Tạo một tài khoản?</label>
-
-                                                        <div id="collapseOne" class="collapse one" data-parent="#accordion">
-                                                            <div class="card-body1">
-                                                               <label> Account password   <span>*</span></label>
-                                                                <input placeholder="password" type="password">  
-                                                            </div>
-                                                        </div>
-                                                    </div> -->
                                         <div class="col-12 mb-30">
                                             <input id="address" type="checkbox" data-target="createp_account">
                                             <label class="righ_0" for="address" data-toggle="collapse"
-                                                data-target="#collapsetwo" aria-controls="collapseOne">Ship to a
-                                                different address?</label>
+                                                data-target="#collapsetwo" aria-controls="collapseOne">Gửi đến một địa
+                                                chỉ
+                                                khác?</label>
 
                                             <div id="collapsetwo" class="collapse one" data-parent="#accordion">
                                                 <div class="row">
@@ -182,14 +145,13 @@
                                             <div class="order-notes">
                                                 <label for="order_note">Ghi chú</label>
                                                 <textarea id="order_note"
-                                                    placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng."></textarea>
+                                                    placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt để giao hàng."
+                                                    name="Notes"></textarea>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <form role="form" method="post" th:action="@{/order}" th:object="${Product}">
+                                </div>
+                                <div class="col-lg-6 col-md-6">
                                     <h3>Đơn hàng của bạn</h3>
                                     <div class="order_table table-responsive mb-30" th:if="${check == null}">
                                         <table>
@@ -203,10 +165,16 @@
                                                 <tr>
                                                     <td>
                                                         <span th:text="${cartItem.products.ProductName}"></span>
-                                                        <span><strong th:text="${'x' +cartItem.Quantity}" name="Price"></strong></span>
-                                                    </td>                                                    
-                                                    <td
-                                                        th:text="${#numbers.formatDecimal(cartItem.products.Price - cartItem.products.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'" name="Price">
+                                                        <input type="hidden" th:value="${cartItem.products.ProductID}"
+                                                            name="ProductID">
+                                                        <input type="hidden"
+                                                            th:value="${cartItem.products.Price - cartItem.products.SalePrice}"
+                                                            name="Price">
+                                                        <span>x<strong th:text="${cartItem.Quantity}"
+                                                                name="Quantity"></strong></span>
+                                                    </td>
+                                                    <td th:text="${#numbers.formatDecimal(cartItem.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"
+                                                        name="TotalPrice">
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -263,9 +231,9 @@
                                         </div>
                                         <br>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <!--Checkout page section end-->

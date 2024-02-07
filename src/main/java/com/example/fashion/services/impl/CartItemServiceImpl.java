@@ -76,12 +76,13 @@ public class CartItemServiceImpl implements CartItemService {
     public Boolean create(Long ProductID, Integer Quantity, User user) {
         try {
             Product product = productService.findByID(ProductID);
+            Cart newCart = cartRepository.findByUser(user);
 
-            // Tạo giỏ hàng mới
-            Cart newCart = new Cart();
-            newCart.setCartID((1L));
-            newCart.setUser(user);
-            this.cartRepository.save(newCart);
+            if (newCart == null) {
+                newCart = new Cart();
+                newCart.setUser(user);
+                this.cartRepository.save(newCart);
+            }
 
             CartItem cartItem = cartItemRepository.findByProduct(ProductID);
 
@@ -94,13 +95,13 @@ public class CartItemServiceImpl implements CartItemService {
             } else {
                 // Nếu không có, tạo một CartItem mới và thêm vào giỏ hàng
                 double totalsPrice = (product.getPrice() - product.getSalePrice()) * Quantity;
-    
+
                 CartItem newCartItem = new CartItem();
                 newCartItem.setCarts(newCart);
                 newCartItem.setProducts(product);
                 newCartItem.setQuantity(Quantity);
                 newCartItem.setTotalsPrice(totalsPrice);
-    
+
                 cartItemRepository.save(newCartItem);
             }
 
@@ -117,6 +118,11 @@ public class CartItemServiceImpl implements CartItemService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<CartItem> findByUser(Long id) {
+        return this.cartItemRepository.findByUser(id);
     }
 
 }

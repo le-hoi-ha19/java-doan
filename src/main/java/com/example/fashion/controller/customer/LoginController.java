@@ -58,7 +58,7 @@ public class LoginController {
 		user.setPassword(encodedPassword);
 
 		if (this.userService.createWithUserRoleCUSTOMER(user)) {
-			return "redirect:admin/login";
+			return "redirect:login";
 		}
 		return "login";
 	}

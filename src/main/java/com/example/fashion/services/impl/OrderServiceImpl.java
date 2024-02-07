@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Service;
@@ -39,30 +38,32 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Boolean create(Long ProductID, Integer Quantity, User user) {
         try {
-            Product product = productService.findByID(ProductID);
+            // Order newOrder = orderRepository.findByUser(user);
 
-            Order newOrder = new Order();
-            newOrder.setUser(user);
-            newOrder.setOrderID(1L);
-            newOrder.setOrderStatus("Chờ xử lý"); // Set trạng thái đơn hàng là "Chờ xử lý"
-            newOrder.setOrderDate(LocalDate.now()); // Set ngày đặt hàng là ngày hôm nay
-            LocalDate deliveryDate = LocalDate.now().plusDays(7);
-            newOrder.setDeliveryDate(deliveryDate);
-            this.orderRepository.save(newOrder);
+            // if (newOrder == null) {
+            //     newOrder = new Order();
+            //     newOrder.setUser(user);
+            //     // newOrder.setOrderStatus("Chờ xử lý");
+            //     // newOrder.setOrderDate(LocalDate.now());
+            //     // LocalDate deliveryDate = LocalDate.now().plusDays(7);
+            //     // newOrder.setDeliveryDate(deliveryDate);
+            //     // newOrder.setShippingFee((double) 15000);
+            //     this.orderRepository.save(newOrder);
+            // }
+            Order order = orderRepository.findByUser(user);
+            if(order == null){
+                order = new Order();
+                order.setUser(UserService.findByUsername());
+                this.orderRepository.save(order);
+            }
 
-            OrderDetail orderDetail = orderDetailRepository.findByProductAndOrder(ProductID);
-
-            OrderDetail newOD = new OrderDetail();
-            newOD.setOrder(newOrder);
-            newOD.setProduct(product);
-            newOD.setPrice(product.getPrice());
-            this.orderDetailRepository.save(newOD);
-
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrder(order);
+            this.orderDetailRepository.save(orderDetail);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
-
 }

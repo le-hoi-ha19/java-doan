@@ -4,13 +4,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,7 +31,7 @@ import jakarta.servlet.http.HttpSession;
 import java.security.Principal;
 
 @Controller
-public class CartController {
+public class CheckoutController {
 
 	@Autowired
 	private UserService userService;
@@ -57,13 +54,13 @@ public class CartController {
 	@Autowired
 	private BrandService brandService;
 
-	@GetMapping("/cart")
+	@GetMapping("/checkout")
 	public String index(Model model, Principal principal, HttpSession session) {
 		if (principal == null) {
-			return "redirect:/admin/login";
+			return "redirect:admin/login";
 		}
 		String username = principal.getName();
-		User user = userService.findByUsername(username);
+		User user = userService.findByUsername(username);  
 		Set<Cart> cart = user.getCarts();
 		List<CartItem> lstItems = itemService.findByUser(user.getId());
 		model.addAttribute("lstItems", lstItems);
@@ -77,11 +74,11 @@ public class CartController {
 		model.addAttribute("categories", categories);
 		List<Brand> listBra = this.brandService.getAll();
 		model.addAttribute("listBra", listBra);
-		return "cart/index";
+		return "checkout/index";
 	}
 
-	@PostMapping("/addcart")
-	public String addItemToCart(@RequestParam("ProductID") Long ProductID,
+	@PostMapping("/order")
+	public String addOrder(@RequestParam("ProductID") Long ProductID,
 			@RequestParam("Quantity") Integer Quantity,
 			Model model,
 			Principal principal,
@@ -91,13 +88,10 @@ public class CartController {
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
-		if (this.itemService.create(ProductID, Quantity, user)) {
+		if (this.orderService.create(ProductID, Quantity, user)) {
 			return "redirect:" + request.getHeader("Referer");
 		} else {
 			return "redirect:" + request.getHeader("Referer");
 		}
 	}
-
-	
-
 }
