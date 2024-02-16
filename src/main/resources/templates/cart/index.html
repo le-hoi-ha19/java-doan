@@ -49,9 +49,9 @@
 
                 <!--shopping cart area start -->
                 <div class="shopping_cart_area">
-                    <form action="#">
-                        <div class="row">
-                            <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <form th:action="@{/update-cart}" method="post">
                                 <div class="table_desc">
                                     <div class="cart_page table-responsive">
                                         <table>
@@ -66,25 +66,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody th:if="${check == null}">
-                                                <tr th:each="cartItem  : ${lstItems}">
-                                                    <td class="product_remove"><a href="#"><i
-                                                                class="fa fa-trash-o"></i></a></td>
-                                                    <td class="product_thumb"><a href="#">
-                                                            <img th:src="@{'/uploads/'+${cartItem.products.Avatar}}"
-                                                                style="max-width: 40px" class="img-fluid" alt>
-                                                        </a></td>
+                                                <tr th:each="cartItem : ${lstItems}">
+                                                    <input type="hidden" name="ProductID"
+                                                        th:value="${cartItem.products.ProductID}">
+                                                    <td class="product_remove"><button type="submit" name="action"
+                                                            value="delete" title="Xóa"><i
+                                                                class="fa fa-trash-o"></i></button></td>
+                                                    <td class="product_thumb"><a href="#"><img
+                                                                th:src="@{'/uploads/'+${cartItem.products.Avatar}}"
+                                                                style="max-width: 40px" class="img-fluid" alt></a></td>
                                                     <td class="product_name"><a href="#"
                                                             th:text="${cartItem.products.ProductName}"></a></td>
                                                     <td class="product-price"
                                                         th:text="${#numbers.formatDecimal(cartItem.products.Price - cartItem.products.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
                                                     </td>
-                                                    </td>
-
                                                     <td class="product_quantity"><input min="0" max="100"
-                                                            th:value="${cartItem.Quantity}" type="number"></td>
+                                                            name="Quantity" th:value="${cartItem.Quantity}"
+                                                            type="number"></td>
                                                     <td class="product_total"
                                                         th:text="${#numbers.formatDecimal(cartItem.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
-                                                    </td>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -94,16 +94,18 @@
                                         </div>
                                     </div>
                                     <div class="cart_submit">
-                                        <button type="submit">Cập nhật</button>
+                                        <button type="submit" name="action" value="update" title="Cập nhật">Cập
+                                            nhật</button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                        <!-- coupon code area start -->
-                        <div class="coupon_area">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <!-- <div class="coupon_code">
+                    </div>
+                    <!-- coupon code area start -->
+                    <div class="coupon_area">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <!-- <div class="coupon_code">
                                             <h3>Coupon</h3>
                                             <div class="coupon_inner">
                                                 <p>Enter your coupon code if you
@@ -114,39 +116,38 @@
                                                     coupon</button>
                                             </div>
                                         </div> -->
-                                </div>
-                                <div class="col-lg-6 col-md-6" th:if="${check == null}">
-                                    <div class="coupon_code" th:each="cart  : ${listViewsCart}">
-                                        <h3>Tổng giỏ hàng</h3>
-                                        <div class="coupon_inner">
-                                            <div class="cart_subtotal">
-                                                <p>Tổng phụ</p>
-                                                <p class="cart_amount"
-                                                    th:text="${#numbers.formatDecimal(cart.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
-                                                </p>
-                                            </div>
-                                            <div class="cart_subtotal ">
-                                                <p>Phí vận chuyển</p>
-                                                <p class="cart_amount"><span>Tỷ giá cố định:</span>15,000 VNĐ</p>
-                                            </div>
-                                            <a href="#">Tính toán vận chuyển</a>
+                            </div>
+                            <div class="col-lg-6 col-md-6" th:if="${check == null}">
+                                <div class="coupon_code" th:each="cart  : ${listViewsCart}">
+                                    <h3>Tổng giỏ hàng</h3>
+                                    <div class="coupon_inner">
+                                        <div class="cart_subtotal">
+                                            <p>Tổng phụ</p>
+                                            <p class="cart_amount"
+                                                th:text="${#numbers.formatDecimal(cart.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                                            </p>
+                                        </div>
+                                        <div class="cart_subtotal ">
+                                            <p>Phí vận chuyển</p>
+                                            <p class="cart_amount"><span>Tỷ giá cố định:</span>15,000 VNĐ</p>
+                                        </div>
+                                        <a href="#">Tính toán vận chuyển</a>
 
-                                            <div class="cart_subtotal">
-                                                <p>Tổng cộng</p>
-                                                <p class="cart_amount"
-                                                    th:text="${#numbers.formatDecimal(cart.TotalsPrice + 15000, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
-                                                </p>
-                                            </div>
-                                            <div class="checkout_btn">
-                                                <a href="/checkout">Tiến hành kiểm tra</a>
-                                            </div>
+                                        <div class="cart_subtotal">
+                                            <p>Tổng cộng</p>
+                                            <p class="cart_amount"
+                                                th:text="${#numbers.formatDecimal(cart.TotalsPrice + 15000, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">
+                                            </p>
+                                        </div>
+                                        <div class="checkout_btn">
+                                            <a href="/checkout">Tiến hành kiểm tra</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--coupon code area end-->
-                    </form>
+                    </div>
+                    <!--coupon code area end-->
                 </div>
                 <!--shopping cart area end -->
 

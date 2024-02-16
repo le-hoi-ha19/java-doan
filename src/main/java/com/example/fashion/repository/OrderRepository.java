@@ -1,6 +1,7 @@
 package com.example.fashion.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.fashion.models.Order;
@@ -10,5 +11,8 @@ import com.example.fashion.models.User;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Order findByUser(User user);
+
+    @Query(value = "SELECT COALESCE(SUM(o.TotalsPrice), 0) FROM Order o WHERE o.OrderStatus = 'Đã xác nhận' AND o.OrderStatus = 'Đang giao hàng'")
+    long countTotalPrice();
     
 }

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Sửa sản phẩm</title>
+  <title th:text="'Chỉnh sửa sản phẩm' + ${Product.ProductName}"></title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -136,7 +136,7 @@
 
   <main id="main" class="main">
     <div class="pagetitle">
-      <h2>Xác nhận sửa sản phẩm</h2>
+      <h2 th:text="'Xác nhận sửa sản phẩm' + '  ' + ${Product.ProductName}"></h2>
     </div>
     <div class="container shadow p-5">
       <div class="row pb-2">

@@ -50,9 +50,34 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public Boolean update(CartItem cartItem) {
+    public Boolean update(Long ProductID, Integer Quantity, User user) {
         try {
-            this.cartItemRepository.save(cartItem);
+            // Tìm kiếm giỏ hàng của người dùng
+            Cart cart = cartRepository.findByUser(user);
+
+            // Lấy danh sách các CartItem của giỏ hàng của người dùng
+            Set<CartItem> cartItems = cart.getCartItems();
+
+            // Duyệt qua từng CartItem để cập nhật số lượng và tổng giá tiền
+            for (CartItem cartItem : cartItems) {
+                if (cartItem.getProducts().getProductID().equals(ProductID)) {
+                    // Nếu tìm thấy CartItem có ProductID tương ứng, cập nhật thông tin
+                    Product product = cartItem.getProducts();
+                    cartItem.setQuantity(Quantity);
+                    double totalItemPrice = (product.getPrice() - product.getSalePrice()) * Quantity;
+                    cartItem.setTotalsPrice(totalItemPrice);
+                    cartItemRepository.save(cartItem);
+                }
+            }
+
+            // Sau khi cập nhật toàn bộ CartItem, cập nhật lại tổng số lượng và tổng giá
+            // tiền cho giỏ hàng
+            int totalQuantity = cartItemRepository.sumQuantityByCart(cart.getCartID());
+            double totalPrice = cartItemRepository.sumTotalPriceByCart(cart.getCartID());
+            cart.setTotalsPrice(totalPrice);
+            cart.setTotalsItem(totalQuantity);
+            cartRepository.save(cart);
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,9 +86,28 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public Boolean delete(Long CI_ID) {
+    public Boolean delete(Long ProductID, User user) {
         try {
-            this.cartItemRepository.delete(findByID(CI_ID));
+            Product product = productService.findByID(ProductID);
+            Cart newCart = cartRepository.findByUser(user);
+            CartItem cartItem = cartItemRepository.findByProduct(ProductID);
+            this.cartItemRepository.delete(cartItem);
+
+            // Kiểm tra xem còn bao nhiêu CartItem trong Cart
+            int totalQuantity = this.cartItemRepository.sumQuantityByCart(newCart.getCartID());
+            if (totalQuantity == 0) {
+                // Nếu không còn CartItem nào, xóa luôn Cart
+                this.cartRepository.delete(newCart);
+                return true;
+            }
+
+            // Nếu còn CartItem, cập nhật lại thông tin của Cart
+            double totalPrice = this.cartItemRepository.sumTotalPriceByCart(newCart.getCartID());
+            newCart.setCartItems(cartItemRepository.findByCart(newCart));
+            newCart.setTotalsPrice(totalPrice);
+            newCart.setTotalsItem(totalQuantity);
+            this.cartRepository.save(newCart);
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();

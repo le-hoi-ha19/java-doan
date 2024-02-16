@@ -62,7 +62,6 @@
                     <th class="col-1 text-center">Số lượng</th>
                     <th class="col-1 text-center">Thể loại</th>
                     <th class="col-1 text-center">Thương hiệu</th>
-                    <!-- <th class="col-2 text-center">Thời gian đăng</th> -->
                     <th class="col-2 text-center">Chức năng</th>
                   </tr>
                 </thead>
@@ -74,18 +73,14 @@
                       <img th:src="@{'/uploads/'+${product.Avatar}}" style="max-width: 40px" class="img-fluid" />
                     </td>
                     <td class="text-center">
-                      <span th:text="${product.Price}"></span>vnđ
+                      <span th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                     </td>
-                    <td th:text="${product.SalePrice}" class="text-center"></td>
+                    <td th:text="${#numbers.formatDecimal(product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'" class="text-center"></td>
                     <td class="text-center">
                       <span th:text="${product.Quantity}"></span> cái
                     </td>
                     <td th:text="${product.category.CatName}" class="text-center"></td>
                     <td th:text="${product.brand.BrandName}" class="text-center"></td>
-                    <!-- <td class="text-center">
-                            <span th:text="${product.CreatedDate}"></span>
-                          </td>
-                          -->
                     <td class="text-center">
                       <a th:href="@{/admin/edit-product/{ProductID}(ProductID=${product.ProductID})}"
                         class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>

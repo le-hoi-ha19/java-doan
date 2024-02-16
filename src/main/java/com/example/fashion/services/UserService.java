@@ -7,6 +7,8 @@ import com.example.fashion.models.User;
 public interface UserService {
     User findByUsername(String username);
 
+    User findByFullname(String fullname);
+
     User findByID(Long id);
 
     Boolean createWithUserRole(User user);

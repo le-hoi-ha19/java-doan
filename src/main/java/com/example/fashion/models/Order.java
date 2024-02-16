@@ -25,8 +25,8 @@ public class Order {
     private LocalDate OrderDate;
     @Column(name = "DeliveryDate")
     private LocalDate DeliveryDate;
-    @Column(name = "TotalPrice")
-    private Double TotalPrice;
+    @Column(name = "TotalsPrice")
+    private Double TotalsPrice;
     @Column(name = "ShippingFee")
     private Double ShippingFee;
     @Column(name = "OrderStatus")
@@ -63,12 +63,12 @@ public class Order {
         this.DeliveryDate = DeliveryDate;
     }
 
-    public Double getTotalPrice() {
-        return this.TotalPrice;
+    public Double getTotalsPrice() {
+        return this.TotalsPrice;
     }
 
-    public void setTotalPrice(Double TotalPrice) {
-        this.TotalPrice = TotalPrice;
+    public void setTotalsPrice(Double TotalsPrice) {
+        this.TotalsPrice = TotalsPrice;
     }
 
     public Double getShippingFee() {
@@ -111,13 +111,12 @@ public class Order {
         this.user = user;
     }
 
-    public Order(Long OrderID, LocalDate OrderDate, LocalDate DeliveryDate, Double TotalPrice, Double ShippingFee,
-            String OrderStatus, String Notes, Set<OrderDetail> orderDetails, User user) {
+    public Order(Long OrderID, LocalDate OrderDate, LocalDate DeliveryDate, Double TotalsPrice, Double ShippingFee, String OrderStatus, String Notes, Set<OrderDetail> orderDetails, User user) {
         super();
         this.OrderID = OrderID;
         this.OrderDate = OrderDate;
         this.DeliveryDate = DeliveryDate;
-        this.TotalPrice = TotalPrice;
+        this.TotalsPrice = TotalsPrice;
         this.ShippingFee = ShippingFee;
         this.OrderStatus = OrderStatus;
         this.Notes = Notes;

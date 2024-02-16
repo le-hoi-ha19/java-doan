@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title th:text="'Đơn hàng của khách' + '   ' + ${order.user.fullname}"></title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="/admun/assets/img/favicon.png" rel="icon" />
+    <link href="/admun/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="/admun/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="/admun/assets/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <div th:replace="admin/fragments/header :: header"></div>
+    <!-- End Header -->
+
+    <!-- ======= Sidebar ======= -->
+    <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+    <!-- End Sidebar-->
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h2 th:text="'Sửa đơn hàng cho khách hàng' + '   ' + ${order.user.fullname}"></h2>
+        </div>
+        <div class="container shadow p-5">
+            <div class="row pb-2">
+                <h2>Sửa đơn hàng</h2>
+            </div>
+            <!-- Thêm vào trong thẻ form để hiển thị thông báo lỗi -->
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+            <form role="form" method="post" th:action="@{/admin/edit-order}" th:object="${order}">
+                <input type="hidden" name="OrderID" class="form-control mb-3" th:field="*{OrderID}">
+                <div asp-validation-summary="All"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="OrderStatus">Tình trạng đặt hàng:</label>
+                        <select name="OrderStatus" class="form-control mb-3" th:field="*{OrderStatus}">
+                            <option value="Chờ xử lý">Chờ xử lý</option>
+                            <option value="Đang xử lý">Đang xử lý</option>
+                            <option value="Đã xác nhận">Đã xác nhận</option>
+                            <option value="Đang giao hàng">Đang giao hàng</option>
+                        </select>
+                        <span class="alert-danger"></span>
+                    </div>
+                </div>
+
+                <button type="submit" name="sua" class="btn btn-lg btn-primary p-2"><i
+                        class="bi bi-file-plus-fill"></i>Lưu</button>
+                <a href="/admin/category" class="btn btn-lg btn-warning p-2">Quay lại</a>
+            </form>
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <div th:replace="admin/fragments/footer :: footer"></div>
+    <!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <div th:replace="admin/fragments/script :: script"></div>
+</body>
+
+</html>

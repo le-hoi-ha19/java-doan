@@ -2,6 +2,7 @@ package com.example.fashion.controller.customer;
 
 import java.util.List;
 import java.util.Set;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,7 +61,7 @@ public class CheckoutController {
 			return "redirect:admin/login";
 		}
 		String username = principal.getName();
-		User user = userService.findByUsername(username);  
+		User user = userService.findByUsername(username);
 		Set<Cart> cart = user.getCarts();
 		List<CartItem> lstItems = itemService.findByUser(user.getId());
 		model.addAttribute("lstItems", lstItems);
@@ -79,19 +80,29 @@ public class CheckoutController {
 
 	@PostMapping("/order")
 	public String addOrder(@RequestParam("ProductID") Long ProductID,
-			@RequestParam("Quantity") Integer Quantity,
-			Model model,
-			Principal principal,
-			HttpServletRequest request) {
+		Model model, Principal principal, HttpServletRequest request) {
 		if (principal == null) {
 			return "redirect:/admin/login";
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
-		if (this.orderService.create(ProductID, Quantity, user)) {
-			return "redirect:" + request.getHeader("Referer");
-		} else {
-			return "redirect:" + request.getHeader("Referer");
+		Set<Cart> carts = user.getCarts();
+
+		try {
+			for (Cart cart : carts) {
+				Set<CartItem> cartItems = cart.getCartItems();
+				for (CartItem cartItem : cartItems) {
+					if (this.orderService.create(cart, cartItem)) {
+						itemService.delete(ProductID, user);
+					}
+				}
+				cartService.delete(cart.getCartID());
+			}
+			return "/cart";
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return "/cart";
 	}
+
 }

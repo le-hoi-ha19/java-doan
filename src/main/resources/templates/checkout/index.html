@@ -51,7 +51,7 @@
                 <!--Checkout page section-->
                 <div class="Checkout_section">
                     <div class="checkout_form">
-                        <form role="form" method="post" th:action="@{/order}" th:object="${orders}">
+                        <form role="form" method="post" th:action="@{/order}" th:object="${cart}">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <h3>Chi tiết thanh toán</h3>
@@ -192,7 +192,7 @@
                                                 <tr class="order_total">
                                                     <th>Tổng giá tiền</th>
                                                     <td><strong
-                                                            th:text="${#numbers.formatDecimal(cart.TotalsPrice + 15000, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></strong>
+                                                            th:text="${#numbers.formatDecimal(cart.TotalsPrice + 15000, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'" name="TotalsPrice"></strong>
                                                     </td>
                                                 </tr>
                                             </tfoot>

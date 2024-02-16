@@ -1,6 +1,7 @@
 package com.example.fashion.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,5 +24,8 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     @Query("SELECT ci FROM CartItem ci JOIN ci.carts c WHERE c.user.id = :userId")
     List<CartItem> findByUser(@Param("userId") Long userId);
+
+    @Query("SELECT ci FROM CartItem ci WHERE ci.carts = :cart")
+    Set<CartItem> findByCart(@Param("cart") Cart cart);
 
 }

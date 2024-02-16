@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.fashion.models.Product;
+import com.example.fashion.services.OrderService;
 import com.example.fashion.services.ProductService;
 import com.example.fashion.services.UserService;
 
@@ -22,6 +23,8 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrderService orderService;
     @GetMapping
     public String index() {
         return "redirect:/admin/";
@@ -33,6 +36,8 @@ public class AdminController {
         model.addAttribute("totalProducts", totalProducts);
         long totalUser = this.userService.countTotalUsers();
         model.addAttribute("totalUser", totalUser);
+        long totalPrice = this.orderService.countTotalPrice();
+        model.addAttribute("totalPrice", totalPrice);
         return "admin/index";
     }
 }

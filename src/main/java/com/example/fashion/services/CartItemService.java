@@ -14,10 +14,12 @@ public interface CartItemService {
 
     CartItem findByID(Long CI_ID);
 
-    Boolean update(CartItem cartItem);
+    Boolean update(Long ProductID, Integer Quantity, User user);
 
-    Boolean delete(Long CI_ID);
+    Boolean delete(Long ProductID, User user);
 
     List<CartItem> findByUser(Long userID);
+    
+    
 
 }

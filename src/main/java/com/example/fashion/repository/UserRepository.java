@@ -13,6 +13,8 @@ import com.example.fashion.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	User findByUsername(String username);
 
+	User findByFullname(String fullname);
+
 	@Query("SELECT DISTINCT u FROM User u JOIN FETCH u.userRoles ur JOIN FETCH ur.role r WHERE r.name = 'CUSTOMER'")
     List<User> findCustomerUsers();
 	

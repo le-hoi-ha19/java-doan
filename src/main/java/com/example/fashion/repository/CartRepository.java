@@ -13,5 +13,7 @@ import com.example.fashion.models.User;
 public interface CartRepository extends JpaRepository<Cart, Long>{
    
     Cart findByUser(User user);
+
+    // Cart findByUserID(Long id);
     
 }

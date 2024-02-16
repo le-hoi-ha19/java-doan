@@ -41,8 +41,10 @@
                     <td class="text-center">
                       <img th:src="@{'/uploads/'+${post.Avatar}}" style="max-width: 40px" class="img-fluid" />
                     </td>
-                    <td class="text-center" th:text="${#strings.length(post.Abstract) > 30 ? #strings.substring(post.Abstract, 0, 30) + '...' : post.Abstract}"></td>
-                    <td  class="text-center" th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></td>
+                    <td class="text-center"
+                      th:text="${#strings.length(post.Abstract) > 30 ? #strings.substring(post.Abstract, 0, 30) + '...' : post.Abstract}">
+                    </td>
+                    <td class="text-center" th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></td>
                     <td th:text="${post.brand.BrandName}" class="text-center"></td>
                     <td class="text-center">
                       <a th:href="@{/admin/edit-post/{PostID}(PostID=${post.PostID})}" class="btn btn-primary btn-sm"><i

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Quản lý đơn hàng</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="/admun/assets/img/favicon.png" rel="icon" />
+    <link href="/admun/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet" />
+
+    <!-- Vendor CSS Files -->
+    <link href="/admun/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/admun/assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+
+    <!-- Template Main CSS File -->
+    <link href="/admun/assets/css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div th:replace="admin/fragments/header :: header"></div>
+
+    <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Danh sách đơn hàng</h1>
+            <nav></nav>
+        </div>
+        <!-- End Page Title -->
+        <section class="section dashboard">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card recent-sales overflow-auto">
+                        <div class="card-body mt-4">
+                            <table class="table table-borderless datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="col-1 text-center">#</th>
+                                        <th class="col-1 text-center">Ngày đặt hàng</th>
+                                        <th class="col-1 text-center">Tên khách hàng</th>
+                                        <th class="col-2 text-center">Địa chỉ</th>
+                                        <th class="col-1 text-center">Số điện thoại</th>
+                                        <th class="col-1 text-center">Trạng thái</th>
+                                        <th class="col-1 text-center">Tổng cộng</th>
+                                        <th class="col-3 text-center">Ghi chú</th>
+                                        <th class="col-1 text-center">Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="order, iterStat : ${lstOrders}">
+                                        <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
+                                        <td th:text="${order.OrderDate}" class="text-center"></td>
+                                        <td th:text="${order.user.fullname}" class="text-center"></td>
+                                        <td th:text="${order.user.address}" class="text-center"></td>
+                                        <td th:text="${order.user.telephone}" class="text-center"></td>
+                                        <td th:text="${order.OrderStatus}" th:style="'color:' + (${order.OrderStatus} == 'Chờ xử lý' ? '#4682B4' : (${order.OrderStatus} == 'Đang xử lý' ? '#FFD700' : '#008000'))" class="text-center"></td>
+                                        <td class="text-center"> <span th:text="${#numbers.formatDecimal(order.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></td>
+                                        <td th:text="${order.Notes}" class="text-center"></td>
+                                        <td class="text-center">
+                                            <a th:href="@{/admin/edit-order/{OrderID}(OrderID=${order.OrderID})}"
+                                                class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
+                                            <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
+                                                href=""
+                                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- End #main -->
+
+
+    <div th:replace="admin/fragments/footer :: footer"></div>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <div th:replace="admin/fragments/script :: script"></div>
+</body>
+
+</html>

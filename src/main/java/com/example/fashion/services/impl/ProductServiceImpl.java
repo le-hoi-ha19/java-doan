@@ -23,12 +23,6 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.findAll();
     }
 
-    // @Override
-    // public List<Product> findTop5ByOrderByidDesc() {
-    // // TODO Auto-generated method stub
-    // return this.productRepository.findAll();
-    // }
-
     @Override
     public Boolean create(Product products) {
         try {

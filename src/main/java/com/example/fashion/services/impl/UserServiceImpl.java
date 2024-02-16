@@ -117,4 +117,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User findByFullname(String fullname) {
+        return userRepository.findByFullname(fullname);
+
+    }
+
 }
