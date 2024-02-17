@@ -98,11 +98,11 @@ public class CheckoutController {
 				}
 				cartService.delete(cart.getCartID());
 			}
-			return "/cart";
+			return "/index";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "/cart";
+		return "/index";
 	}
 
 }

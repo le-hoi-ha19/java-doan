@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.example.fashion.models.Brand;
+import com.example.fashion.models.Category;
 import com.example.fashion.models.Product;
 
 public interface ProductService {
@@ -25,4 +27,8 @@ public interface ProductService {
 	List<Product> list6Products();
 
 	long countTotalProducts();
+
+	Product findByCategory(Category category);
+
+	Product findByBrand(Brand brand);
 }

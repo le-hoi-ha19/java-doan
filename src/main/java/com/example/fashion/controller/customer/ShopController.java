@@ -94,6 +94,9 @@ public class ShopController {
             model.addAttribute("listBra", listBra);
         }
 
+        Product relatedProducts = productService.findByCategory(product.getCategory());
+        model.addAttribute("relatedProducts", relatedProducts);
+
         long totalProducts = this.productService.countTotalProducts();
         model.addAttribute("totalProducts", totalProducts);
         List<Product> listProducts = this.productService.getAll();

@@ -8,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.fashion.models.Brand;
+import com.example.fashion.models.Category;
 import com.example.fashion.models.Product;
 import com.example.fashion.repository.ProductRepository;
 import com.example.fashion.services.ProductService;
@@ -78,9 +80,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.countTotalProducts();
     }
 
-    // @Override
-    // public List<Product> searchProduct(String keyword) {
-    // return this.productRepository.searchProduct(keyword);
-    // }
+    @Override
+    public Product findByCategory(Category category) {
+        return productRepository.findByCategory(category);
+    }
+
+    @Override
+    public Product findByBrand(Brand brand) {
+        return productRepository.findByBrand(brand);
+    }
+
+    
 
 }

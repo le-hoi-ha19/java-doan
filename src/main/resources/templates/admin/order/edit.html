@@ -55,6 +55,12 @@
             </div>
             <form role="form" method="post" th:action="@{/admin/edit-order}" th:object="${order}">
                 <input type="hidden" name="OrderID" class="form-control mb-3" th:field="*{OrderID}">
+                <input type="hidden" name="OrderDate" class="form-control mb-3" th:field="*{OrderDate}">
+                <input type="hidden" name="DeliveryDate" class="form-control mb-3" th:field="*{DeliveryDate}">
+                <input type="hidden" name="TotalsPrice" class="form-control mb-3" th:field="*{TotalsPrice}">
+                <input type="hidden" name="Notes" class="form-control mb-3" th:field="*{ShippingFee}">
+                <input type="hidden" name="user.id" class="form-control mb-3" th:field="*{user.id}">
+                <input type="hidden" name="Notes" class="form-control mb-3" th:field="*{Notes}">
                 <div asp-validation-summary="All"></div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -68,10 +74,57 @@
                         <span class="alert-danger"></span>
                     </div>
                 </div>
+                <!-- <section class="section dashboard">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card recent-sales overflow-auto">
+                                <div class="card-body mt-4">
+                                    <table class="table table-borderless datatable">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-1 text-center">#</th>
+                                                <th class="col-1 text-center">Ngày đặt hàng</th>
+                                                <th class="col-1 text-center">Tên khách hàng</th>
+                                                <th class="col-2 text-center">Địa chỉ</th>
+                                                <th class="col-1 text-center">Số điện thoại</th>
+                                                <th class="col-1 text-center">Trạng thái</th>
+                                                <th class="col-1 text-center">Tổng cộng</th>
+                                                <th class="col-3 text-center">Ghi chú</th>
+                                                <th class="col-1 text-center">Chức năng</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="order, iterStat : ${lstOrders}">
+                                                <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
+                                                <td th:text="${order.OrderDate}" class="text-center"></td>
+                                                <td th:text="${order.user.fullname}" class="text-center"></td>
+                                                <td th:text="${order.user.address}" class="text-center"></td>
+                                                <td th:text="${order.user.telephone}" class="text-center"></td>
+                                                <td th:text="${order.OrderStatus}"
+                                                    th:style="'color:' + (${order.OrderStatus} == 'Chờ xử lý' ? '#4682B4' : (${order.OrderStatus} == 'Đang xử lý' ? '#FFD700' : '#008000'))"
+                                                    class="text-center"></td>
+                                                <td class="text-center"> <span
+                                                        th:text="${#numbers.formatDecimal(order.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                                </td>
+                                                <td th:text="${order.Notes}" class="text-center"></td>
+                                                <td class="text-center">
+                                                    <a href="" class="btn btn-primary btn-sm"><i
+                                                            class="bi bi-pencil"></i></a>
+                                                    <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')" href=""
+                                                        class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section> -->
 
                 <button type="submit" name="sua" class="btn btn-lg btn-primary p-2"><i
                         class="bi bi-file-plus-fill"></i>Lưu</button>
-                <a href="/admin/category" class="btn btn-lg btn-warning p-2">Quay lại</a>
+                <a href="/admin/order" class="btn btn-lg btn-warning p-2">Quay lại</a>
             </form>
     </main>
     <!-- End #main -->

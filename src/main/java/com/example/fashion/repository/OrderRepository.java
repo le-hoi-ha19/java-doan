@@ -12,7 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Order findByUser(User user);
 
-    @Query(value = "SELECT COALESCE(SUM(o.TotalsPrice), 0) FROM Order o WHERE o.OrderStatus = 'Đã xác nhận' AND o.OrderStatus = 'Đang giao hàng'")
+    @Query(value = "SELECT COALESCE(SUM(o.TotalsPrice), 0) FROM Order o WHERE o.OrderStatus = 'Đang giao hàng'")
     long countTotalPrice();
-    
+
 }

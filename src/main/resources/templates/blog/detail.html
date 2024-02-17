@@ -61,35 +61,28 @@
                                             <div class="blog__post">
                                                 <ul>
                                                     <li class="post_author">Đăng bởi : admin</li>
-                                                    <li class="post_date"> Mar102015	</li>
+                                                    <li class="post_date" th:utext="${#dates.format(Post.CreatedDate, 'dd/MM/yyyy')}"></li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="blog_active owl-carousel">
                                            <div class="blog_thumb blog__hover">
-                                                <a href="blog-details.html"><img src="assets\img\blog\blog9.jpg" alt=""></a>
+                                                <a href="blog-details.html"><img th:src="@{'/uploads/'+${Post.Avatar}}" alt=""></a>
                                             </div>
                                             <div class="blog_thumb">
-                                                <a href="blog-details.html"><img src="assets\img\blog\blog7.jpg" alt=""></a>
+                                                <a href="blog-details.html"><img th:src="@{'/uploads/'+${Post.Img1}}" alt=""></a>
                                             </div>
                                             <div class="blog_thumb">
-                                                <a href="blog-details.html"><img src="assets\img\blog\blog8.jpg" alt=""></a>
+                                                <a href="blog-details.html"><img th:src="@{'/uploads/'+${Post.Img2}}" alt=""></a>
                                             </div>
                                             <div class="blog_thumb">
-                                                <a href="blog-details.html"><img src="assets\img\blog\blog7.jpg" alt=""></a>
+                                                <a href="blog-details.html"><img th:src="@{'/uploads/'+${Post.Img3}}" alt=""></a>
                                             </div>
                                         </div>   
 
                                         <div class="blog_entry_content">
-                                           <p>Donec vitae hendrerit arcu, sit amet faucibus nisl. Cras pretium arcu ex. Aenean posuere libero eu augue condimentum rhoncus. Praesent ornare tortor ac ante egestas hendrerit. Aliquam et metus pharetra, bibendum massa nec, fermentum odio. Nunc id leo ultrices, mollis ligula in, finibus tortor. Mauris eu dui ut lectus fermentum eleifend</p>
-
-                                           <p>Proin consectetur aliquam odio nec fringilla. Sed interdum at justo in efficitur. Vivamus gravida volutpat sodales. Fusce ornare sit amet ligula condimentum sagittis.</p>
-
-                                           <p class="blockquote">Quisque semper nunc vitae erat pellentesque, ac placerat arcu consectetur. In venenatis elit ac ultrices convallis. Duis est nisi, tincidunt ac urna sed, cursus blandit lectus. In ullamcorper sit amet ligula ut eleifend. Proin dictum tempor ligula, ac feugiat metus. Sed finibus tortor eu scelerisque scelerisque.</p>
-
-                                            <p>Aenean et tempor eros, vitae sollicitudin velit. Etiam varius enim nec quam tempor, sed efficitur ex ultrices. Phasellus pretium est vel dui vestibulum condimentum. Aenean nec suscipit nibh. Phasellus nec lacus id arcu facilisis elementum. Curabitur lobortis, elit ut elementum congue, erat ex bibendum odio, nec iaculis lacus sem non lorem. Duis suscipit metus ante, sed convallis quam posuere quis. Ut tincidunt eleifend odio, ac fringilla mi vehicula nec. Nunc vitae lacus eget lectus imperdiet tempus sed in dui. Nam molestie magna at risus consectetur, placerat suscipit justo dignissim. Sed vitae fringilla enim, nec ullamcorper arcu.</p>
-
-                                            <p>Suspendisse turpis ipsum, tempus in nulla eu, posuere pharetra nibh. In dignissim vitae lorem non mollis. Praesent pretium tellus in tortor viverra condimentum. Nullam dignissim facilisis nisl, accumsan placerat justo ultricies vel. Vivamus finibus mi a neque pretium, ut convallis dui lacinia. Morbi a rutrum velit. Curabitur sagittis quam quis consectetur mattis. Aenean sit amet quam vel turpis interdum sagittis et eget neque. Nunc ante quam, luctus et neque a, interdum iaculis metus. Aliquam vel ante mattis, placerat orci id, vehicula quam. Suspendisse quis eros cursus, viverra urna sed, commodo mauris. Cras diam arcu, fringilla a sem condimentum, viverra facilisis nunc. Curabitur vitae orci id nulla maximus maximus. Nunc pulvinar sollicitudin molestie.</p>
+                                           <p th:text="${Post.Abstract}"></p>
+                                           <p th:text="${Post.Contents}"></p>
                                         </div>
                                         <div class="blog_entry_meta">
                                            <ul>

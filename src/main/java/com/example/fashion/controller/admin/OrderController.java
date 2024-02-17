@@ -43,23 +43,17 @@ public class OrderController {
     }
 
     @PostMapping("/edit-order")
-    public String update(@ModelAttribute("order") Order order, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang sửa danh mục với thông báo lỗi
-            return "admin/order/edit";
+    public String update(@ModelAttribute("order") Order order, Model model) {
+       
+        try{
+            if(this.orderService.update(order)){
+                return "redirect:/admin/order";
+            }
+            
+        } catch(Exception e){
+            e.printStackTrace();
         }
-
-        if (order.getOrderStatus() == null || order.getNotes().trim().isEmpty()) {
-            model.addAttribute("error", "Tên thể loại không được để trống");
-            return "admin/order/edit";
-        }
-
-        // Tiến hành cập nhật danh mục nếu không có lỗi
-        if (this.orderService.update(order)) {
-            return "redirect:/admin/order/index";
-        } else {
-            return "redirect:/admin/order/edit";
-        }
+        return "redirect:/admin/order/edit";
     }
 
 }
