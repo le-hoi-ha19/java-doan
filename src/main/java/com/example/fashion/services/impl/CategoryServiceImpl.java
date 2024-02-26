@@ -59,4 +59,10 @@ public class CategoryServiceImpl implements CategoryService {
         return false;
     }
 
+    // @Override
+    // public Category findByCatName(String CatName) {
+    //     return categoryRepository.findByCatName(CatName);
+
+    // }
+
 }

@@ -28,7 +28,7 @@ public interface ProductService {
 
 	long countTotalProducts();
 
-	Product findByCategory(Category category);
+	List <Product> findByCategory(Category category);
 
 	Product findByBrand(Brand brand);
 }

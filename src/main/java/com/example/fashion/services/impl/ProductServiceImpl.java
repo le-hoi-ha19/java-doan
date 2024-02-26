@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findByCategory(Category category) {
+    public List <Product> findByCategory(Category category) {
         return productRepository.findByCategory(category);
     }
 
@@ -89,7 +89,4 @@ public class ProductServiceImpl implements ProductService {
     public Product findByBrand(Brand brand) {
         return productRepository.findByBrand(brand);
     }
-
-    
-
 }

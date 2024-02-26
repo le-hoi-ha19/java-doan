@@ -149,7 +149,7 @@
                     <a href="/">Trang chủ</a>
                   </li>
                   <li>
-                    <a href="/shop">Cửa hàng</a>
+                    <a href="/products">Sản phẩm</a>
                   </li>
                   <li>
                     <a href="blog.html">Danh mục</a>
@@ -157,7 +157,7 @@
                       <div class="mega_items jewelry" th:each="category : ${categories}">
                         <ul>
                           <li>
-                            <a th:href="@{'/products/' + ${category.CatName}}" th:text="${category.CatName}"></a>
+                            <a th:href="@{'/products/' + ${category.CatID}}" th:text="${category.CatName}"></a>
                           </li>
                         </ul>
                       </div>

@@ -27,7 +27,7 @@ import com.example.fashion.services.UserService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class ShopController {
+public class ProductsController {
 
     @Autowired
     private CategoryService categoryService;
@@ -41,20 +41,20 @@ public class ShopController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = { "/index", "/shop-detail" }, method = RequestMethod.POST)
-    public String home(Model model, Principal principal, HttpSession session) {
-        if (principal != null) {
-            session.setAttribute("username", principal.getName());
-            User user = userService.findByUsername(principal.getName());
-            Cart cart = (Cart) user.getCarts();
-            session.setAttribute("totalItems", cart.getTotalsItem());
-        } else {
-            session.removeAttribute("username");
-        }
-        return "shop/detail";
-    }
+    // @RequestMapping(value = { "/index", "/shop-detail" }, method = RequestMethod.POST)
+    // public String home(Model model, Principal principal, HttpSession session) {
+    //     if (principal != null) {
+    //         session.setAttribute("username", principal.getName());
+    //         User user = userService.findByUsername(principal.getName());
+    //         Cart cart = (Cart) user.getCarts();
+    //         session.setAttribute("totalItems", cart.getTotalsItem());
+    //     } else {
+    //         session.removeAttribute("username");
+    //     }
+    //     return "shop/detail";
+    // }
 
-    @GetMapping("/shop")
+    @GetMapping("/products")
     public String shop(Model model, @RequestParam(name = "pageNo", defaultValue = "1") Long pageNo) {
         Page<Product> listProducts = this.productService.getAll(pageNo);
 
@@ -77,7 +77,7 @@ public class ShopController {
         long totalProducts = this.productService.countTotalProducts();
         model.addAttribute("totalProducts", totalProducts);
 
-        return "shop/index";
+        return "product/index";
     }
 
     @GetMapping("/shop-detail/{ProductID}")
@@ -94,13 +94,23 @@ public class ShopController {
             model.addAttribute("listBra", listBra);
         }
 
-        Product relatedProducts = productService.findByCategory(product.getCategory());
+        List<Product> relatedProducts = productService.findByCategory(product.getCategory());
+        relatedProducts.removeIf(p -> p.getProductID().equals(ProductID));
         model.addAttribute("relatedProducts", relatedProducts);
 
-        long totalProducts = this.productService.countTotalProducts();
+        long totalProducts = productService.countTotalProducts();
+        totalProducts--;
+        List<Product> allProducts = productService.getAll();
+        allProducts.removeIf(p -> p.getProductID().equals(ProductID));
         model.addAttribute("totalProducts", totalProducts);
-        List<Product> listProducts = this.productService.getAll();
-        model.addAttribute("listProducts", listProducts);
-        return "shop/detail";
+        model.addAttribute("listProducts", allProducts);
+        return "product/detail";
+    }
+
+    @GetMapping("/products/{CatName}")
+    public String category(Model model, @PathVariable("CatID") Integer CatID){
+        Category category = this.categoryService.findByID(CatID);
+        model.addAttribute("Category", category);
+        return "product/category";
     }
 }
