@@ -240,7 +240,7 @@
                         <div th:if="${successMessage}" class="alert alert-success">
                           <p th:text="${successMessage}"></p>
                         </div>
-                        <input type="hidden" th:value="${Product.ProductID}" name="productID">
+                        <input type="hidden" th:value="${Product.ProductID}" name="ProductID">
                         <h2>Thêm bài đánh giá</h2>
                         <p>
                           Địa chỉ email của bạn sẽ không được công bố
@@ -284,7 +284,7 @@
               <div class="col-lg-3" th:each="product : ${listProducts}">
                 <div class="single_product">
                   <div class="product_thumb">
-                    <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
+                    <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img
                         th:src="@{'/uploads/'+${product.Avatar}}" alt="" /></a>
                     <div class="product_action">
                       <a href="#">
@@ -295,7 +295,7 @@
                     <span class="product_price"
                       th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></span>
                     <h3 class="product_title">
-                      <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
+                      <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"
                         th:text="${product.ProductName}"></a>
                     </h3>
                   </div>
@@ -330,7 +330,7 @@
               <div class="col-lg-3" th:each="product : ${relatedProducts}">
                 <div class="single_product">
                   <div class="product_thumb">
-                    <a   th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img th:src="@{'/uploads/'+${product.Avatar}}"  alt="" /></a>
+                    <a   th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img th:src="@{'/uploads/'+${product.Avatar}}"  alt="" /></a>
                     <div class="product_action">
                       <a href="#">
                         <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
@@ -339,7 +339,7 @@
                   <div class="product_content">
                     <span class="product_price" th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                     <h3 class="product_title">
-                      <a   th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}" th:text="${product.ProductName}"></a>
+                      <a   th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}" th:text="${product.ProductName}"></a>
                     </h3>
                   </div>
                   <div class="product_info">

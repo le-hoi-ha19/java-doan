@@ -38,7 +38,7 @@
                                 <ul>
                                     <li><a href="/">Trang chủ</a></li>
                                     <li><i class="fa fa-angle-right"></i></li>
-                                    <li>cửa hàng</li>
+                                    <li>sản phẩm</li>
                                 </ul>
                             </div>
                         </div>
@@ -57,35 +57,11 @@
                                 </div>
                                 <div class="layere_categorie" th:each="category : ${categories}">
                                     <ul>
-                                        <a href th:text="${category.CatName}"></a>
+                                        <a th:href="@{'/products/' + ${category.CatID}}"
+                                            th:text="${category.CatName}"></a>
                                     </ul>
                                 </div>
                             </div>
-                            <!--layere categorie end-->
-
-                            <!--color area start-->
-                            <!-- <div class="sidebar_widget color">
-                                            <h2>Color</h2>
-                                             <div class="widget_color">
-                                                <ul>
-
-                                                    <li><a href="#">Black <span>(10)</span></a></li>
-
-                                                    <li><a href="#">Orange <span>(12)</span></a></li>
-
-                                                    <li> <a href="#">Blue <span>(14)</span></a></li>
-
-                                                    <li><a href="#">Yellow <span>(15)</span></a></li>
-
-                                                    <li><a href="#">pink <span>(16)</span></a></li>
-
-                                                    <li><a href="#">green <span>(11)</span></a></li>
-
-                                                </ul>
-                                            </div>
-                                        </div>                  -->
-                            <!--color area end-->
-
                             <!--price slider start-->
                             <div class="sidebar_widget price">
                                 <h2>Giá tiền</h2>
@@ -107,7 +83,7 @@
                                         <a href="#"><img src="\assets\img\cart\cart.jpg" alt /></a>
                                     </div>
                                     <div class="cart_info">
-                                        <a href="#">lorem ipsum dolor</a>
+                                        <a href="#">Quần</a>
                                         <span class="cart_price">$115.00</span>
                                         <span class="quantity">Qty: 1</span>
                                     </div>
@@ -120,7 +96,7 @@
                                         <a href="#"><img src="assets\img\cart\cart2.jpg" alt></a>
                                     </div>
                                     <div class="cart_info">
-                                        <a href="#">Quisque ornare dui</a>
+                                        <a href="#">Áo</a>
                                         <span class="cart_price">$105.00</span>
                                         <span class="quantity">Qty: 1</span>
                                     </div>
@@ -141,7 +117,7 @@
                                     <h3>Thương hiệu</h3>
                                 </div>
                                 <div class="block_tags" th:each="brand : ${listBra}">
-                                    <a href="#" th:text="${brand.BrandName}"></a>
+                                    <a th:href="@{'/product/' + ${brand.BrandID}}"  th:text="${brand.BrandName}"></a>
                                 </div>
                             </div>
                             <!--popular tags end-->
@@ -160,7 +136,7 @@
                             <!--newsletter block end-->
 
                             <!--special product start-->
-                           
+
                             <!--special product end-->
 
                         </div>
@@ -221,7 +197,7 @@
                                                 <div class="single_product">
                                                     <div class="product_thumb">
                                                         <a
-                                                            th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
+                                                            th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img
                                                                 th:src="@{'/uploads/'+${product.Avatar}}" alt></a>
                                                         <div class="img_icone">
                                                             <img src="assets\img\cart\span-new.png" alt>
@@ -231,13 +207,13 @@
                                                         <span class="product_price"
                                                             th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                                                         <h3 class="product_title"><a
-                                                                th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
+                                                                th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"
                                                                 th:text="${product.ProductName}"></a></h3>
                                                     </div>
                                                     <div class="product_info">
                                                         <ul>
                                                             <li><a href="#" title=" Add to Wishlist ">Yêu thích</a></li>
-                                                            <li><a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
+                                                            <li><a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"
                                                                     data-toggle="modal" data-target="#modal_box"
                                                                     title="Quick view">Xem
                                                                     chi tiết</a></li>
@@ -248,57 +224,30 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="list" role="tabpanel">
-                                        <div class="product_list_item mb-35">
+                                        <div class="product_list_item mb-35" th:each="product : ${listProducts}">
                                             <div class="row align-items-center">
                                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product2.jpg" alt></a>
-                                                        <div class="hot_img">
-                                                            <img src="assets\img\cart\span-hot.png" alt>
-                                                        </div>
+                                                        <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img
+                                                                th:src="@{'/uploads/'+${product.Avatar}}" alt></a>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-8 col-md-6 col-sm-6">
                                                     <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
                                                         <div class="list_title">
-                                                            <h3><a href="single-product.html">Lorem
-                                                                    ipsum
-                                                                    dolor</a></h3>
+                                                            <h3><a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}" th:text="${product.ProductName}"></a></h3>
                                                         </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
+                                                        <p class="design" th:text="${product.Description}">
+                                                            </p>
 
                                                         <p class="compare">
-                                                            <input id="select" type="checkbox">
+                                                            <!-- <input id="select" type="checkbox">
                                                             <label for="select">Select
-                                                                to compare</label>
+                                                                to compare</label> -->
                                                         </p>
                                                         <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
+                                                            <span th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                                            <span class="old-price" th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>></span>
                                                         </div>
                                                         <div class="add_links">
                                                             <ul>
@@ -308,576 +257,6 @@
                                                                 <li><a href="#" title="add to wishlist"><i
                                                                             class="fa fa-heart"
                                                                             aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product3.jpg" alt></a>
-                                                        <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Quisque
-                                                                    ornare
-                                                                    dui</a>
-                                                            </h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select1" type="checkbox">
-                                                            <label for="select1">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product4.jpg" alt></a>
-                                                        <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Maecenas
-                                                                    sit amet</a></h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select2" type="checkbox">
-                                                            <label for="select2">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product5.jpg" alt></a>
-                                                        <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Sed
-                                                                    non
-                                                                    luctus
-                                                                    turpis</a>
-                                                            </h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select3" type="checkbox">
-                                                            <label for="select3">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product6.jpg" alt></a>
-                                                        <div class="hot_img">
-                                                            <img src="assets\img\cart\span-hot.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Donec
-                                                                    dignissim
-                                                                    eget</a>
-                                                            </h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select4" type="checkbox">
-                                                            <label for="select4">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product7.jpg" alt></a>
-                                                        <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Lorem
-                                                                    ipsum
-                                                                    dolor</a></h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select5" type="checkbox">
-                                                            <label for="select5">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product8.jpg" alt></a>
-                                                        <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Donec
-                                                                    ac
-                                                                    congue</a></h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select6" type="checkbox">
-                                                            <label for="select6">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product9.jpg" alt></a>
-                                                        <div class="hot_img">
-                                                            <img src="assets\img\cart\span-hot.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Curabitur
-                                                                    sodales</a></h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select7" type="checkbox">
-                                                            <label for="select7">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
-                                                                <li><a href="#" data-toggle="modal"
-                                                                        data-target="#modal_box" title="Quick view"><i
-                                                                            class="fa fa-eye"
-                                                                            aria-hidden="true"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="product_list_item mb-35">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                                    <div class="product_thumb">
-                                                        <a href="single-product.html"><img
-                                                                src="assets\img\product\product1.jpg" alt></a>
-                                                        <div class="img_icone">
-                                                            <img src="assets\img\cart\span-new.png" alt>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-8 col-md-6 col-sm-6">
-                                                    <div class="list_product_content">
-                                                        <div class="product_ratting">
-                                                            <ul>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="list_title">
-                                                            <h3><a href="single-product.html">Lorem
-                                                                    ipsum
-                                                                    dolor</a></h3>
-                                                        </div>
-                                                        <p class="design">
-                                                            in quibusdam
-                                                            accusantium qui
-                                                            nostrum
-                                                            consequuntur,
-                                                            officia, quidem
-                                                            ut placeat.
-                                                            Officiis,
-                                                            incidunt
-                                                            eos recusandae!
-                                                            Facilis aliquam
-                                                            vitae blanditiis
-                                                            quae
-                                                            perferendis
-                                                            minus eligendi</p>
-
-                                                        <p class="compare">
-                                                            <input id="select8" type="checkbox">
-                                                            <label for="select8">Select
-                                                                to compare</label>
-                                                        </p>
-                                                        <div class="content_price">
-                                                            <span>$118.00</span>
-                                                            <span class="old-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add_links">
-                                                            <ul>
-                                                                <li><a href="#" title="add to cart"><i
-                                                                            class="fa fa-shopping-cart"
-                                                                            aria-hidden="true"></i></a></li>
-                                                                <li><a href="#" title="add to wishlist"><i
-                                                                            class="fa fa-heart"
-                                                                            aria-hidden="true"></i></a></li>
-
                                                                 <li><a href="#" data-toggle="modal"
                                                                         data-target="#modal_box" title="Quick view"><i
                                                                             class="fa fa-eye"
@@ -897,15 +276,6 @@
                             <!--pagination style start-->
                             <div class="pagination_style">
                                 <div class="item_page">
-                                    <form action="#">
-                                        <!-- <label for="page_select">show</label>
-                                        <select id="page_select">
-                                            <option value="1">9</option>
-                                            <option value="2">10</option>
-                                            <option value="3">11</option>
-                                        </select>
-                                        <span>Products by page</span> -->
-                                    </form>
                                 </div>
                                 <div class="page_number">
                                     <span>Trang: </span>
@@ -1034,7 +404,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- modal area end -->
 

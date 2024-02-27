@@ -6,10 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.fashion.models.Comment;
 import com.example.fashion.models.Contact;
+import com.example.fashion.models.Post;
+import com.example.fashion.models.Product;
 import com.example.fashion.services.CommentService;
+import com.example.fashion.services.PostService;
+import com.example.fashion.services.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,12 +23,22 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private PostService postService;
+
     @PostMapping("/add-comment")
-    public String save(@ModelAttribute("comment") Comment comment, BindingResult bindingResult, Model model, HttpServletRequest request) {
+    public String save(@ModelAttribute("comment") Comment comment, BindingResult bindingResult, Model model, HttpServletRequest request, @RequestParam("ProductID") Long ProductID, @RequestParam("PostID") Long PostID) {
         if (bindingResult.hasErrors()) {
             // Nếu có lỗi hợp lệ, trả về trang thêm danh mục với thông báo lỗi
             return "redirect:" + request.getHeader("Referer");
         }
+        Product product = this.productService.findByID(ProductID);
+        Post post = this.postService.findByID(PostID);
+        comment.setPost(post);
+        comment.setProduct(product);
         if (this.commentService.create(comment)) {
             // Thêm thông báo thành công vào model
             model.addAttribute("successMessage", "Bình luận của bạn đã được gửi thành công!");

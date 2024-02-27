@@ -153,7 +153,7 @@
                     <div class="col-lg-3" th:each="product : ${lstNewProducts}">
                       <div class="single_product">
                         <div class="product_thumb">
-                          <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
+                          <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img
                               th:src="@{'/uploads/'+${product.Avatar}}" /></a>
                           <div class="img_icone">
                             <img src="assets\img\cart\span-new.png" alt="" />
@@ -198,7 +198,7 @@
                       <form action="" method="post">
                         <div class="single_product">
                           <div class="product_thumb">
-                            <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"><img
+                            <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img
                                 th:src="@{'/uploads/'+${product.Avatar}}" /></a>
                             <div class="hot_img">
                               <img src="assets\img\cart\span-hot.png" alt="" />
@@ -210,7 +210,7 @@
                             <span class="product_price"
                               th:text="${#numbers.formatDecimal(product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                             <h3 class="product_title">
-                              <a th:href="@{/shop-detail/{ProductID}(ProductID=${product.ProductID})}"
+                              <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"
                                 th:text="${product.ProductName}"></a>
                             </h3>
                           </div>

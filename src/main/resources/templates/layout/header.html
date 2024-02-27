@@ -169,7 +169,7 @@
                       <div class="mega_items jewelry" th:each="brand : ${listBra}">
                         <ul>
                           <li>
-                            <a th:href="@{'/products/' + ${brand.BrandName}}" th:text="${brand.BrandName}"></a>
+                            <a th:href="@{'/product/' + ${brand.BrandID}}" th:text="${brand.BrandName}"></a>
                           </li>
                         </ul>
                       </div>

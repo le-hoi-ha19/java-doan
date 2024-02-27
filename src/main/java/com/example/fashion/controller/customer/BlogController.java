@@ -54,8 +54,15 @@ public class BlogController {
             model.addAttribute("listPost", listPost);
         }
 
+        List<Category> categories = this.categoryService.getAll();
+        if (categories != null) {
+            model.addAttribute("categories", categories);
+        }
+
         List<Brand> listBra = this.brandService.getAll();
-        model.addAttribute("listBra", listBra);
+        if (listBra != null) {
+            model.addAttribute("listBra", listBra);
+        }
         List<Comment> comments = this.commentService.getAll();
         model.addAttribute("comments", comments);
         return "blog/index";

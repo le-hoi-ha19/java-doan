@@ -80,7 +80,7 @@ public class ProductsController {
         return "product/index";
     }
 
-    @GetMapping("/shop-detail/{ProductID}")
+    @GetMapping("/product-details/{ProductID}")
     public String detail(Model model, @PathVariable("ProductID") Long ProductID) {
         Product product = this.productService.findByID(ProductID);
         model.addAttribute("Product", product);
@@ -113,6 +113,33 @@ public class ProductsController {
         model.addAttribute("category", category);
         List<Product> lpro= this.productService.findByCategory(category);
         model.addAttribute("lpro", lpro);
+        List<Category> categories = this.categoryService.getAll();
+        if (categories != null) {
+            model.addAttribute("categories", categories);
+        }
+
+        List<Brand> listBra = this.brandService.getAll();
+        if (listBra != null) {
+            model.addAttribute("listBra", listBra);
+        }
         return "product/category";
+    }
+
+    @GetMapping("/product/{BrandID}")
+    public String category(Model model, @PathVariable("BrandID") Long BrandID){
+        Brand brand = this.brandService.findByID(BrandID);
+        model.addAttribute("brand", brand);
+        List<Product> lpro= this.productService.findByBrand(brand);
+        model.addAttribute("lpro", lpro);
+        List<Category> categories = this.categoryService.getAll();
+        if (categories != null) {
+            model.addAttribute("categories", categories);
+        }
+
+        List<Brand> listBra = this.brandService.getAll();
+        if (listBra != null) {
+            model.addAttribute("listBra", listBra);
+        }
+        return "product/brand";
     }
 }
