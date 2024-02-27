@@ -30,5 +30,5 @@ public interface ProductService {
 
 	List <Product> findByCategory(Category category);
 
-	Product findByBrand(Brand brand);
+	List<Product> findByBrand(Brand brand);
 }
