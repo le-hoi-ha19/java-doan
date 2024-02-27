@@ -107,10 +107,12 @@ public class ProductsController {
         return "product/detail";
     }
 
-    @GetMapping("/products/{CatName}")
+    @GetMapping("/products/{CatID}")
     public String category(Model model, @PathVariable("CatID") Integer CatID){
         Category category = this.categoryService.findByID(CatID);
-        model.addAttribute("Category", category);
+        model.addAttribute("category", category);
+        List<Product> lpro= this.productService.findByCategory(category);
+        model.addAttribute("lpro", lpro);
         return "product/category";
     }
 }
