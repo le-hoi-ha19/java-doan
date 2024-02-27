@@ -69,15 +69,64 @@
                                         <td th:text="${order.user.fullname}" class="text-center"></td>
                                         <td th:text="${order.user.address}" class="text-center"></td>
                                         <td th:text="${order.user.telephone}" class="text-center"></td>
-                                        <td th:text="${order.OrderStatus}" th:style="'color:' + (${order.OrderStatus} == 'Chờ xử lý' ? '#4682B4' : (${order.OrderStatus} == 'Đang xử lý' ? '#FFD700' : '#008000'))" class="text-center"></td>
-                                        <td class="text-center"> <span th:text="${#numbers.formatDecimal(order.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></td>
+                                        <td th:text="${order.OrderStatus}"
+                                            th:style="${order.OrderStatus == 'Giao hàng thành công' ? 'color: green;' : (order.OrderStatus == 'Đã hủy' ? 'color: red;' : '')}"
+                                            class="text-center"></td>
+                                        <td class="text-center">
+                                            <span
+                                                th:text="${#numbers.formatDecimal(order.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                        </td>
                                         <td th:text="${order.Notes}" class="text-center"></td>
                                         <td class="text-center">
-                                            <a th:href="@{/admin/edit-order/{OrderID}(OrderID=${order.OrderID})}"
-                                                class="btn btn-primary btn-sm"><i class="bi bi-pencil"></i></a>
-                                            <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
-                                                href=""
-                                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                            <!-- Kiểm tra nếu trạng thái là "Chờ xử lý" -->
+                                            <div th:if="${order.OrderStatus == 'Chờ xử lý'}">
+                                                <a th:href="@{/admin/edit-order/{OrderID}(OrderID=${order.OrderID})}"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')" href=""
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                            <div th:if="${order.OrderStatus == 'Đang xử lý'}">
+                                                <a th:href="@{/admin/edit-order/{OrderID}(OrderID=${order.OrderID})}"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')" href=""
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                            <div th:if="${order.OrderStatus == 'Đã xác nhận'}">
+                                                <a th:href="@{/admin/edit-order/{OrderID}(OrderID=${order.OrderID})}"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')" href=""
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                            <div th:if="${order.OrderStatus == 'Đang giao hàng'}">
+                                                <a th:href="@{/admin/edit-order/{OrderID}(OrderID=${order.OrderID})}"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')" href=""
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                            <!-- Kiểm tra nếu trạng thái là "Đã hủy" hoặc "Giao hàng thành công" -->
+                                            <div
+                                                th:if="${order.OrderStatus == 'Đã hủy' or order.OrderStatus == 'Giao hàng thành công'}">
+                                                <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')" href=""
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -89,7 +138,6 @@
         </section>
     </main>
     <!-- End #main -->
-
 
     <div th:replace="admin/fragments/footer :: footer"></div>
 

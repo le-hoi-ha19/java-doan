@@ -10,7 +10,7 @@ import com.example.fashion.models.User;
 public interface OrderService {
     List<Order> getAll();
 
-    Boolean create(Cart cart, CartItem cartItem);
+    Boolean create(Cart cart);
 
     long countTotalPrice();
 

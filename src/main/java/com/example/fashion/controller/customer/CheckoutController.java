@@ -80,7 +80,7 @@ public class CheckoutController {
 
 	@PostMapping("/order")
 	public String addOrder(@RequestParam("ProductID") Long ProductID,
-		Model model, Principal principal, HttpServletRequest request) {
+			Model model, Principal principal, HttpServletRequest request) {
 		if (principal == null) {
 			return "redirect:/admin/login";
 		}
@@ -88,21 +88,20 @@ public class CheckoutController {
 		User user = userService.findByUsername(username);
 		Set<Cart> carts = user.getCarts();
 
-		try {
-			for (Cart cart : carts) {
-				Set<CartItem> cartItems = cart.getCartItems();
-				for (CartItem cartItem : cartItems) {
-					if (this.orderService.create(cart, cartItem)) {
-						itemService.delete(ProductID, user);
-					}
-				}
+		// Kiểm tra xem người dùng có giỏ hàng hay không
+		if (!carts.isEmpty()) {
+			// Lấy ra giỏ hàng đầu tiên của người dùng (nếu có nhiều hơn một giỏ hàng)
+			Cart cart = carts.iterator().next();
+			// Tạo Order từ giỏ hàng đó
+			if (this.orderService.create(cart)) {
+				// Sau khi tạo Order thành công, xóa sản phẩm khỏi giỏ hàng
+				itemService.delete(ProductID, user);
+				// Xóa giỏ hàng
 				cartService.delete(cart.getCartID());
 			}
-			return "/index";
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return "/index";
+
+		return "redirect:/"; // Chuyển hướng đến trang chính
 	}
 
 }

@@ -47,31 +47,30 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Boolean create(Cart cart, CartItem cartItem) {
+    public Boolean create(Cart cart) {
         try {
-            // Tìm hoặc tạo mới Order cho User từ Cart
-            Order order = orderRepository.findByUser(cart.getUser());
-            if (order == null) {
-                order = new Order();
-                order.setUser(cart.getUser());
-                order.setOrderStatus("Chờ xử lý");
-                order.setOrderDate(LocalDate.now());
-                LocalDate deliveryDate = LocalDate.now().plusDays(7);
-                order.setDeliveryDate(deliveryDate);
-                order.setShippingFee((double) 15000);
-                order.setTotalsPrice(cart.getTotalsPrice());
-                this.orderRepository.save(order);
-            }
+            // Tạo mới Order cho User từ Cart
+            Order order = new Order();
+            order.setUser(cart.getUser());
+            order.setOrderStatus("Chờ xử lý");
+            order.setOrderDate(LocalDate.now());
+            LocalDate deliveryDate = LocalDate.now().plusDays(7);
+            order.setDeliveryDate(deliveryDate);
+            order.setShippingFee((double) 15000);
+            order.setTotalsPrice(cart.getTotalsPrice());
+            this.orderRepository.save(order);
 
-            // Lưu OrderDetail với Order đã xác định
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setOrder(order);
-            double itemPrice = cartItem.getTotalsPrice() / cartItem.getQuantity();
-            orderDetail.setPrice(itemPrice);
-            orderDetail.setProduct(cartItem.getProducts());
-            orderDetail.setQuantity(cartItem.getQuantity());
-            orderDetail.setTotalPrice(cartItem.getTotalsPrice());
-            this.orderDetailRepository.save(orderDetail);
+            // Lặp qua từng mục trong giỏ hàng và lưu vào OrderDetail
+            for (CartItem cartItem : cart.getCartItems()) {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setOrder(order);
+                double itemPrice = cartItem.getTotalsPrice() / cartItem.getQuantity();
+                orderDetail.setPrice(itemPrice);
+                orderDetail.setProduct(cartItem.getProducts());
+                orderDetail.setQuantity(cartItem.getQuantity());
+                orderDetail.setTotalPrice(cartItem.getTotalsPrice());
+                this.orderDetailRepository.save(orderDetail);
+            }
 
             return true;
         } catch (Exception e) {
