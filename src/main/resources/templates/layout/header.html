@@ -28,16 +28,19 @@
                 <a href="my-account.html" title="My account">Tài khoản </a>
               </li>
               <li><a href="/cart" title="My cart">Giỏ hàng</a></li> -->
+              <li><a href="/cart" title="My cart">Giỏ hàng</a></li> -->
               <ul>
                 <ul>
                   <li class="login-box">
                     <select id="" class="selectpicker show-tick form-control" data-placeholder="Đăng nhập"
                       onchange="location = this.value;">
                       <option sec:authorize="isAuthenticated()" value="http://localhost:9090/admin-logout" th:text="${#authentication.name}">
+                      <option sec:authorize="isAuthenticated()" value="http://localhost:9090/admin-logout" th:text="${#authentication.name}">
                       </option>
                       <option th:unless="${#authentication.name == null}" value="http://localhost:9090/login">
                         Đăng nhập
                       </option>
+                      <option th:if="${#authentication.name != null}" value="http://localhost:9090/admin-logout">
                       <option th:if="${#authentication.name != null}" value="http://localhost:9090/admin-logout">
                         Đăng xuất
                       </option>
