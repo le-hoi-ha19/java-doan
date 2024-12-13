@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.fashion.models.User;
 
+//Cung cấp các thông tin cần thiết cho Spring Security để thực hiện xác thực và phân quyền.
 public class CustomUserDetails implements UserDetails {
 	private User user;
 	private Collection<? extends GrantedAuthority> authorities;
