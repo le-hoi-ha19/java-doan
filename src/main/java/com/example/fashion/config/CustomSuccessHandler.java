@@ -13,24 +13,23 @@ import jakarta.servlet.http.HttpServletResponse;
 @Service
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
+	// middleware xử lý điều hướng sau khi đăng nhập
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		
+
 		var authourities = authentication.getAuthorities();
 		var roles = authourities.stream().map(r -> r.getAuthority()).findFirst();
-		
+
 		if (roles.orElse("").equals("ADMIN")) {
-			response.sendRedirect("/admin/");
+			response.sendRedirect("/admin");
 		} else if (roles.orElse("").equals("CUSTOMER")) {
 			response.sendRedirect("/");
 		} else {
 			response.sendRedirect("/error");
 		}
-		
-		
-		
+
 	}
 
 }

@@ -69,6 +69,7 @@
                                             <input id="remember" type="checkbox" name="password">
                                             Ghi nhớ tài khoản
                                         </label>
+                                        <a href="/register">Đăng ký ngay</a>
                                     </div>
 
                                 </form>
@@ -76,72 +77,6 @@
                         </div>
                         <!--login area start-->
 
-                        <!--register area start-->
-                        <div class="col-lg-6 col-md-6">
-                            <div class="account_form register">
-                                <h2>Đăng ký</h2>
-                                <form  role="form" method="post" th:action="@{/register}" th:object="${user}" enctype="multipart/form-data">
-                                    <p>
-                                        <label>Họ và tên <span>*</span></label>
-                                        <input type="text" name="fullname">
-                                    </p>
-                                    <p>
-                                        <label>Giới tính <span>*</span></label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="male"
-                                            value="true" required />
-                                        <label class="form-check-label" for="male">
-                                            Nam
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="female"
-                                            value="false" required />
-                                        <label class="form-check-label" for="female">
-                                            Nữ
-                                        </label>
-                                    </div>
-                                    </p>
-                                    <p>
-                                        <label>Địa chỉ <span>*</span></label>
-                                        <input type="text" name="address">
-                                    </p>
-                                    <div class="col-12">
-                                        <label for="yourImages" class="form-label">Ảnh đại diện</label>
-                                        <input type="file" name="imaget" class="form-control" id="yourImages"
-                                            required />
-                                        <div class="invalid-feedback">
-                                            Vui lòng chọn hình ảnh!
-                                        </div>
-                                        <img src="" alt="Preview" id="imagePreview" style="
-                                              max-width: 50%;
-                                              margin-top: 10px;
-                                              display: none;
-                                            " />
-                                    </div>
-                                    <p>
-                                        <label>Số điện thoại <span>*</span></label>
-                                        <input type="text" name="telephone">
-                                    </p>
-                                    <p>
-                                        <label>Email <span>*</span></label>
-                                        <input type="email" name="email">
-                                    </p>
-                                    <p>
-                                        <label>Tài khoản <span>*</span></label>
-                                        <input type="text" name="username">
-                                    </p>
-                                    <p>
-                                        <label>Mật khẩu <span>*</span></label>
-                                        <input type="password" name="password">
-                                    </p>
-                                    <div class="login_submit">
-                                        <button type="submit">Đăng ký</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!--register area end-->
                     </div>
                 </div>
                 <!-- customer login end -->
@@ -156,37 +91,8 @@
     <div th:replace="layout/footer :: footer"></div>
     <!--footer area end-->
 
-
-
-
-
-
     <!-- all js here -->
     <script th:replace="layout/script :: script"></script>
-    <script>
-        // Lắng nghe sự kiện khi người dùng chọn ảnh
-        document
-            .getElementById("yourImages")
-            .addEventListener("change", function () {
-                var input = this;
-
-                // Kiểm tra nếu có chọn ảnh
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-
-                    // Lắng nghe sự kiện khi đọc xong ảnh
-                    reader.onload = function (e) {
-                        var imagePreview = document.getElementById("imagePreview");
-                        // Hiển thị ảnh đã chọn
-                        imagePreview.src = e.target.result;
-                        imagePreview.style.display = "block";
-                    };
-
-                    // Đọc ảnh
-                    reader.readAsDataURL(input.files[0]);
-                }
-            });
-    </script>
 </body>
 
 </html>

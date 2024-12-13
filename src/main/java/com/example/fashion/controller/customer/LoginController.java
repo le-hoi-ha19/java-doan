@@ -45,21 +45,4 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/register") 
-	public String save(@ModelAttribute("user") User user,
-			@RequestParam("imaget") MultipartFile file) {
-
-		this.storageService.store(file);
-		String fileName = file.getOriginalFilename();
-		user.setImages(fileName);
-		user.setEnabled(true);
-
-		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
-
-		if (this.userService.createWithUserRoleCUSTOMER(user)) {
-			return "redirect:login";
-		}
-		return "login";
-	}
 }
