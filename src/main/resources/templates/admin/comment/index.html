@@ -30,6 +30,7 @@
 
     <!-- Template Main CSS File -->
     <link href="/admun/assets/css/style.css" rel="stylesheet" />
+    
 </head>
 
 <body>
@@ -53,12 +54,13 @@
                                     <tr>
                                         <th class="col-1 text-center">#</th>
                                         <th class="col-2 text-center">Tên khách hàng</th>
-                                        <th class="col-1 text-center">Email</th>
-                                        <th class="col-2 text-center">Website</th>
-                                        <th class="col-3 text-center">Bình luận</th>
+                                        <th class="col-2 text-center">Email</th>
+                                        <th class="col-3 text-center">Nội dung đánh giá</th>
+                                        <th class="col-1 text-center">Số sao</th>
+                                        <th class="col-2 text-center">Ngày tạo</th>
                                         <!-- <th class="col-2 text-center">Thông tin về tin tức</th>
                                         <th class="col-2 text-center">Thông tin về sản phẩm</th> -->
-                                        <th class="col-1 text-center">Chức năng</th>
+                                        <th class="col-3 text-center">Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,8 +68,9 @@
                                         <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
                                         <td th:text="${comment.fullname}"class="text-center"></td>
                                         <td th:text="${comment.Email}" class="text-center"></td>
-                                        <td th:text="${comment.website}" class="text-center"></td>
                                         <td th:text="${comment.comment}" class="text-center"></td>
+                                        <td th:text="${comment.rating}" class="text-center"></td>
+                                        <td th:text="${comment.createDate}" class="text-center"></td>
                                         <!-- <td th:text="${comment.post.Title}" class="text-center"></td>
                                         <td th:text="${comment.product.ProductName}" class="text-center"></td> -->
                                         <td class="text-center">
@@ -92,6 +95,7 @@
             class="bi bi-arrow-up-short"></i></a>
 
     <div th:replace="admin/fragments/script :: script"></div>
+   
 </body>
 
 </html>

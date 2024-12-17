@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Comments")
@@ -20,17 +21,16 @@ public class Comment {
     private String fullname;
     @Column(name = "email")
     private String email;
-    @Column(name = "website")
-    private String website;
     @Column(name = "comment", length = 100000)
     private String comment;
+    @Column(name = "rating")
+    private Integer rating; // Rating từ 1 đến 5
+
+    @Column(name = "createDate")
+    private LocalDateTime createDate; // Ngày giờ tạo bình luận
     @ManyToOne
     @JoinColumn(name = "ProductID", referencedColumnName = "ProductID")
     private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "PostID", referencedColumnName = "PostID")
-    private Post post;
 
     public Long getId() {
         return this.id;
@@ -56,14 +56,6 @@ public class Comment {
         this.email = email;
     }
 
-    public String getWebsite() {
-        return this.website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
     public String getComment() {
         return this.comment;
     }
@@ -80,23 +72,32 @@ public class Comment {
         this.product = product;
     }
 
-    public Post getPost() {
-        return this.post;
+    public Integer getRating() {
+        return this.rating;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
-    public Comment(Long id, String fullname, String email, String website, String comment, Product product, Post post) {
+    public LocalDateTime getCreateDate() {
+        return this.createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public Comment(Long id, String fullname, String email, String website, String comment, Product product,
+            Integer rating, LocalDateTime createDate) {
         super();
         this.id = id;
         this.fullname = fullname;
         this.email = email;
-        this.website = website;
         this.comment = comment;
+        this.rating = rating;
+        this.createDate = createDate;
         this.product = product;
-        this.post = post;
     }
 
     public Comment() {

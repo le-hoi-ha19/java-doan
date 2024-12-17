@@ -58,6 +58,6 @@ public class HomeController {
         model.addAttribute("categories", categories);
         List<Brand> listBra = this.brandService.getAll();
         model.addAttribute("listBra", listBra);
-        return "index";
+        return "home/index";
     }
 }

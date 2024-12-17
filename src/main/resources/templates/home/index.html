@@ -34,7 +34,7 @@
                 <h3>Thể loại</h3>
                 <ul>
                   <li th:each="category : ${categories}">
-                    <a href="#" th:text="${category.CatName}"></a>
+                    <a th:href="@{/products-category/{slug}(slug=${category.slug})}" th:text="${category.CatName}"></a>
                   </li>
                 </ul>
               </div>
@@ -50,9 +50,10 @@
                   <h3>Thương hiệu</h3>
                 </div>
                 <div class="block_tags" th:each="brand : ${listBra}">
-                  <a href="#" th:text="${brand.BrandName}"></a>
+                  <!-- Sử dụng cú pháp Thymeleaf cho href -->
+                  <a th:href="@{/products-branch/{slug}(slug=${brand.slug})}" th:text="${brand.BrandName}"></a>
                 </div>
-              </div>
+              </div>              
               <!--popular tags end -->
 
               <!--newsletter block start-->
@@ -132,7 +133,7 @@
                     <div class="col-lg-3" th:each="product : ${lstNewProducts}">
                       <div class="single_product">
                         <div class="product_thumb">
-                          <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img
+                          <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img style="max-height: 250px; object-fit: cover;"
                               th:src="@{'/uploads/'+${product.Avatar}}" /></a>
                           <div class="img_icone">
                             <img src="assets\img\cart\span-new.png" alt="" />
@@ -382,6 +383,7 @@
 
   <!-- all js here -->
   <script th:replace="layout/script :: script"></script>
+
 </body>
 
 </html>

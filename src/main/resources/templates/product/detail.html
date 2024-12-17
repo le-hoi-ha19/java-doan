@@ -208,58 +208,84 @@
                         hats, belts and more!
                       </p>
                     </div> -->
-                    <!-- <div class="product_info_inner">
-                      <div class="product_ratting mb-10">
-                        <ul>
-                          <li>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                          </li>
-                          <li>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                          </li>
-                          <li>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                          </li>
-                          <li>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                          </li>
-                          <li>
-                            <a href="#"><i class="fa fa-star"></i></a>
-                          </li>
-                        </ul>
-                        <strong>Posthemes</strong>
-                        <p>09/07/2018</p>
+
+                    <!-- hiển thị list đánh giá -->
+                    <div class="product_info_inner">
+                      <div class="product_ratting mb-10 w-100">
+                        <!-- Loop through the comments and display each one -->
+                        <div th:each="comment : ${comments}" class="comment-item pb-3 mb-3" style="border-bottom: 1px solid gray">
+                          <!-- Loop through the rating stars based on the comment rating -->
+                          <ul>
+                            <li th:each="i : ${#numbers.sequence(1, comment.rating)}">
+                              <a href="#"><i class="fa fa-star"></i></a>
+                            </li>
+                          </ul>
+                          <!-- Display the author's name -->
+                          <strong th:text="${comment.fullname}"></strong>
+                          <!-- Display the creation date -->
+                          <p class="comment-date" th:text="${comment.createDate}"></p>
+                          <!-- Display the comment text -->
+                          <div class="product_demo">
+                            <p th:text="${comment.comment}"></p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="product_demo">
-                        <strong>demo</strong>
-                        <p>That's OK!</p>
-                      </div>
-                    </div> -->
+                    </div>
+                    <!-- form đánh giá -->
                     <div class="product_review_form">
-                      <form role="form" method="post" th:action="@{/add-comment}" th:object="${Comment}">
+                      <form role="form" method="post" th:action="@{/add-comment}" th:object="${Comment}" id="reviewForm">
                         <div th:if="${successMessage}" class="alert alert-success">
                           <p th:text="${successMessage}"></p>
                         </div>
                         <input type="hidden" th:value="${Product.ProductID}" name="ProductID">
                         <h2>Thêm bài đánh giá</h2>
-                        <p>
-                          Địa chỉ email của bạn sẽ không được công bố
-                        </p>
+                        <p>Địa chỉ email của bạn sẽ không được công bố</p>
                         <div class="row">
+                          <!-- Comment Section -->
                           <div class="col-12">
                             <label for="review_comment">Đánh giá của bạn</label>
-                            <textarea name="Comment" id="review_comment"></textarea>
+                            <textarea name="Comment" id="review_comment" class="form-control" required></textarea>
+                            <div class="invalid-feedback">
+                              Bạn chưa nhập đánh giá.
+                            </div>
                           </div>
-                          <div class="col-lg-6 col-md-6">
-                            <label for="author">Tên</label>
-                            <input id="author" type="text" name="fullname" />
+                    
+                          <!-- Author Section -->
+                          <div class="col-lg-4 col-md-4">
+                            <label for="author">Họ và tên</label>
+                            <input id="author" type="text" name="fullname" class="form-control" required />
+                            <div class="invalid-feedback">
+                              Họ và tên là bắt buộc.
+                            </div>
                           </div>
-                          <div class="col-lg-6 col-md-6">
-                            <label for="email">Email </label>
-                            <input id="email" type="email" name="email" />
+                    
+                          <!-- Email Section -->
+                          <div class="col-lg-4 col-md-4">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email" class="form-control" required />
+                            <div class="invalid-feedback">
+                              Vui lòng nhập email hợp lệ.
+                            </div>
+                          </div>
+                    
+                          <!-- Rating Section -->
+                          <div class="col-lg-4 col-md-4 d-flex justify-content-center align-items-end">
+                            <label for="rating">Điểm đánh giá</label>
+                            <select id="rating" name="rating" class="form-control" required>
+                              <option value="" selected>Chọn điểm đánh giá</option>
+                              <option value="1">1 sao</option>
+                              <option value="2">2 sao</option>
+                              <option value="3">3 sao</option>
+                              <option value="4">4 sao</option>
+                              <option value="5">5 sao</option>
+                            </select>
+                            <div class="invalid-feedback">
+                              Bạn chưa chọn điểm đánh giá.
+                            </div>
                           </div>
                         </div>
-                        <button type="submit" name="them">Gửi</button>
+                    
+                        <button type="submit" class="btn btn-primary">Gửi</button>
                       </form>
                     </div>
                   </div>
@@ -490,6 +516,21 @@
   <script src="\assets\js\ajax-mail.js"></script>
   <script src="\assets\js\plugins.js"></script>
   <script src="\assets\js\main.js"></script>
+  <script>
+    // Function to format date from yyyy-MM-dd'T'HH:mm:ss to dd-MM-yyyy
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+      const date = new Date(dateString); // Convert the string to a Date object
+      return date.toLocaleDateString('en-GB', options); // Return the formatted date
+    }
+  
+    // Select all comment dates and format them
+    document.querySelectorAll('.comment-date').forEach(function(dateElement) {
+      const originalDate = dateElement.textContent.trim(); // Get the raw date string
+      const formattedDate = formatDate(originalDate); // Format the date
+      dateElement.textContent = formattedDate; // Set the formatted date back to the element
+    });
+  </script>
 </body>
 
 </html>

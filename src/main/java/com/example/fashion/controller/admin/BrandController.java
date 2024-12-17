@@ -18,6 +18,7 @@ import com.example.fashion.models.Category;
 import com.example.fashion.models.Product;
 import com.example.fashion.services.BrandService;
 import com.example.fashion.services.StorageService;
+import com.example.fashion.utils.SlugUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -62,6 +63,9 @@ public class BrandController {
 
         // Tiến hành thêm thương hiệu nếu không có lỗi
         try {
+            // create slug
+            String slug = SlugUtils.createSlug(brand.getBrandName());
+            brand.setSlug(slug);
             // upload file
             this.storageService.store(file);
             String fileName = file.getOriginalFilename();
@@ -107,6 +111,9 @@ public class BrandController {
 
         // Tiến hành cập nhật thương hiệu nếu không có lỗi
         try {
+             // update slug
+             String slug = SlugUtils.createSlug(brand.getBrandName());
+             brand.setSlug(slug);
             // upload file
             this.storageService.store(file);
             String fileName = file.getOriginalFilename();

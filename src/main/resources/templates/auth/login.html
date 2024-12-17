@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Đăng nhập</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+
+    <!-- all css here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/plugin.css">
+    <link rel="stylesheet" href="assets/css/bundle.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        /* Chèn các styles CSS ở đây */
+    </style>
+
+    <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+    <!-- Add your site or application content here -->
+
+    <!--pos page start-->
+    <div class="pos_page">
+        <div class="container">
+            <!--pos page inner-->
+            <div class="pos_page_inner">
+                <!--header area -->
+                <div th:replace="layout/header :: header"></div>
+                <!--header end -->
+                <!--breadcrumbs area start-->
+                <div class="breadcrumbs_area">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb_content">
+                                <ul>
+                                    <li><a href="/">Trang chủ</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li>Đăng nhập</li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--breadcrumbs area end-->
+
+                <!-- customer login start -->
+                <div class="customer_login">
+                    <div class="row">
+                        <!--login area start-->
+                        <div class="col-12 col-lg-6">
+                           <div class="d-flex justify-content-between align-items-center">
+                                <div class="account_form ">
+                                    <h2>Đăng nhập</h2>
+                                    <form class="row needs-validation" th:action="@{/login}" method="post">
+                                        <div th:if = "${param.error}" class="alert alert-danger text-center">
+                                            Sai tài khoản hoặc mật khẩu
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Tên đăng nhập</label>
+                                            <div class="input-group has-validation">
+                                            <input type="text" name="username" class="form-control" id="yourUsername" required>
+                                            <div class="invalid-feedback">Vui lòng nhập tài khoản!</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourPassword" class="form-label">Mật khẩu</label>
+                                            <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                            <div class="invalid-feedback">Vui lòng nhập mật khẩu!</div>
+                                        </div>
+                                        <div class="login_submit w-100 mt-10">
+                                        <div class="d-flex justify-content-between align-items-center ">
+                                                <div class="d-flex flex-column">
+                                                    <button class="btn btn-primary rounded" type="submit">Đăng nhập</button>
+                                                    <div class="form-check d-flex ml-10" style="gap:8px">
+                                                        <input class="form-check-input" style="width:15px;height: 15px;" type="checkbox" name="remember" value="true" id="rememberMe">
+                                                        <label  for="rememberMe">Ghi nhớ tài khoản</label>
+                                                    </div>
+                                                </div>
+                                                <a href="/register">Đăng ký ngay</a>
+                                        </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                           </div>
+                        </div>
+                        <!--login area start-->
+
+                    </div>
+                </div>
+                <!-- customer login end -->
+
+            </div>
+            <!--pos page inner end-->
+        </div>
+    </div>
+    <!--pos page end-->
+
+    <!--footer area start-->
+    <div th:replace="layout/footer :: footer"></div>
+    <!--footer area end-->
+
+    <!-- all js here -->
+    <script th:replace="layout/script :: script"></script>
+</body>
+
+</html>
