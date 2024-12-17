@@ -40,8 +40,6 @@ public class Post {
     @JoinColumn(name = "BrandID", referencedColumnName = "BrandID")
     private Brand brand;
 
-    @OneToMany(mappedBy = "post")
-	private Set<Comment> comment;
 
     public Long getPostID() {
         return this.PostID;
@@ -123,14 +121,6 @@ public class Post {
         this.brand = brand;
     }
 
-    public Set<Comment> getComment() {
-        return this.comment;
-    }
-
-    public void setComment(Set<Comment> comment) {
-        this.comment = comment;
-    }
-
     public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Abstract, Date CreatedDate, Brand brand, Set<Comment> comment) {
         super();
         this.PostID = PostID;
@@ -143,7 +133,6 @@ public class Post {
         this.Abstract = Abstract;
         this.CreatedDate = CreatedDate;
         this.brand = brand;
-        this.comment = comment;
     }
 
     

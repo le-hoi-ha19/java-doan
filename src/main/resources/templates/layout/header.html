@@ -28,20 +28,17 @@
                 <a href="my-account.html" title="My account">Tài khoản </a>
               </li>
               <li><a href="/cart" title="My cart">Giỏ hàng</a></li> -->
-              <li><a href="/cart" title="My cart">Giỏ hàng</a></li> -->
               <ul>
                 <ul>
                   <li class="login-box">
                     <select id="" class="selectpicker show-tick form-control" data-placeholder="Đăng nhập"
                       onchange="location = this.value;">
-                      <option sec:authorize="isAuthenticated()" value="http://localhost:9090/admin-logout" th:text="${#authentication.name}">
-                      <option sec:authorize="isAuthenticated()" value="http://localhost:9090/admin-logout" th:text="${#authentication.name}">
+                      <option sec:authorize="isAuthenticated()" value="http://localhost:9090/logout" th:text="${#authentication.name}">
                       </option>
                       <option th:unless="${#authentication.name == null}" value="http://localhost:9090/login">
                         Đăng nhập
                       </option>
-                      <option th:if="${#authentication.name != null}" value="http://localhost:9090/admin-logout">
-                      <option th:if="${#authentication.name != null}" value="http://localhost:9090/admin-logout">
+                      <option th:if="${#authentication.name != null}" value="http://localhost:9090/logout">
                         Đăng xuất
                       </option>
                       <option value="http://localhost:9090/register">Đăng ký</option>
@@ -77,8 +74,10 @@
               </form>
             </div>
             <div class="shopping_cart">
-              <a href="#"><i class="fa fa-shopping-cart" th:text = "${session.totalItem == null} ? ' 0 ' : ${session.totalItem}"></i>
-                <i class="fa fa-angle-down"></i></a>
+              <a href="#">
+                <i class="fa fa-shopping-cart" th:text = "${session.totalItem == null} ? ' 0 ' : ${session.totalItem}"></i>
+                <i class="fa fa-angle-down"></i>
+              </a>
 
               <!--mini cart-->
               <div class="mini_cart">
@@ -141,16 +140,16 @@
                     <a href="/products">Sản phẩm</a>
                   </li>
                   <li>
-                    <a href="blog.html">Danh mục</a>
+                    <a href="#">Danh mục</a>
                     <div class="mega_menu jewelry">
                       <div class="mega_items jewelry" th:each="category : ${categories}">
                         <ul>
                           <li>
-                            <a th:href="@{'/products/' + ${category.CatID}}" th:text="${category.CatName}"></a>
+                            <a th:href="@{'/products-category/' + ${category.slug}}" th:text="${category.CatName}"></a>
                           </li>
                         </ul>
                       </div>
-                    </div>
+</div>
                   </li>
                   <li>
                     <a href="#">Thương hiệu</a>
@@ -158,7 +157,7 @@
                       <div class="mega_items jewelry" th:each="brand : ${listBra}">
                         <ul>
                           <li>
-                            <a th:href="@{'/product/' + ${brand.BrandID}}" th:text="${brand.BrandName}"></a>
+                            <a th:href="@{'/products-branch/' + ${brand.slug}}" th:text="${brand.BrandName}"></a>
                           </li>
                         </ul>
                       </div>

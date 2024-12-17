@@ -38,6 +38,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category findBySlug(String Slug) {
+        return this.categoryRepository.findBySlug(Slug).get();
+    }
+
+    @Override
     public Boolean update(Category category) {
         try {
             this.categoryRepository.save(category);
