@@ -69,7 +69,7 @@ public class ProductController {
             @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
 
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang thêm sản phẩm với thông báo lỗi
+
             List<Category> listCat = this.categoryService.getAll();
             model.addAttribute("listCat", listCat);
             List<Brand> listBra = this.brandService.getAll();
@@ -80,8 +80,6 @@ public class ProductController {
         if (product.getProductName() == null || product.getProductName().trim().isEmpty() ||
                 fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
                 || product.getQuantity() == null) {
-            // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
-            // trang thêm sản phẩm
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
             List<Category> listCat = this.categoryService.getAll();
             model.addAttribute("listCat", listCat);
@@ -90,9 +88,7 @@ public class ProductController {
             return "admin/product/add";
         }
 
-        // Tiến hành thêm sản phẩm nếu không có lỗi
         try {
-            // upload file và lưu vào trường avatar
             this.storageService.store(fileAvatar);
             String fileNameAvatar = fileAvatar.getOriginalFilename();
             product.setAvatar(fileNameAvatar);
@@ -141,7 +137,6 @@ public class ProductController {
             @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
 
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang sửa sản phẩm với thông báo lỗi
             List<Category> listCat = this.categoryService.getAll();
             model.addAttribute("listCat", listCat);
             List<Brand> listBra = this.brandService.getAll();
@@ -152,8 +147,6 @@ public class ProductController {
         if (product.getProductName() == null || product.getProductName().trim().isEmpty() ||
                 fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
                 || product.getQuantity() == null) {
-            // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
-            // trang sửa sản phẩm
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
             List<Category> listCat = this.categoryService.getAll();
             model.addAttribute("listCat", listCat);
@@ -162,9 +155,8 @@ public class ProductController {
             return "admin/product/edit";
         }
 
-        // Tiến hành thêm sản phẩm nếu không có lỗi
+
         try {
-            // upload file và lưu vào trường avatar
             this.storageService.store(fileAvatar);
             String fileNameAvatar = fileAvatar.getOriginalFilename();
             product.setAvatar(fileNameAvatar);

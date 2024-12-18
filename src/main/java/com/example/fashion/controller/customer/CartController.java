@@ -108,21 +108,18 @@ public class CartController {
 			String username = principal.getName();
 			User user = userService.findByUsername(username);
 
-			// Kiểm tra xem Quantity có lớn hơn 0 không
+			 
 			if (Quantity > 0) {
-				// Nếu Quantity lớn hơn 0, cập nhật giỏ hàng
+
 				boolean updateSuccessful = this.itemService.update(ProductID, Quantity, user);
 
 				if (updateSuccessful) {
-					// Sau khi cập nhật thành công, chuyển hướng người dùng đến trang trước đó
+
 					return "redirect:" + request.getHeader("Referer");
 				} else {
-					// Xử lý nếu cập nhật không thành công, có thể hiển thị thông báo lỗi
-					// hoặc chuyển hướng đến trang khác
+
 				}
 			}
-
-			// Nếu Quantity không hợp lệ, chuyển hướng người dùng đến trang trước đó
 			return "redirect:" + request.getHeader("Referer");
 		}
 	}
@@ -138,14 +135,13 @@ public class CartController {
 			String username = principal.getName();
 			User user = userService.findByUsername(username);
 
-			// Thực hiện xóa CartItem và kiểm tra xem có cần xóa Cart không
 			boolean cartDeleted = this.itemService.delete(ProductID, user);
 
 			if (cartDeleted) {
-				// Nếu cart đã bị xóa, chuyển hướng về trang chính
+				
 				return "redirect:" + request.getHeader("Referer");
 			} else {
-				// Nếu không cần xóa cart, chuyển hướng về trang trước đó
+				
 				return "redirect:" + request.getHeader("Referer");
 			}
 		}
