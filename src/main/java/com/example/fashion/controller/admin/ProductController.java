@@ -64,8 +64,7 @@ public class ProductController {
     }
 
     @PostMapping("/add-product")
-    public String save(@ModelAttribute("product") Product product, BindingResult bindingResult,
-            @RequestParam("fileAvatar") MultipartFile fileAvatar,
+    public String save(@ModelAttribute("product") Product product, BindingResult bindingResult,@RequestParam("fileAvatar") MultipartFile fileAvatar,
             @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
 
         if (bindingResult.hasErrors()) {

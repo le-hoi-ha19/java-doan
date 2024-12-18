@@ -1,0 +1,63 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>404</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="assets\img\favicon.png">
+		
+		<!-- all css here -->
+       <link rel="stylesheet" href="assets\css\bootstrap.min.css">
+        <link rel="stylesheet" href="assets\css\plugin.css">
+        <link rel="stylesheet" href="assets\css\bundle.css">
+        <link rel="stylesheet" href="assets\css\style.css">
+        <link rel="stylesheet" href="assets\css\responsive.css">
+        <script src="assets\js\vendor\modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+            <!-- Add your site or application content here -->
+            
+            <!--pos page start-->
+            <div class="pos_page">
+                <div class="container">  
+                    <!--pos page inner-->
+                    <div class="pos_page_inner">  
+                       <!--header area -->
+                       <div th:replace="layout/header :: header"></div>
+                        <!--header end -->
+
+                        <!--error section area start-->
+                        <div class="error_section">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="error_form">
+                                        <h1>404</h1>
+                                        <h2>Rất tiếc! TRANG KHÔNG TÌM THẤY</h2>
+                                        <p>Xin lỗi, nhưng trang bạn đang tìm không tồn tại, đã bị<br> xóa, tên đã thay đổi hoặc tạm thời không có sẵn.</p>
+                                        <a href="/">Quay lại trang chủ</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                        <!--error section area end-->   
+                    </div>
+                    <!--pos page inner end-->
+                </div>
+            </div>
+            <!--pos page end-->
+            
+            <!--footer area start-->
+            <div th:replace="layout/footer :: footer"></div>
+            <!--footer area end-->
+		<!-- all js here -->
+        <script src="assets\js\vendor\jquery-1.12.0.min.js"></script>
+        <script src="assets\js\popper.js"></script>
+        <script src="assets\js\bootstrap.min.js"></script>
+        <script src="assets\js\ajax-mail.js"></script>
+        <script src="assets\js\plugins.js"></script>
+        <script src="assets\js\main.js"></script>
+    </body>
+</html>

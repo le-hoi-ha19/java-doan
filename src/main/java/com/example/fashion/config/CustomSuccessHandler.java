@@ -13,10 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @Service
 public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
-	// middleware xử lý điều hướng sau khi đăng nhập
+	// middleware xử lý điều hướng sau khi đăng nhập thành công
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 
 		var authourities = authentication.getAuthorities();

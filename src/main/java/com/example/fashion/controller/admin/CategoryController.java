@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.fashion.models.Category;
 import com.example.fashion.services.CategoryService;
+import com.example.fashion.utils.SlugUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,7 +47,10 @@ public class CategoryController {
             model.addAttribute("error", "Tên thể loại không được để trống");
             return "admin/category/add";
         }
-
+        // create slug
+        String slug = SlugUtils.createSlug(category.getCatName());
+        category.setSlug(slug);
+        // Tiến hành thêm danh mục nếu không có lỗi
         if (this.categoryService.create(category)) {
             return "redirect:/admin/category";
         } else {
@@ -71,7 +75,9 @@ public class CategoryController {
             model.addAttribute("error", "Tên thể loại không được để trống");
             return "admin/category/edit";
         }
-
+        String slug = SlugUtils.createSlug(category.getCatName());
+        category.setSlug(slug);
+        // Tiến hành cập nhật danh mục nếu không có lỗi
         if (this.categoryService.update(category)) {
             return "redirect:/admin/category";
         } else {

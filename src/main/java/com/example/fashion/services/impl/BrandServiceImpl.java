@@ -38,6 +38,11 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public Brand findBySlug(String Slug) {
+        return this.brandRepository.findBySlug(Slug).get();
+    }
+
+    @Override
     public Boolean update(Brand brand) {
         try {
             this.brandRepository.save(brand);
