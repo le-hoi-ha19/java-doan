@@ -40,13 +40,10 @@ public class CategoryController {
     @PostMapping("/add-category")
     public String save(@ModelAttribute("category") Category category, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang thêm danh mục với thông báo lỗi
             return "admin/category/add";
         }
 
         if (category.getCatName() == null || category.getCatName().trim().isEmpty()) {
-            // Nếu tên thể loại rỗng, thêm thông báo lỗi vào model và trả về trang thêm danh
-            // mục
             model.addAttribute("error", "Tên thể loại không được để trống");
             return "admin/category/add";
         }
@@ -71,13 +68,10 @@ public class CategoryController {
     @PostMapping("/edit-category")
     public String update(@ModelAttribute("category") Category category, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang sửa danh mục với thông báo lỗi
             return "admin/category/edit";
         }
 
         if (category.getCatName() == null || category.getCatName().trim().isEmpty()) {
-            // Nếu tên thể loại rỗng, thêm thông báo lỗi vào model và trả về trang sửa danh
-            // mục
             model.addAttribute("error", "Tên thể loại không được để trống");
             return "admin/category/edit";
         }

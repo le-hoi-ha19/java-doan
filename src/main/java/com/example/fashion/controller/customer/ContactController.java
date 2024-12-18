@@ -52,7 +52,7 @@ public class ContactController {
     @PostMapping("/contact")
     public String save(@ModelAttribute("contact") Contact contact, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang thêm danh mục với thông báo lỗi
+          
             return "contact/index";
         }
 
@@ -63,13 +63,12 @@ public class ContactController {
         }
 
         if (this.contactService.create(contact)) {
-            // Thêm thông báo thành công vào model
+    
             model.addAttribute("successMessage", "Tin nhắn của quý khách đã được gửi thành công!");
 
-            // Chuyển hướng đến trang index hoặc trang khác tùy theo yêu cầu của bạn
             return "redirect:/contact/index";
         } else {
-            // Nếu có lỗi khi lưu tin nhắn, bạn có thể thêm thông báo lỗi vào model
+ 
             model.addAttribute("errorMessage", "Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại.");
 
             return "redirect:/contact/index";

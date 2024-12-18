@@ -73,7 +73,6 @@ public class PostController {
         }
 
         try {
-            // upload file và lưu vào trường avatar
             this.storageService.store(fileAvatars);
             String fileNameAvatars = fileAvatars.getOriginalFilename();
             post.setAvatar(fileNameAvatars);

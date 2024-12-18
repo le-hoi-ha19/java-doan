@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getAll() {
         // TODO Auto-generated method stub
-        return this.categoryRepository.findAll();
+        return this.categoryRepository.findAll();  // 
     }
 
     @Override
@@ -31,6 +31,11 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return false;
     }
+// trong laravel trang index url::to (/add-product)
+// web.php route::get
+// truỳen
+
+
 
     @Override
     public Category findByID(Integer CatID) {

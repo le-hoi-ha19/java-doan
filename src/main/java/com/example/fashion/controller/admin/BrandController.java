@@ -50,18 +50,15 @@ public class BrandController {
             @RequestParam("fileImag") MultipartFile file, Model model) {
 
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang thêm thương hiệu với thông báo lỗi
+            
             return "admin/brand/add";
         }
 
         if (brand.getBrandName() == null || brand.getBrandName().trim().isEmpty() || file.isEmpty()) {
-            // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
-            // trang thêm thương hiệu
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
             return "admin/brand/add";
         }
 
-        // Tiến hành thêm thương hiệu nếu không có lỗi
         try {
             // create slug
             String slug = SlugUtils.createSlug(brand.getBrandName());
@@ -94,22 +91,20 @@ public class BrandController {
             @RequestParam("fileImage") MultipartFile file, Model model) {
 
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang sửa thương hiệu với thông báo lỗi
+            
             List<Brand> listBra = this.brandService.getAll();
             model.addAttribute("listBra", listBra);
             return "admin/brand/edit";
         }
 
         if (brand.getBrandName() == null || brand.getBrandName().trim().isEmpty() || file.isEmpty()) {
-            // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
-            // trang sửa thương hiệu
+            
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
             List<Brand> listBra = this.brandService.getAll();
             model.addAttribute("listBra", listBra);
             return "admin/brand/edit";
         }
 
-        // Tiến hành cập nhật thương hiệu nếu không có lỗi
         try {
              // update slug
              String slug = SlugUtils.createSlug(brand.getBrandName());

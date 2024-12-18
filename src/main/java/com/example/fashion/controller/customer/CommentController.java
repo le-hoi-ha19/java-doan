@@ -54,7 +54,7 @@ public class CommentController {
 
         // Tạo bình luận và xử lý kết quả
         if (this.commentService.create(comment)) {
-            // Thêm thông báo thành công vào model
+            
             model.addAttribute("successMessage", "Bình luận của bạn đã được gửi thành công!");
         } else {
             // Thêm thông báo lỗi nếu không thể lưu bình luận
