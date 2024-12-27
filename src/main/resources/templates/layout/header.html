@@ -35,7 +35,7 @@
                       onchange="location = this.value;">
                       <option sec:authorize="isAuthenticated()" value="http://localhost:9090/logout" th:text="${#authentication.name}">
                       </option>
-                      <option th:unless="${#authentication.name == null}" value="http://localhost:9090/admin/login">
+                      <option th:unless="${#authentication.name == null}" value="http://localhost:9090/login">
                         Đăng nhập
                       </option>
                       <option th:if="${#authentication.name != null}" value="http://localhost:9090/logout">

@@ -58,7 +58,7 @@ public class CartController {
 	@GetMapping("/cart")
 	public String index(Model model, Principal principal, HttpSession session) {
 		if (principal == null) {
-			return "redirect:/admin/login";
+			return "redirect:/login";
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
@@ -85,7 +85,7 @@ public class CartController {
 			Principal principal,
 			HttpServletRequest request) {
 		if (principal == null) {
-			return "redirect:/admin/login";
+			return "redirect:/login";
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
@@ -103,12 +103,11 @@ public class CartController {
 			Principal principal,
 			HttpServletRequest request) {
 		if (principal == null) {
-			return "redirect:/admin/login";
+			return "redirect:/login";
 		} else {
 			String username = principal.getName();
 			User user = userService.findByUsername(username);
 
-			 
 			if (Quantity > 0) {
 
 				boolean updateSuccessful = this.itemService.update(ProductID, Quantity, user);
@@ -130,7 +129,7 @@ public class CartController {
 			Principal principal,
 			HttpServletRequest request) {
 		if (principal == null) {
-			return "redirect:/admin/login";
+			return "redirect:/login";
 		} else {
 			String username = principal.getName();
 			User user = userService.findByUsername(username);
@@ -138,10 +137,10 @@ public class CartController {
 			boolean cartDeleted = this.itemService.delete(ProductID, user);
 
 			if (cartDeleted) {
-				
+
 				return "redirect:" + request.getHeader("Referer");
 			} else {
-				
+
 				return "redirect:" + request.getHeader("Referer");
 			}
 		}

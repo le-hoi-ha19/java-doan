@@ -58,7 +58,7 @@ public class CheckoutController {
 	@GetMapping("/checkout")
 	public String index(Model model, Principal principal, HttpSession session) {
 		if (principal == null) {
-			return "redirect:admin/login";
+			return "redirect:/login";
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
@@ -82,7 +82,7 @@ public class CheckoutController {
 	public String addOrder(@RequestParam("ProductID") Long ProductID,
 			Model model, Principal principal, HttpServletRequest request) {
 		if (principal == null) {
-			return "redirect:/admin/login";
+			return "redirect:/login";
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
