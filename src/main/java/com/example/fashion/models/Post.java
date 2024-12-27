@@ -32,13 +32,11 @@ public class Post {
     private String Img2;
     @Column(name = "Img3")
     private String Img3;
-    @Column(name = "Abstract", length = 100000)
-    private String Abstract;
+    @Column(name = "Description", length = 100000)
+    private String Description;
     @Column (name = "CreatedDate")
     private Date CreatedDate;
-    @ManyToOne
-    @JoinColumn(name = "BrandID", referencedColumnName = "BrandID")
-    private Brand brand;
+
 
 
     public Long getPostID() {
@@ -97,14 +95,14 @@ public class Post {
         this.Img3 = Img3;
     }
 
-    public String getAbstract() {
-        return this.Abstract;
+    public String getDescription() {
+        return this.Description;
     }
 
-    public void setAbstract(String Abstract) {
-        this.Abstract = Abstract;
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
-
+    
     public Date getCreatedDate() {
         return this.CreatedDate;
     }
@@ -113,15 +111,8 @@ public class Post {
         this.CreatedDate = CreatedDate;
     }
 
-    public Brand getBrand() {
-        return this.brand;
-    }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Abstract, Date CreatedDate, Brand brand, Set<Comment> comment) {
+    public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Description, Date CreatedDate, Set<Comment> comment) {
         super();
         this.PostID = PostID;
         this.Title = Title;
@@ -130,9 +121,8 @@ public class Post {
         this.Img1 = Img1;
         this.Img2 = Img2;
         this.Img3 = Img3;
-        this.Abstract = Abstract;
+        this.Description = Description;
         this.CreatedDate = CreatedDate;
-        this.brand = brand;
     }
 
     

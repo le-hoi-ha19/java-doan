@@ -30,7 +30,6 @@
                     <th class="col-2 text-center">Hình ảnh</th>
                     <th class="col-2 text-center">Mô tả</th>
                     <th class="col-1 text-center">Ngày đăng bài</th>
-                    <th class="col-1 text-center">Thể loại</th>
                     <th class="col-1 text-center">Chức năng</th>
                   </tr>
                 </thead>
@@ -42,13 +41,14 @@
                       <img th:src="@{'/uploads/'+${post.Avatar}}" style="max-width: 40px" class="img-fluid" />
                     </td>
                     <td class="text-center"
-                      th:text="${#strings.length(post.Abstract) > 30 ? #strings.substring(post.Abstract, 0, 30) + '...' : post.Abstract}">
+                      th:text="${#strings.length(post.Description) > 30 ? #strings.substring(post.Description, 0, 30) + '...' : post.Description}">
                     </td>
                     <td class="text-center" th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></td>
-                    <td th:text="${post.brand.BrandName}" class="text-center"></td>
                     <td class="text-center">
-                      <a th:href="@{/admin/edit-post/{PostID}(PostID=${post.PostID})}" class="btn btn-primary btn-sm"><i
-                          class="bi bi-pencil"></i></a>
+                      <a th:href="@{/admin/edit-post/{id}(id=${post.PostID})}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    
                       <a onclick="return confirm(' Bạn có chắc chắn muốn xoá?')"
                         th:href="@{/admin/delete-post/{PostID}(PostID=${post.PostID})}" class="btn btn-danger btn-sm"><i
                           class="bi bi-trash"></i></a>
