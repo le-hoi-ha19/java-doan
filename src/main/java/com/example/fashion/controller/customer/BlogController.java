@@ -63,8 +63,8 @@ public class BlogController {
         if (listBra != null) {
             model.addAttribute("listBra", listBra);
         }
-        List<Comment> comments = this.commentService.getAll();
-        model.addAttribute("comments", comments);
+        // List<Comment> comments = this.commentService.getAll();
+        // model.addAttribute("comments", comments);
         return "blog/index";
     }
 
