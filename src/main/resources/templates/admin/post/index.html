@@ -27,6 +27,7 @@
                   <tr>
                     <th class="col-1 text-center">#</th>
                     <th class="col-1 text-center">Tiêu đề</th>
+                    <th class="col-1 text-center">Slug </th>
                     <th class="col-2 text-center">Hình ảnh</th>
                     <th class="col-2 text-center">Mô tả</th>
                     <th class="col-1 text-center">Ngày đăng bài</th>
@@ -34,18 +35,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="post, iterStat : ${lpost}">
+                  <tr th:each="post, iterStat : ${listpost}">
                     <td th:text="${iterStat.count}" class="text-center" scope="row"></td>
-                    <td th:text="${post.Title}" class="text-center"></td>
+                    <td th:text="${post.title}" class="text-center"></td>
+                    <td th:text="${post.slug}" class="text-center"></td>
                     <td class="text-center">
-                      <img th:src="@{'/uploads/'+${post.Avatar}}" style="max-width: 40px" class="img-fluid" />
+                      <img th:src="@{'/uploads/'+${post.thumnail}}" style="max-width: 40px" class="img-fluid" />
                     </td>
-                    <td class="text-center"
-                      th:text="${#strings.length(post.Description) > 30 ? #strings.substring(post.Description, 0, 30) + '...' : post.Description}">
-                    </td>
-                    <td class="text-center" th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${post.description}" class="text-center"></td>
+                    <td class="text-center" th:utext="${#dates.format(post.createdDate, 'dd/MM/yyyy')}"></td>
                     <td class="text-center">
-                      <a th:href="@{/admin/edit-post/{id}(id=${post.PostID})}" class="btn btn-primary btn-sm">
+                      <a th:href="@{/admin/edit-post/{id}(id=${post.postID})}" class="btn btn-primary btn-sm">
                         <i class="bi bi-pencil"></i>
                     </a>
                     

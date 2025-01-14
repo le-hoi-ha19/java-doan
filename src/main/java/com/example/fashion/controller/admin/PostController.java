@@ -3,6 +3,7 @@ package com.example.fashion.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import com.example.fashion.services.BrandService;
 import com.example.fashion.services.CategoryService;
 import com.example.fashion.services.PostService;
 import com.example.fashion.services.StorageService;
+import com.example.fashion.utils.SlugUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,8 +39,8 @@ public class PostController {
 
     @GetMapping("/post")
     public String index(Model model) {
-        List<Post> lpost = this.postService.getAll();
-        model.addAttribute("lpost", lpost);
+        List<Post> listpost = this.postService.getAll();
+        model.addAttribute("listpost", listpost);
         return "/admin/post/index";
     }
 
@@ -52,45 +54,25 @@ public class PostController {
 
     @PostMapping("/add-post")
     public String save(@ModelAttribute("post") Post post, BindingResult bindingResult,
-            @RequestParam("fileAvatars") MultipartFile fileAvatars,
-            @RequestParam("fileImagek") MultipartFile[] fileImagek, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "admin/post/add-post";
-        }
+            @RequestParam("Thumnail") MultipartFile Thumnail,
+            Model model) {
 
         if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getDescription() == null
                 || post.getCreatedDate() == null
                 || post.getContents() == null) {
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
-            return "admin/post/add-post";
+            return "admin/post/add";
         }
 
         try {
-            this.storageService.store(fileAvatars);
-            String fileNameAvatars = fileAvatars.getOriginalFilename();
-            post.setAvatar(fileNameAvatars);
+            this.storageService.store(Thumnail);
+            String thumbnail = Thumnail.getOriginalFilename();
+            post.setThumnail(thumbnail);
             post.setTitle(post.getTitle()); // Gán Title
+            post.setSlug(SlugUtils.createSlug(post.getTitle()));
             post.setContents(post.getContents()); // Gán Contents
             post.setDescription(post.getDescription()); // Gán Description
             post.setCreatedDate(post.getCreatedDate()); // Gán CreatedDate
-
-            for (int i = 0; i < Math.min(fileImagek.length, 3); i++) {
-                this.storageService.store(fileImagek[i]);
-                String fileName = fileImagek[i].getOriginalFilename();
-
-                switch (i) {
-                    case 0:
-                        post.setImg1(fileName);
-                        break;
-                    case 1:
-                        post.setImg2(fileName);
-                        break;
-                    case 2:
-                        post.setImg3(fileName);
-                        break;
-                }
-            }
 
             if (this.postService.create(post)) {
                 return "redirect:/admin/post";
@@ -99,7 +81,7 @@ public class PostController {
             e.printStackTrace();
         }
 
-        return "admin/post/add-post";
+        return "admin/post/add";
     }
 
     @GetMapping("/edit-post/{PostID}")
@@ -118,7 +100,7 @@ public class PostController {
             model.addAttribute("post", post);
 
             // Trả về view của trang edit
-            return "admin/post/edit-post";
+            return "admin/post/edit";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", "Lỗi xảy ra khi lấy bài viết");
@@ -128,22 +110,15 @@ public class PostController {
 
     @PostMapping("/edit-post/{id}")
     public String edit(@PathVariable("id") Long id,
-            @ModelAttribute("post") Post post,
-            BindingResult bindingResult,
-            @RequestParam(value = "fileAvatars", required = false) MultipartFile fileAvatars,
-            @RequestParam(value = "fileImagek", required = false) MultipartFile[] fileImagek,
+            @ModelAttribute("post") Post post, BindingResult bindingResult,
+            @RequestParam("Thumnail") MultipartFile Thumnail,
             Model model) {
-
-        // Kiểm tra nếu có lỗi trong binding
-        if (bindingResult.hasErrors()) {
-            return "admin/post/edit-post";
-        }
 
         // Kiểm tra các trường bắt buộc
         if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getDescription() == null
                 || post.getCreatedDate() == null || post.getContents() == null) {
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
-            return "admin/post/edit-post";
+            return "admin/post/edit";
         }
 
         try {
@@ -151,7 +126,7 @@ public class PostController {
             Post existingPost = postService.findByID(id);
             if (existingPost == null) {
                 model.addAttribute("error", "Bài viết không tồn tại");
-                return "admin/post/edit-post";
+                return "admin/post/edit";
             }
 
             // Cập nhật các trường cho bài viết
@@ -161,32 +136,11 @@ public class PostController {
             existingPost.setCreatedDate(post.getCreatedDate());
 
             // Nếu có ảnh đại diện mới, lưu ảnh
-            if (fileAvatars != null && !fileAvatars.isEmpty()) {
-                this.storageService.store(fileAvatars);
-                String fileNameAvatars = fileAvatars.getOriginalFilename();
-                existingPost.setAvatar(fileNameAvatars);
+            if (Thumnail != null && !Thumnail.isEmpty()) {
+                this.storageService.store(Thumnail);
+                String ThumnailFile = Thumnail.getOriginalFilename();
+                existingPost.setThumnail(ThumnailFile);
             }
-
-            // Cập nhật các ảnh nếu có
-            for (int i = 0; i < Math.min(fileImagek.length, 3); i++) {
-                if (fileImagek[i] != null && !fileImagek[i].isEmpty()) {
-                    this.storageService.store(fileImagek[i]);
-                    String fileName = fileImagek[i].getOriginalFilename();
-
-                    switch (i) {
-                        case 0:
-                            existingPost.setImg1(fileName);
-                            break;
-                        case 1:
-                            existingPost.setImg2(fileName);
-                            break;
-                        case 2:
-                            existingPost.setImg3(fileName);
-                            break;
-                    }
-                }
-            }
-
             // Cập nhật bài viết
             if (postService.update(existingPost)) {
                 return "redirect:/admin/post";
@@ -195,7 +149,7 @@ public class PostController {
             e.printStackTrace();
         }
 
-        return "admin/post/edit-post";
+        return "admin/post/edit";
     }
 
     @GetMapping("/delete-post/{PostID}")

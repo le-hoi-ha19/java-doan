@@ -1,17 +1,7 @@
 package com.example.fashion.models;
 
 import java.sql.Date;
-import java.util.Set;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Posts")
@@ -20,116 +10,93 @@ public class Post {
     @Column(name = "PostID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long PostID;
+
     @Column(name = "Title")
     private String Title;
-    @Column(name = "Contents", length = 100000)
-    private String Contents;
-    @Column(name = "Avatar")
-    private String Avatar;
-    @Column(name = "Img1")
-    private String Img1;
-    @Column(name = "Img2")
-    private String Img2;
-    @Column(name = "Img3")
-    private String Img3;
+
+    @Column(name = "Slug", unique = true, nullable = false)
+    private String Slug; // Thêm trường Slug
+
     @Column(name = "Description", length = 100000)
     private String Description;
-    @Column (name = "CreatedDate")
+
+    @Column(name = "Contents", length = 100000)
+    private String Contents;
+
+    @Column(name = "Thumnail")
+    private String Thumnail;
+
+    @Column(name = "CreatedDate")
     private Date CreatedDate;
 
-
-
     public Long getPostID() {
-        return this.PostID;
+        return PostID;
     }
 
-    public void setPostID(Long PostID) {
-        this.PostID = PostID;
+    public void setPostID(Long postID) {
+        PostID = postID;
     }
 
     public String getTitle() {
-        return this.Title;
+        return Title;
     }
 
-    public void setTitle(String Title) {
-        this.Title = Title;
+    public void setTitle(String title) {
+        Title = title;
     }
 
     public String getContents() {
-        return this.Contents;
+        return Contents;
     }
 
-    public void setContents(String Contents) {
-        this.Contents = Contents;
+    public void setContents(String contents) {
+        Contents = contents;
     }
 
-    public String getAvatar() {
-        return this.Avatar;
+    public String getSlug() {
+        return Slug;
     }
 
-    public void setAvatar(String Avatar) {
-        this.Avatar = Avatar;
+    public void setSlug(String slug) {
+        Slug = slug;
     }
 
-    public String getImg1() {
-        return this.Img1;
+    public String getThumnail() {
+        return Thumnail;
     }
 
-    public void setImg1(String Img1) {
-        this.Img1 = Img1;
-    }
-
-    public String getImg2() {
-        return this.Img2;
-    }
-
-    public void setImg2(String Img2) {
-        this.Img2 = Img2;
-    }
-
-    public String getImg3() {
-        return this.Img3;
-    }
-
-    public void setImg3(String Img3) {
-        this.Img3 = Img3;
+    public void setThumnail(String thumnail) {
+        Thumnail = thumnail;
     }
 
     public String getDescription() {
-        return this.Description;
+        return Description;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
+    public void setDescription(String description) {
+        Description = description;
     }
-    
+
     public Date getCreatedDate() {
-        return this.CreatedDate;
+        return CreatedDate;
     }
 
-    public void setCreatedDate(Date CreatedDate) {
-        this.CreatedDate = CreatedDate;
+    public void setCreatedDate(Date createdDate) {
+        CreatedDate = createdDate;
     }
 
-
-    public Post(Long PostID, String Title, String Contents, String Avatar, String Img1, String Img2, String Img3, String Description, Date CreatedDate, Set<Comment> comment) {
+    public Post(Long postID, String title, String contents, String thumnail,
+            String description, Date createdDate, String slug) {
         super();
-        this.PostID = PostID;
-        this.Title = Title;
-        this.Contents = Contents;
-        this.Avatar = Avatar;
-        this.Img1 = Img1;
-        this.Img2 = Img2;
-        this.Img3 = Img3;
-        this.Description = Description;
-        this.CreatedDate = CreatedDate;
+        PostID = postID;
+        Title = title;
+        Slug = slug;
+        Contents = contents;
+        Thumnail = thumnail;
+        Description = description;
+        CreatedDate = createdDate;
     }
-
-    
-
-   
 
     public Post() {
-
-	}
+    }
 }

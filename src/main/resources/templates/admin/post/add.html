@@ -152,21 +152,10 @@
             <label>Tên bài viết:</label>
             <input type="text" name="Title" class="form-control mb-3" th:field="*{Title}" />
           </div>
-          <div class="form-group col-md-6">
-            <div class="upload__box">
-              <div class="upload__btn-box">
-                <label class="upload__btn">
-                  <p>Tải hình ảnh</p>
-                  <input type="file" multiple="" data-max_length="20" name="fileImagek" class="upload__inputfile" />
-                </label>
-              </div>
-              <div class="upload__img-wrap"></div>
-            </div>
-          </div>
 
           <div class="form-group col-md-6">
-            <label>Hình ảnh đại diện:</label>
-            <input type="file" id="fileAvatars" name="fileAvatars" class="form-control mb-3" />
+            <label for="Thumnail">Hình ảnh đại diện:</label>
+            <input type="file" id="Thumnail" name="Thumnail" class="form-control mb-3" />
             <span class="alert-danger"></span>
           </div>
 
@@ -183,7 +172,7 @@
               </textarea>
           </div>
         </div>
-        <button type="submit" name="them" class="btn btn-lg btn-primary p-2">
+        <button type="submit"  class="btn btn-lg btn-primary p-2">
           <i class="bi bi-file-plus-fill"></i>Lưu
         </button>
         <a href="/admin/post" class="btn btn-lg btn-warning p-2">Quay lại</a>
@@ -204,68 +193,6 @@
 </body>
 
 </html>
-<script>
-  jQuery(document).ready(function () {
-    ImgUpload();
-  });
-
-  function ImgUpload() {
-    var imgWrap = "";
-    var imgArray = [];
-
-    $('.upload__inputfile').each(function () {
-      $(this).on('change', function (e) {
-        imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
-        var maxLength = $(this).attr('data-max_length');
-
-        var files = e.target.files;
-        var filesArr = Array.prototype.slice.call(files);
-        var iterator = 0;
-        filesArr.forEach(function (f, index) {
-
-          if (!f.type.match('image.*')) {
-            return;
-          }
-
-          if (imgArray.length > maxLength) {
-            return false
-          } else {
-            var len = 0;
-            for (var i = 0; i < imgArray.length; i++) {
-              if (imgArray[i] !== undefined) {
-                len++;
-              }
-            }
-            if (len > maxLength) {
-              return false;
-            } else {
-              imgArray.push(f);
-
-              var reader = new FileReader();
-              reader.onload = function (e) {
-                var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
-                imgWrap.append(html);
-                iterator++;
-              }
-              reader.readAsDataURL(f);
-            }
-          }
-        });
-      });
-    });
-
-    $('body').on('click', ".upload__img-close", function (e) {
-      var file = $(this).parent().data("file");
-      for (var i = 0; i < imgArray.length; i++) {
-        if (imgArray[i].name === file) {
-          imgArray.splice(i, 1);
-          break;
-        }
-      }
-      $(this).parent().parent().remove();
-    });
-  }
-</script>
 <script>
   // Khi trang đã tải xong
   window.onload = function() {
