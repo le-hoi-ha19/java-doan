@@ -44,7 +44,7 @@ public class CartController {
 	private CartService cartService;
 
 	@Autowired
-	private CartItemService itemService;
+	private CartItemService cartItemService;
 
 	@Autowired
 	private ProductService productService;
@@ -62,11 +62,11 @@ public class CartController {
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
-		Set<Cart> cart = user.getCarts();
-		List<CartItem> lstItems = itemService.findByUser(user.getId());
-		model.addAttribute("lstItems", lstItems);
-		model.addAttribute("listViewsCart", cart);
-		if (cart.isEmpty()) {
+		Set<Cart> listCart = user.getCarts();
+		List<CartItem> listCartItem = cartItemService.findByUser(user.getId());
+		model.addAttribute("listCartItem", listCartItem);
+		model.addAttribute("listCart", listCart);
+		if (listCart.isEmpty()) {
 			model.addAttribute("check", "Không có sản phẩm trong giỏ hàng");
 		}
 		List<Product> listViewsProducts = this.productService.getAll();
@@ -89,7 +89,7 @@ public class CartController {
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
-		if (this.itemService.create(ProductID, Quantity, user)) {
+		if (this.cartItemService.create(ProductID, Quantity, user)) {
 			return "redirect:" + request.getHeader("Referer");
 		} else {
 			return "redirect:" + request.getHeader("Referer");
@@ -110,7 +110,7 @@ public class CartController {
 
 			if (Quantity > 0) {
 
-				boolean updateSuccessful = this.itemService.update(ProductID, Quantity, user);
+				boolean updateSuccessful = this.cartItemService.update(ProductID, Quantity, user);
 
 				if (updateSuccessful) {
 
@@ -134,7 +134,7 @@ public class CartController {
 			String username = principal.getName();
 			User user = userService.findByUsername(username);
 
-			boolean cartDeleted = this.itemService.delete(ProductID, user);
+			boolean cartDeleted = this.cartItemService.delete(ProductID, user);
 
 			if (cartDeleted) {
 

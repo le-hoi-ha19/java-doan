@@ -26,6 +26,7 @@ import com.example.fashion.services.CategoryService;
 import com.example.fashion.services.OrderService;
 import com.example.fashion.services.ProductService;
 import com.example.fashion.services.UserService;
+import com.example.fashion.services.NotificationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -54,6 +55,9 @@ public class CheckoutController {
 
 	@Autowired
 	private BrandService brandService;
+
+	@Autowired
+	private NotificationService notificationService;
 
 	@GetMapping("/checkout")
 	public String index(Model model, Principal principal, HttpSession session) {
@@ -91,7 +95,7 @@ public class CheckoutController {
 		if (!carts.isEmpty()) {
 			Cart cart = carts.iterator().next();
 			if (this.orderService.create(cart)) {
-				
+				notificationService.createNotification(user.getId(), "Đặt hàng thành công", "Đơn hàng của bạn đã được tạo thành công!");
 				itemService.delete(ProductID, user);
 				cartService.delete(cart.getCartID());
 			}
