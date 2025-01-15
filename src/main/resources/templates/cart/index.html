@@ -66,7 +66,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody th:if="${check == null}">
-                                                <tr th:each="cartItem : ${lstItems}">
+                                                <tr th:each="cartItem : ${listCartItem}">
                                                     <input type="hidden" name="ProductID"
                                                         th:value="${cartItem.products.ProductID}">
                                                     <td class="product_remove"><button type="submit" name="action"
@@ -118,7 +118,7 @@
                                         </div> -->
                             </div>
                             <div class="col-lg-6 col-md-6" th:if="${check == null}">
-                                <div class="coupon_code" th:each="cart  : ${listViewsCart}">
+                                <div class="coupon_code" th:each="cart  : ${listCart}">
                                     <h3>Tổng giỏ hàng</h3>
                                     <div class="coupon_inner">
                                         <div class="cart_subtotal">
