@@ -1,4 +1,5 @@
-FROM maven:3.8.5-openjdk-17 AS build
+# Stage 1: Build jar
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
@@ -8,7 +9,8 @@ RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-jdk-slim
+# Stage 2: Run jar
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
