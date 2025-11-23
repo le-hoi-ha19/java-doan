@@ -84,7 +84,7 @@ public class Contact {
         this.subject = subject;
     }
 
-    private Contact() {
+    public Contact() {
 
     }
 
