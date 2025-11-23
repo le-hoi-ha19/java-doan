@@ -14,8 +14,6 @@ public interface OrderService {
 
     long countTotalPrice();
 
-    Order findByUser(User user);
-
     List<Order> findByUserOrderByOrderIDDesc(User user);
 
     long countTotalOrders();

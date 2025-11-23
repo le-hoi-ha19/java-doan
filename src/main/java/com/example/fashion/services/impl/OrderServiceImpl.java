@@ -139,12 +139,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order findByUser(User user) {
-        return orderRepository.findByUser(user);
-
-    }
-
-    @Override
     public List<Order> findByUserOrderByOrderIDDesc(User user) {
         return orderRepository.findByUserOrderByOrderIDDesc(user);
     }
