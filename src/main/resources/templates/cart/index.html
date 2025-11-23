@@ -89,8 +89,12 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div th:if="${check}" class="text-center alert-warning">
+                                        <!-- Empty cart state -->
+                                        <div th:if="${check}" class="alert alert-info text-center" style="padding: 50px; margin: 20px 0;">
+                                            <i class="fa fa-shopping-cart" style="font-size: 48px; color: #999; margin-bottom: 20px;"></i>
+                                            <h4>Giỏ hàng trống</h4>
                                             <p th:text="${check}"></p>
+                                            <a href="/products" class="btn btn-primary" style="margin-top: 10px;">Mua sắm ngay</a>
                                         </div>
                                     </div>
                                     <div class="cart_submit">

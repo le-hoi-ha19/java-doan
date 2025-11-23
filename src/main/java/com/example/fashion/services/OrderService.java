@@ -16,6 +16,8 @@ public interface OrderService {
 
     Order findByUser(User user);
 
+    List<Order> findByUserOrderByOrderIDDesc(User user);
+
     long countTotalOrders();
 
     long countPendingOrders();

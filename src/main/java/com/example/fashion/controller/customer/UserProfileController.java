@@ -12,12 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.fashion.models.Order;
 import com.example.fashion.models.User;
-import com.example.fashion.models.Brand;
-import com.example.fashion.models.Category;
 import com.example.fashion.services.OrderService;
 import com.example.fashion.services.UserService;
-import com.example.fashion.services.BrandService;
-import com.example.fashion.services.CategoryService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,12 +26,6 @@ public class UserProfileController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private BrandService brandService;
-
     @GetMapping("/my-profile")
     public String profile(Model model, Principal principal, HttpSession session) {
         if (principal == null) {
@@ -46,11 +36,6 @@ public class UserProfileController {
         User user = userService.findByUsername(username);
         model.addAttribute("user", user);
 
-        List<Category> categories = this.categoryService.getAll();
-        model.addAttribute("categories", categories);
-        List<Brand> listBra = this.brandService.getAll();
-        model.addAttribute("listBra", listBra);
-
         return "customer/profile";
     }
 
@@ -60,22 +45,25 @@ public class UserProfileController {
             return "redirect:/login";
         }
 
-        String username = principal.getName();
-        User user = userService.findByUsername(username);
-        
-        List<Order> userOrders = orderService.getAll().stream()
-            .filter(order -> order.getUser().getId().equals(user.getId()))
-            .toList();
-        
-        model.addAttribute("orders", userOrders);
-        model.addAttribute("user", user);
+        try {
+            String username = principal.getName();
+            User user = userService.findByUsername(username);
+            
+            if (user == null) {
+                return "redirect:/login";
+            }
+            
+            List<Order> userOrders = orderService.findByUserOrderByOrderIDDesc(user);
+            
+            model.addAttribute("orders", userOrders);
+            model.addAttribute("user", user);
 
-        List<Category> categories = this.categoryService.getAll();
-        model.addAttribute("categories", categories);
-        List<Brand> listBra = this.brandService.getAll();
-        model.addAttribute("listBra", listBra);
-
-        return "customer/my-orders";
+            return "customer/my-orders";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Có lỗi xảy ra khi tải đơn hàng.");
+            return "customer/my-orders";
+        }
     }
 
     @PostMapping("/update-profile")

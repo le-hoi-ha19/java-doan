@@ -71,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> list6Products() {
-        return this.productRepository.list6Products();
+        return this.productRepository.list6Products().stream().limit(6).toList();
     }
 
     @Override

@@ -73,7 +73,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> list3Post() {
-        return this.postRepository.list3Post();
+        return this.postRepository.list3Post().stream().limit(3).toList();
     }
 
 }

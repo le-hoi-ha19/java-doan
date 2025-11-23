@@ -1,0 +1,149 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Thông tin cá nhân</title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/plugin.css">
+    <link rel="stylesheet" href="/assets/css/bundle.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+    <div class="pos_page">
+        <div class="container">
+            <div class="pos_page_inner">
+                <div th:replace="layout/header :: header"></div>
+
+                <div class="breadcrumbs_area">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb_content">
+                                <ul>
+                                    <li><a href="/">Trang chủ</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li>Thông tin cá nhân</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pos_home_section" style="padding: 30px 0;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img th:src="@{${user.images != null && user.images != ''} ? '/uploads/'+${user.images} : '/images/default-avatar.png'}" 
+                                         style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;"
+                                         alt="Avatar">
+                                    <h4 th:text="${user.fullname}" style="margin-top: 15px;"></h4>
+                                    <p th:text="${user.email}" style="color: #666;"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <div class="card">
+                                <div class="card-header" style="background: #fff; border-bottom: 2px solid #f0f0f0;">
+                                    <h3><i class="fa fa-user"></i> Cập nhật thông tin</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form th:action="@{/update-profile}" method="post" th:object="${user}">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="fullname">Họ và tên</label>
+                                                <input type="text" 
+                                                       class="form-control" 
+                                                       id="fullname" 
+                                                       name="fullname" 
+                                                       th:value="${user.fullname}" 
+                                                       required>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="email">Email</label>
+                                                <input type="email" 
+                                                       class="form-control" 
+                                                       id="email" 
+                                                       name="email" 
+                                                       th:value="${user.email}" 
+                                                       required>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="telephone">Số điện thoại</label>
+                                                <input type="text" 
+                                                       class="form-control" 
+                                                       id="telephone" 
+                                                       name="telephone" 
+                                                       th:value="${user.telephone}" 
+                                                       required>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label>Giới tính</label><br>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" 
+                                                           type="radio" 
+                                                           name="gender" 
+                                                           id="male" 
+                                                           value="true" 
+                                                           th:checked="${user.gender}">
+                                                    <label class="form-check-label" for="male">Nam</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" 
+                                                           type="radio" 
+                                                           name="gender" 
+                                                           id="female" 
+                                                           value="false" 
+                                                           th:checked="${!user.gender}">
+                                                    <label class="form-check-label" for="female">Nữ</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 mb-3">
+                                                <label for="address">Địa chỉ</label>
+                                                <textarea class="form-control" 
+                                                          id="address" 
+                                                          name="address" 
+                                                          rows="3" 
+                                                          th:text="${user.address}"></textarea>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fa fa-save"></i> Cập nhật
+                                                </button>
+                                                <a href="/" class="btn btn-secondary">
+                                                    <i class="fa fa-times"></i> Hủy
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout/footer :: footer"></div>
+    <div th:replace="fragments/toast :: toast"></div>
+
+    <script th:replace="layout/script :: script"></script>
+</body>
+
+</html>

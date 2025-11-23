@@ -1,0 +1,149 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Đơn hàng của tôi</title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/plugin.css">
+    <link rel="stylesheet" href="/assets/css/bundle.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <style>
+        .order-item {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background: #fff;
+        }
+        .order-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .order-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-processing {
+            background: #cce5ff;
+            color: #004085;
+        }
+        .status-shipping {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pos_page">
+        <div class="container">
+            <div class="pos_page_inner">
+                <div th:replace="layout/header :: header"></div>
+
+                <div class="breadcrumbs_area">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb_content">
+                                <ul>
+                                    <li><a href="/">Trang chủ</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li>Đơn hàng của tôi</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pos_home_section" style="padding: 30px 0;">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2><i class="fa fa-shopping-bag"></i> Đơn hàng của tôi</h2>
+                            <hr>
+
+                            <div th:if="${errorMessage}" class="alert alert-danger">
+                                <p th:text="${errorMessage}"></p>
+                            </div>
+
+                            <div th:if="${orders == null || orders.isEmpty()}" 
+                                 class="alert alert-info text-center" 
+                                 style="padding: 50px; margin: 20px 0;">
+                                <i class="fa fa-shopping-cart" style="font-size: 48px; color: #999; margin-bottom: 20px;"></i>
+                                <h4>Chưa có đơn hàng nào</h4>
+                                <p>Bạn chưa có đơn hàng nào.</p>
+                                <a href="/products" class="btn btn-primary" style="margin-top: 10px;">Mua sắm ngay</a>
+                            </div>
+
+                            <div th:if="${orders != null && !orders.isEmpty()}">
+                                <div th:each="order : ${orders}" class="order-item">
+                                    <div class="order-header">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <strong>Mã đơn hàng:</strong> #<span th:text="${order.OrderID}"></span><br>
+                                                <strong>Ngày đặt:</strong> <span th:text="${#dates.format(order.OrderDate, 'dd/MM/yyyy HH:mm')}"></span>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <span class="order-status"
+                                                      th:classappend="${order.OrderStatus == 'Chờ xử lý' ? 'status-pending' : 
+                                                                       (order.OrderStatus == 'Đang xử lý' ? 'status-processing' : 
+                                                                       (order.OrderStatus == 'Đang giao hàng' ? 'status-shipping' : 
+                                                                       (order.OrderStatus == 'Giao hàng thành công' ? 'status-completed' : 'status-cancelled')))}"
+                                                      th:text="${order.OrderStatus}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-details">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <strong>Địa chỉ giao hàng:</strong><br>
+                                                <span th:text="${order.user.fullname}"></span><br>
+                                                <span th:text="${order.user.address}"></span><br>
+                                                <span th:text="${order.user.telephone}"></span>
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                <strong>Tổng tiền:</strong><br>
+                                                <h4 style="color: #e91e63;" th:text="${#numbers.formatDecimal(order.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h4>
+                                            </div>
+                                        </div>
+                                        <div th:if="${order.Notes != null && order.Notes != ''}" style="margin-top: 10px;">
+                                            <strong>Ghi chú:</strong> <span th:text="${order.Notes}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout/footer :: footer"></div>
+
+    <script th:replace="layout/script :: script"></script>
+</body>
+
+</html>

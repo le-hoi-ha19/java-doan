@@ -143,7 +143,15 @@
 
                             <!--shop tab product-->
                             <div class="shop_tab_product">
-                                <div class="tab-content" id="myTabContent">
+                                <!-- Empty state -->
+                                <div th:if="${listProducts == null || listProducts.isEmpty()}" class="alert alert-info text-center" style="padding: 50px; margin: 20px 0;">
+                                    <i class="fa fa-inbox" style="font-size: 48px; color: #999; margin-bottom: 20px;"></i>
+                                    <h4>Không có sản phẩm nào</h4>
+                                    <p>Hiện tại chưa có sản phẩm nào trong cửa hàng.</p>
+                                    <a href="/" class="btn btn-primary" style="margin-top: 10px;">Về trang chủ</a>
+                                </div>
+                                
+                                <div class="tab-content" id="myTabContent" th:if="${listProducts != null && !listProducts.isEmpty()}">
                                     <div class="tab-pane fade show active" id="large" role="tabpanel">
                                         <div class="row">
                                             <div class="col-lg-4 col-md-6" th:each="product : ${listProducts}">
@@ -231,7 +239,7 @@
                             <!--shop tab product end-->
 
                             <!--pagination style start-->
-                            <div class="pagination_style">
+                            <div class="pagination_style" th:if="${totalPage > 0}">
                                 <div class="item_page">
                                 </div>
                                 <div class="page_number">

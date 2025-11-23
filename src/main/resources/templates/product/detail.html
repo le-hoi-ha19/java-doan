@@ -214,7 +214,7 @@
                         <!-- Loop through the comments and display each one -->
                         <div th:each="comment : ${comments}" class="comment-item pb-3 mb-3" style="border-bottom: 1px solid gray">
                           <!-- Loop through the rating stars based on the comment rating -->
-                          <ul>
+                          <ul th:if="${comment.rating != null && comment.rating > 0}">
                             <li th:each="i : ${#numbers.sequence(1, comment.rating)}">
                               <a href="#"><i class="fa fa-star"></i></a>
                             </li>

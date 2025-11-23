@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.example.fashion.models.Post;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>{
-     @Query(value = "SELECT p FROM Post p ORDER BY p.PostID DESC LIMIT 3")
+     @Query(value = "SELECT p FROM Post p ORDER BY p.PostID DESC")
     List<Post> list3Post();
 
     @Query(value = "SELECT p FROM Post p ORDER BY p.PostID DESC")

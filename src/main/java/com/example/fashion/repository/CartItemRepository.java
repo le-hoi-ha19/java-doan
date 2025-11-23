@@ -13,13 +13,13 @@ import com.example.fashion.models.Product;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    @Query("SELECT COALESCE(SUM(ci.Quantity), 0) FROM CartItem ci WHERE ci.carts.id = :cartId")
+    @Query("SELECT COALESCE(SUM(ci.Quantity), 0) FROM CartItem ci WHERE ci.carts.CartID = :cartId")
     int sumQuantityByCart(@Param("cartId") Long cartId);
 
-    @Query("SELECT COALESCE(SUM(ci.TotalsPrice), 0) FROM CartItem ci WHERE ci.carts.id = :cartId")
+    @Query("SELECT COALESCE(SUM(ci.TotalsPrice), 0) FROM CartItem ci WHERE ci.carts.CartID = :cartId")
     double sumTotalPriceByCart(@Param("cartId") Long cartID);
 
-    @Query("SELECT ci FROM CartItem ci WHERE ci.products.id = :productId")
+    @Query("SELECT ci FROM CartItem ci WHERE ci.products.ProductID = :productId")
     CartItem findByProduct(@Param("productId") Long productId);
 
     @Query("SELECT ci FROM CartItem ci JOIN ci.carts c WHERE c.user.id = :userId")

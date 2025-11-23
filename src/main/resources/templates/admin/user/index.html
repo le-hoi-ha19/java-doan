@@ -48,7 +48,14 @@
                 <div class="col-12">
                     <div class="card recent-sales overflow-auto">
                         <div class="card-body mt-4">
-                            <table class="table table-borderless datatable">
+                            <!-- Empty state -->
+                            <div th:if="${customerUsers == null || customerUsers.isEmpty()}" class="alert alert-info text-center" style="padding: 50px; margin: 20px 0;">
+                                <i class="bi bi-people" style="font-size: 48px; color: #999; margin-bottom: 20px;"></i>
+                                <h4>Chưa có khách hàng nào</h4>
+                                <p>Chưa có khách hàng đăng ký trong hệ thống.</p>
+                            </div>
+                            
+                            <table class="table table-borderless datatable" th:if="${customerUsers != null && !customerUsers.isEmpty()}">
                                 <thead>
                                     <tr>
                                         <th class="col-1 text-center">#</th>

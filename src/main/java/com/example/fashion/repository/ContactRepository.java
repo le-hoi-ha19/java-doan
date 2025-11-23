@@ -9,6 +9,6 @@ import com.example.fashion.models.Contact;
 
 public interface ContactRepository extends JpaRepository<Contact, Long>{
     
-    @Query(value = "SELECT c FROM Contact c ORDER BY c.id DESC")
+    @Query(value = "SELECT c FROM Contact c ORDER BY c.contactID DESC")
     List<Contact> findAllOrderByIdDesc();
 }

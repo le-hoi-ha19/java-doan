@@ -1,0 +1,167 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Thông báo</title>
+    <meta name="description" content>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/plugin.css">
+    <link rel="stylesheet" href="/assets/css/bundle.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <style>
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+        }
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+        .notification-item.unread {
+            background-color: #e3f2fd;
+            font-weight: 500;
+        }
+        .notification-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .notification-message {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .notification-time {
+            font-size: 12px;
+            color: #999;
+        }
+        .notification-badge {
+            background: #f44336;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pos_page">
+        <div class="container">
+            <div class="pos_page_inner">
+                <div th:replace="layout/header :: header"></div>
+
+                <div class="breadcrumbs_area">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb_content">
+                                <ul>
+                                    <li><a href="/">Trang chủ</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li>Thông báo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pos_home_section" style="padding: 30px 0;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header" style="background: #fff; border-bottom: 2px solid #f0f0f0; padding: 20px;">
+                                    <h3 style="margin: 0; display: inline-block;">
+                                        <i class="fa fa-bell"></i> Thông báo
+                                        <span th:if="${unreadCount > 0}" class="notification-badge" th:text="${unreadCount}"></span>
+                                    </h3>
+                                    <button th:if="${unreadCount > 0}" 
+                                            onclick="markAllAsRead()" 
+                                            class="btn btn-sm btn-primary" 
+                                            style="float: right;">
+                                        <i class="fa fa-check"></i> Đánh dấu tất cả đã đọc
+                                    </button>
+                                </div>
+                                <div class="card-body" style="padding: 0;">
+                                    <div th:if="${notifications == null || notifications.isEmpty()}" 
+                                         class="alert alert-info text-center" 
+                                         style="padding: 50px; margin: 20px;">
+                                        <i class="fa fa-bell-slash" style="font-size: 48px; color: #999; margin-bottom: 20px;"></i>
+                                        <h4>Không có thông báo nào</h4>
+                                        <p>Bạn chưa có thông báo nào.</p>
+                                    </div>
+
+                                    <div th:if="${notifications != null && !notifications.isEmpty()}">
+                                        <div th:each="notification : ${notifications}" 
+                                             class="notification-item"
+                                             th:classappend="${!notification.isRead ? 'unread' : ''}"
+                                             th:onclick="'markAsRead(' + ${notification.id} + ')'">
+                                            <div class="notification-title">
+                                                <i class="fa fa-circle" 
+                                                   th:if="${!notification.isRead}" 
+                                                   style="font-size: 8px; color: #2196F3; margin-right: 5px;"></i>
+                                                <span th:text="${notification.title}"></span>
+                                            </div>
+                                            <div class="notification-message" th:text="${notification.message}"></div>
+                                            <div class="notification-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                <span th:text="${#temporals.format(notification.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="layout/footer :: footer"></div>
+
+    <script src="/assets/js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script>
+        function markAsRead(notificationId) {
+            fetch('/user/notifications/' + notificationId + '/mark-read', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function markAllAsRead() {
+            fetch('/user/notifications/mark-all-read', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+    <script th:replace="layout/script :: script"></script>
+</body>
+
+</html>

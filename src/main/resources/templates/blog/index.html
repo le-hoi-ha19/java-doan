@@ -49,7 +49,15 @@
 
                 <!--blog area start-->
                 <div class="blog_area">
-                    <div class="row">
+                    <!-- Empty state -->
+                    <div th:if="${listPost == null || listPost.isEmpty()}" class="alert alert-info text-center" style="padding: 50px; margin: 20px 0;">
+                        <i class="fa fa-newspaper-o" style="font-size: 48px; color: #999; margin-bottom: 20px;"></i>
+                        <h4>Chưa có bài viết nào</h4>
+                        <p>Hiện tại chưa có bài viết nào. Vui lòng quay lại sau.</p>
+                        <a href="/" class="btn btn-primary" style="margin-top: 10px;">Về trang chủ</a>
+                    </div>
+                    
+                    <div class="row" th:if="${listPost != null && !listPost.isEmpty()}">
                         <div class="col-lg-4 col-md-6" th:each="post : ${listPost}">
                             <div class="single_blog">
                                 <div class="blog_thumb">
@@ -95,7 +103,7 @@
                 <!--blog area end-->
 
                 <!--pagination style start-->
-                <div class="blog_pagination">
+                <div class="blog_pagination" th:if="${totalPage > 0}">
                     <div class="row">
                         <div class="col-12">
                             <div class="page_number">
