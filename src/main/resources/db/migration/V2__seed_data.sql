@@ -23,71 +23,71 @@ INSERT INTO users_roles (userId, roleId) VALUES
 (5, 2); -- manager also has ROLE_USER
 
 -- Insert brands
-INSERT INTO Brands (BrandName, Slug, Logo, description) VALUES
-('Nike', 'nike', '/images/brands/nike.png', 'Thương hiệu thể thao hàng đầu thế giới'),
-('Adidas', 'adidas', '/images/brands/adidas.png', 'Thương hiệu thể thao nổi tiếng'),
-('Zara', 'zara', '/images/brands/zara.png', 'Thời trang công sở và casual'),
-('H&M', 'h-m', '/images/brands/hm.png', 'Thời trang giá rẻ chất lượng'),
-('Uniqlo', 'uniqlo', '/images/brands/uniqlo.png', 'Thời trang tối giản Nhật Bản'),
-('Local Brand', 'local-brand', '/images/brands/local.png', 'Thương hiệu thời trang Việt Nam');
+INSERT INTO Brands (BrandName, Slug, Logo) VALUES
+('Nike', 'nike', '/images/brands/nike.png'),
+('Adidas', 'adidas', '/images/brands/adidas.png'),
+('Zara', 'zara', '/images/brands/zara.png'),
+('H&M', 'h-m', '/images/brands/hm.png'),
+('Uniqlo', 'uniqlo', '/images/brands/uniqlo.png'),
+('Local Brand', 'local-brand', '/images/brands/local.png');
 
 -- Insert categories
-INSERT INTO Categories (CatName, Slug, description, image_url, parent_id) VALUES
-('Nam', 'nam', 'Thời trang nam', '/images/categories/nam.jpg', NULL),
-('Nữ', 'nu', 'Thời trang nữ', '/images/categories/nu.jpg', NULL),
-('Phụ kiện', 'phu-kien', 'Phụ kiện thời trang', '/images/categories/phu-kien.jpg', NULL),
-('Áo thun nam', 'ao-thun-nam', 'Áo thun nam các loại', '/images/categories/ao-thun-nam.jpg', 1),
-('Quần jean nam', 'quan-jean-nam', 'Quần jean nam', '/images/categories/quan-jean-nam.jpg', 1),
-('Áo khoác nam', 'ao-khoac-nam', 'Áo khoác nam', '/images/categories/ao-khoac-nam.jpg', 1),
-('Áo thun nữ', 'ao-thun-nu', 'Áo thun nữ các loại', '/images/categories/ao-thun-nu.jpg', 2),
-('Váy đầm', 'vay-dam', 'Váy đầm nữ', '/images/categories/vay-dam.jpg', 2),
-('Quần jean nữ', 'quan-jean-nu', 'Quần jean nữ', '/images/categories/quan-jean-nu.jpg', 2),
-('Túi xách', 'tui-xach', 'Túi xách thời trang', '/images/categories/tui-xach.jpg', 3),
-('Giày dép', 'giay-dep', 'Giày dép thời trang', '/images/categories/giay-dep.jpg', 3),
-('Mũ nón', 'mu-non', 'Mũ nón thời trang', '/images/categories/mu-non.jpg', 3);
+INSERT INTO Categories (CatName, Slug) VALUES
+('Nam', 'nam'),
+('Nữ', 'nu'),
+('Phụ kiện', 'phu-kien'),
+('Áo thun nam', 'ao-thun-nam'),
+('Quần jean nam', 'quan-jean-nam'),
+('Áo khoác nam', 'ao-khoac-nam'),
+('Áo thun nữ', 'ao-thun-nu'),
+('Váy đầm', 'vay-dam'),
+('Quần jean nữ', 'quan-jean-nu'),
+('Túi xách', 'tui-xach'),
+('Giày dép', 'giay-dep'),
+('Mũ nón', 'mu-non');
 
 -- Insert products
-INSERT INTO Products (ProductName, slug, Description, Price, SalePrice, Quantity, CatID, BrandID, Avatar, Img1, Img2, Img3, status, sku) VALUES
+INSERT INTO Products (ProductName, Description, Price, SalePrice, Quantity, CatID, BrandID, Avatar, Img1, Img2, Img3) VALUES
 -- Áo thun nam
-('Áo thun Nike Dri-FIT', 'ao-thun-nike-dri-fit', 'Áo thun thể thao Nike công nghệ Dri-FIT thấm hút mồ hôi tốt', 450000, 380000, 100, 4, 1, '/images/products/ao-thun-nam-1.jpg', '/images/products/ao-thun-nam-1-2.jpg', '/images/products/ao-thun-nam-1-3.jpg', '/images/products/ao-thun-nam-1-4.jpg', 'ACTIVE', 'SKU-ATN-001'),
-('Áo thun Adidas Basic', 'ao-thun-adidas-basic', 'Áo thun cotton 100% basic logo Adidas', 350000, 300000, 80, 4, 2, '/images/products/ao-thun-nam-2.jpg', '/images/products/ao-thun-nam-2-2.jpg', NULL, NULL, 'ACTIVE', 'SKU-ATN-002'),
-('Áo thun Local Brand oversized', 'ao-thun-local-brand-oversized', 'Áo thun form rộng local brand chất cotton co giãn', 280000, 250000, 120, 4, 6, '/images/products/ao-thun-nam-3.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-ATN-003'),
-('Áo polo Uniqlo', 'ao-polo-uniqlo', 'Áo polo cổ bẻ công sở Uniqlo', 390000, NULL, 60, 4, 5, '/images/products/ao-polo-nam-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-ATN-004'),
+('Áo thun Nike Dri-FIT', 'Áo thun thể thao Nike công nghệ Dri-FIT thấm hút mồ hôi tốt', 450000, 380000, 100, 4, 1, '/images/products/ao-thun-nam-1.jpg', '/images/products/ao-thun-nam-1-2.jpg', '/images/products/ao-thun-nam-1-3.jpg', '/images/products/ao-thun-nam-1-4.jpg'),
+('Áo thun Adidas Basic', 'Áo thun cotton 100% basic logo Adidas', 350000, 300000, 80, 4, 2, '/images/products/ao-thun-nam-2.jpg', '/images/products/ao-thun-nam-2-2.jpg', NULL, NULL),
+('Áo thun Local Brand oversized', 'Áo thun form rộng local brand chất cotton co giãn', 280000, 250000, 120, 4, 6, '/images/products/ao-thun-nam-3.jpg', NULL, NULL, NULL),
+('Áo polo Uniqlo', 'Áo polo cổ bẻ công sở Uniqlo', 390000, NULL, 60, 4, 5, '/images/products/ao-polo-nam-1.jpg', NULL, NULL, NULL),
 
 -- Quần jean nam
-('Quần jean Nike Slim Fit', 'quan-jean-nike-slim-fit', 'Quần jean nam dáng slim fit co giãn', 750000, 650000, 50, 5, 1, '/images/products/quan-jean-nam-1.jpg', '/images/products/quan-jean-nam-1-2.jpg', NULL, NULL, 'ACTIVE', 'SKU-QJN-001'),
-('Quần jean Zara Skinny', 'quan-jean-zara-skinny', 'Quần jean skinny ôm body Zara', 680000, 580000, 45, 5, 3, '/images/products/quan-jean-nam-2.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-QJN-002'),
-('Quần jean H&M Regular', 'quan-jean-hm-regular', 'Quần jean regular fit H&M', 550000, 480000, 70, 5, 4, '/images/products/quan-jean-nam-3.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-QJN-003'),
+('Quần jean Nike Slim Fit', 'Quần jean nam dáng slim fit co giãn', 750000, 650000, 50, 5, 1, '/images/products/quan-jean-nam-1.jpg', '/images/products/quan-jean-nam-1-2.jpg', NULL, NULL),
+('Quần jean Zara Skinny', 'Quần jean skinny ôm body Zara', 680000, 580000, 45, 5, 3, '/images/products/quan-jean-nam-2.jpg', NULL, NULL, NULL),
+('Quần jean H&M Regular', 'Quần jean regular fit H&M', 550000, 480000, 70, 5, 4, '/images/products/quan-jean-nam-3.jpg', NULL, NULL, NULL),
 
 -- Áo khoác nam
-('Áo khoác Nike Windrunner', 'ao-khoac-nike-windrunner', 'Áo khoác gió Nike chống nước', 1200000, 1000000, 35, 6, 1, '/images/products/ao-khoac-nam-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-AKN-001'),
-('Áo khoác Adidas Bomber', 'ao-khoac-adidas-bomber', 'Áo bomber jacket Adidas phong cách thể thao', 950000, 850000, 40, 6, 2, '/images/products/ao-khoac-nam-2.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-AKN-002'),
-('Áo khoác jeans Local Brand', 'ao-khoac-jeans-local-brand', 'Áo khoác jeans unisex local brand', 680000, 600000, 55, 6, 6, '/images/products/ao-khoac-nam-3.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-AKN-003'),
+('Áo khoác Nike Windrunner', 'Áo khoác gió Nike chống nước', 1200000, 1000000, 35, 6, 1, '/images/products/ao-khoac-nam-1.jpg', NULL, NULL, NULL),
+('Áo khoác Adidas Bomber', 'Áo bomber jacket Adidas phong cách thể thao', 950000, 850000, 40, 6, 2, '/images/products/ao-khoac-nam-2.jpg', NULL, NULL, NULL),
+('Áo khoác jeans Local Brand', 'Áo khoác jeans unisex local brand', 680000, 600000, 55, 6, 6, '/images/products/ao-khoac-nam-3.jpg', NULL, NULL, NULL),
 
 -- Áo thun nữ
-('Áo thun Nike nữ Basic', 'ao-thun-nike-nu-basic', 'Áo thun nữ Nike cotton thoáng mát', 380000, 320000, 90, 7, 1, '/images/products/ao-thun-nu-1.jpg', '/images/products/ao-thun-nu-1-2.jpg', NULL, NULL, 'ACTIVE', 'SKU-ATNU-001'),
-('Áo thun Zara nữ họa tiết', 'ao-thun-zara-nu-hoa-tiet', 'Áo thun nữ Zara họa tiết thời trang', 420000, 360000, 75, 7, 3, '/images/products/ao-thun-nu-2.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-ATNU-002'),
-('Áo croptop H&M', 'ao-croptop-hm', 'Áo croptop nữ H&M năng động', 280000, 250000, 100, 7, 4, '/images/products/ao-croptop-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-ATNU-003'),
+('Áo thun Nike nữ Basic', 'Áo thun nữ Nike cotton thoáng mát', 380000, 320000, 90, 7, 1, '/images/products/ao-thun-nu-1.jpg', '/images/products/ao-thun-nu-1-2.jpg', NULL, NULL),
+('Áo thun Zara nữ họa tiết', 'Áo thun nữ Zara họa tiết thời trang', 420000, 360000, 75, 7, 3, '/images/products/ao-thun-nu-2.jpg', NULL, NULL, NULL),
+('Áo croptop H&M', 'Áo croptop nữ H&M năng động', 280000, 250000, 100, 7, 4, '/images/products/ao-croptop-1.jpg', NULL, NULL, NULL),
 
 -- Váy đầm
-('Váy hoa nhí Zara', 'vay-hoa-nhi-zara', 'Váy hoa nhí dáng xòe Zara', 580000, 500000, 40, 8, 3, '/images/products/vay-1.jpg', '/images/products/vay-1-2.jpg', '/images/products/vay-1-3.jpg', NULL, 'ACTIVE', 'SKU-VD-001'),
-('Váy công sở H&M', 'vay-cong-so-hm', 'Váy công sở H&M thanh lịch', 650000, NULL, 35, 8, 4, '/images/products/vay-2.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-VD-002'),
-('Đầm maxi Zara', 'dam-maxi-zara', 'Đầm maxi dạ hội Zara cao cấp', 1200000, 1000000, 25, 8, 3, '/images/products/dam-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-VD-003'),
+('Váy hoa nhí Zara', 'Váy hoa nhí dáng xòe Zara', 580000, 500000, 40, 8, 3, '/images/products/vay-1.jpg', '/images/products/vay-1-2.jpg', '/images/products/vay-1-3.jpg', NULL),
+('Váy công sở H&M', 'Váy công sở H&M thanh lịch', 650000, NULL, 35, 8, 4, '/images/products/vay-2.jpg', NULL, NULL, NULL),
+('Đầm maxi Zara', 'Đầm maxi dạ hội Zara cao cấp', 1200000, 1000000, 25, 8, 3, '/images/products/dam-1.jpg', NULL, NULL, NULL),
 
 -- Quần jean nữ
-('Quần jean nữ Zara Skinny', 'quan-jean-nu-zara-skinny', 'Quần jean nữ skinny Zara co giãn', 680000, 580000, 60, 9, 3, '/images/products/quan-jean-nu-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-QJNU-001'),
-('Quần jean nữ H&M Boyfriend', 'quan-jean-nu-hm-boyfriend', 'Quần jean nữ boyfriend H&M', 590000, 520000, 50, 9, 4, '/images/products/quan-jean-nu-2.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-QJNU-002'),
+('Quần jean nữ Zara Skinny', 'Quần jean nữ skinny Zara co giãn', 680000, 580000, 60, 9, 3, '/images/products/quan-jean-nu-1.jpg', NULL, NULL, NULL),
+('Quần jean nữ H&M Boyfriend', 'Quần jean nữ boyfriend H&M', 590000, 520000, 50, 9, 4, '/images/products/quan-jean-nu-2.jpg', NULL, NULL, NULL),
 
 -- Phụ kiện
-('Túi xách mini Zara', 'tui-xach-mini-zara', 'Túi xách mini đeo chéo Zara', 450000, 380000, 70, 10, 3, '/images/products/tui-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-TX-001'),
-('Balo Nike Sportswear', 'balo-nike-sportswear', 'Balo Nike đựng laptop thể thao', 890000, 750000, 45, 10, 1, '/images/products/balo-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-TX-002'),
-('Túi tote H&M', 'tui-tote-hm', 'Túi tote canvas H&M đi học đi làm', 280000, 250000, 80, 10, 4, '/images/products/tui-tote-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-TX-003'),
-('Giày Nike Air Force 1', 'giay-nike-air-force-1', 'Giày sneaker Nike Air Force 1 classic', 2500000, 2200000, 30, 11, 1, '/images/products/giay-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-GD-001'),
-('Giày Adidas Superstar', 'giay-adidas-superstar', 'Giày Adidas Superstar iconic', 2200000, 1900000, 35, 11, 2, '/images/products/giay-2.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-GD-002'),
-('Dép Adidas Adilette', 'dep-adidas-adilette', 'Dép đi trong nhà Adidas', 450000, 400000, 100, 11, 2, '/images/products/dep-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-GD-003'),
-('Mũ lưỡi trai Nike', 'mu-luoi-trai-nike', 'Mũ lưỡi trai Nike thêu logo', 380000, 320000, 90, 12, 1, '/images/products/mu-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-MN-001'),
-('Mũ bucket Adidas', 'mu-bucket-adidas', 'Mũ bucket Adidas phong cách streetwear', 420000, 380000, 75, 12, 2, '/images/products/mu-2.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-MN-002'),
-('Nón len Local Brand', 'non-len-local-brand', 'Nón len local brand mùa đông', 280000, 250000, 60, 12, 6, '/images/products/non-len-1.jpg', NULL, NULL, NULL, 'ACTIVE', 'SKU-MN-003');
+('Túi xách mini Zara', 'Túi xách mini đeo chéo Zara', 450000, 380000, 70, 10, 3, '/images/products/tui-1.jpg', NULL, NULL, NULL),
+('Balo Nike Sportswear', 'Balo Nike đựng laptop thể thao', 890000, 750000, 45, 10, 1, '/images/products/balo-1.jpg', NULL, NULL, NULL),
+('Túi tote H&M', 'Túi tote canvas H&M đi học đi làm', 280000, 250000, 80, 10, 4, '/images/products/tui-tote-1.jpg', NULL, NULL, NULL),
+('Giày Nike Air Force 1', 'Giày sneaker Nike Air Force 1 classic', 2500000, 2200000, 30, 11, 1, '/images/products/giay-1.jpg', NULL, NULL, NULL),
+('Giày Adidas Superstar', 'Giày Adidas Superstar iconic', 2200000, 1900000, 35, 11, 2, '/images/products/giay-2.jpg', NULL, NULL, NULL),
+('Dép Adidas Adilette', 'Dép đi trong nhà Adidas', 450000, 400000, 100, 11, 2, '/images/products/dep-1.jpg', NULL, NULL, NULL),
+('Mũ lưỡi trai Nike', 'Mũ lưỡi trai Nike thêu logo', 380000, 320000, 90, 12, 1, '/images/products/mu-1.jpg', NULL, NULL, NULL),
+('Mũ bucket Adidas', 'Mũ bucket Adidas phong cách streetwear', 420000, 380000, 75, 12, 2, '/images/products/mu-2.jpg', NULL, NULL, NULL),
+('Nón len Local Brand', 'Nón len local brand mùa đông', 280000, 250000, 60, 12, 6, '/images/products/non-len-1.jpg', NULL, NULL, NULL);
 
 -- Insert Carts
 INSERT INTO Carts (userId, TotalsItem, TotalsPrice) VALUES
@@ -171,34 +171,3 @@ INSERT INTO notifications (user_id, title, message, is_read) VALUES
 (2, 'Khuyến mãi đặc biệt', 'Flash sale giảm 50% tất cả sản phẩm Nike - Chỉ hôm nay!', FALSE),
 (3, 'Sản phẩm yêu thích có khuyến mãi', 'Sản phẩm trong danh sách yêu thích của bạn đang giảm giá', FALSE);
 
--- Insert Shipping Methods
-INSERT INTO shipping_methods (name, description, fee, estimated_days, status) VALUES
-('Giao hàng tiêu chuẩn', 'Giao hàng trong 5-7 ngày', 30000, 6, 'ACTIVE'),
-('Giao hàng nhanh', 'Giao hàng trong 2-3 ngày', 50000, 2, 'ACTIVE'),
-('Giao hàng hỏa tốc', 'Giao hàng trong 24h', 100000, 1, 'ACTIVE'),
-('Miễn phí vận chuyển', 'Miễn phí cho đơn hàng trên 500k', 0, 5, 'ACTIVE');
-
--- Insert Coupons
-INSERT INTO coupons (code, description, discount_type, discount_value, min_order_amount, max_discount_amount, usage_limit, start_date, end_date, status) VALUES
-('WELCOME10', 'Giảm 10% cho khách hàng mới', 'PERCENTAGE', 10, 200000, 100000, 100, '2024-01-01 00:00:00', '2024-12-31 23:59:59', 'ACTIVE'),
-('FREESHIP', 'Miễn phí vận chuyển đơn hàng trên 500k', 'FIXED_AMOUNT', 30000, 500000, 30000, 1000, '2024-01-01 00:00:00', '2024-12-31 23:59:59', 'ACTIVE'),
-('SUMMER50', 'Giảm 50k cho mùa hè', 'FIXED_AMOUNT', 50000, 300000, 50000, 200, '2024-06-01 00:00:00', '2024-08-31 23:59:59', 'ACTIVE'),
-('FLASH20', 'Flash sale giảm 20%', 'PERCENTAGE', 20, 500000, 200000, 50, '2024-01-01 00:00:00', '2024-12-31 23:59:59', 'ACTIVE'),
-('NEWYEAR2024', 'Khuyến mãi năm mới 2024', 'PERCENTAGE', 15, 300000, 150000, 500, '2024-01-01 00:00:00', '2024-01-31 23:59:59', 'ACTIVE');
-
--- Insert Coupon Usage (các coupon đã được sử dụng)
-INSERT INTO coupon_usage (coupon_id, user_id, order_id, discount_amount) VALUES
-(1, 2, 1, 95000),
-(4, 3, 2, 230000);
-
--- Insert Wishlists
-INSERT INTO wishlists (user_id, product_id) VALUES
-(2, 22), -- user1 thích Giày Nike Air Force 1
-(2, 23), -- user1 thích Giày Adidas Superstar
-(2, 14), -- user1 thích Váy hoa nhí Zara
-(3, 1),  -- user2 thích Áo thun Nike Dri-FIT
-(3, 5),  -- user2 thích Quần jean Nike Slim Fit
-(3, 8),  -- user2 thích Áo khoác Nike Windrunner
-(4, 11), -- user3 thích Áo thun Nike nữ Basic
-(4, 14), -- user3 thích Váy hoa nhí Zara
-(4, 19); -- user3 thích Túi xách mini Zara
