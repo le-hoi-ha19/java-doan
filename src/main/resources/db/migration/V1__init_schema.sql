@@ -1,77 +1,230 @@
+-- Create Role table
+CREATE TABLE IF NOT EXISTS role (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Create Users table
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    full_name VARCHAR(100),
-    phone VARCHAR(20),
+    fullname VARCHAR(100),
+    telephone VARCHAR(20),
     address TEXT,
-    role VARCHAR(20) DEFAULT 'USER',
+    images VARCHAR(255),
+    gender BOOLEAN,
     enabled BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Create Categories table
-CREATE TABLE IF NOT EXISTS categories (
+-- Create Users_Roles table
+CREATE TABLE IF NOT EXISTS users_roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    userId BIGINT NOT NULL,
+    roleId BIGINT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (roleId) REFERENCES role(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_role (userId, roleId)
+);
+
+-- Create Brands table
+CREATE TABLE IF NOT EXISTS Brands (
+    BrandID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    BrandName VARCHAR(100) NOT NULL,
+    Slug VARCHAR(100) UNIQUE,
+    Logo VARCHAR(255),
     description TEXT,
-    image_url VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Create Products table
-CREATE TABLE IF NOT EXISTS products (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(200) NOT NULL,
+-- Create Categories table
+CREATE TABLE IF NOT EXISTS Categories (
+    CatID INT AUTO_INCREMENT PRIMARY KEY,
+    CatName VARCHAR(100) NOT NULL,
+    Slug VARCHAR(100) UNIQUE,
     description TEXT,
-    price DECIMAL(10, 2) NOT NULL,
-    discount_price DECIMAL(10, 2),
-    quantity INT DEFAULT 0,
-    category_id BIGINT,
     image_url VARCHAR(255),
-    status VARCHAR(20) DEFAULT 'ACTIVE',
+    parent_id INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+    FOREIGN KEY (parent_id) REFERENCES Categories(CatID) ON DELETE SET NULL
+);
+
+-- Create Products table
+CREATE TABLE IF NOT EXISTS Products (
+    ProductID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ProductName VARCHAR(200) NOT NULL,
+    Price DOUBLE NOT NULL,
+    SalePrice DOUBLE,
+    Quantity INT DEFAULT 0,
+    CatID INT,
+    BrandID BIGINT,
+    Avatar VARCHAR(255),
+    Img1 VARCHAR(255),
+    Img2 VARCHAR(255),
+    Img3 VARCHAR(255),
+    Description TEXT,
+    slug VARCHAR(200) UNIQUE,
+    status VARCHAR(20) DEFAULT 'ACTIVE',
+    sku VARCHAR(50) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (CatID) REFERENCES Categories(CatID) ON DELETE SET NULL,
+    FOREIGN KEY (BrandID) REFERENCES Brands(BrandID) ON DELETE SET NULL
+);
+
+-- Create Carts table
+CREATE TABLE IF NOT EXISTS Carts (
+    CartID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userId BIGINT NOT NULL,
+    TotalsItem INT DEFAULT 0,
+    TotalsPrice DOUBLE DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Create CartItems table
+CREATE TABLE IF NOT EXISTS CartItems (
+    CI_ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CartID BIGINT NOT NULL,
+    ProductID BIGINT NOT NULL,
+    Quantity INT NOT NULL DEFAULT 1,
+    TotalsPrice DOUBLE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (CartID) REFERENCES Carts(CartID) ON DELETE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
 );
 
 -- Create Orders table
-CREATE TABLE IF NOT EXISTS orders (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    order_number VARCHAR(50) NOT NULL UNIQUE,
-    total_amount DECIMAL(10, 2) NOT NULL,
-    status VARCHAR(20) DEFAULT 'PENDING',
-    payment_method VARCHAR(50),
-    shipping_address TEXT,
-    note TEXT,
+CREATE TABLE IF NOT EXISTS Orders (
+    OrderID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userId BIGINT NOT NULL,
+    OrderDate DATE,
+    DeliveryDate DATE,
+    TotalsPrice DOUBLE NOT NULL,
+    ShippingFee DOUBLE DEFAULT 0,
+    OrderStatus VARCHAR(50) DEFAULT 'PENDING',
+    Notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Create OrderDetail table
+CREATE TABLE IF NOT EXISTS OrderDetail (
+    OD_ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    OrderID BIGINT NOT NULL,
+    ProductID BIGINT NOT NULL,
+    Quantity INT NOT NULL,
+    Price DOUBLE NOT NULL,
+    TotalPrice DOUBLE NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID) ON DELETE CASCADE,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- Create Comments table
+CREATE TABLE IF NOT EXISTS Comments (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ProductID BIGINT NOT NULL,
+    fullname VARCHAR(100),
+    email VARCHAR(100),
+    comment TEXT,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    createDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID) ON DELETE CASCADE
+);
+
+-- Create Posts table
+CREATE TABLE IF NOT EXISTS Posts (
+    PostID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(200) NOT NULL,
+    Slug VARCHAR(200) UNIQUE NOT NULL,
+    Description TEXT,
+    Contents LONGTEXT,
+    Thumnail VARCHAR(255),
+    CreatedDate DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Create Contact table
+CREATE TABLE IF NOT EXISTS contact (
+    ContactID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    fullname VARCHAR(100),
+    email VARCHAR(100) NOT NULL,
+    telephone VARCHAR(20),
+    subject VARCHAR(200),
+    message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create Notifications table
+CREATE TABLE IF NOT EXISTS notifications (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    title VARCHAR(200),
+    message TEXT,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Create Order Items table
-CREATE TABLE IF NOT EXISTS order_items (
+-- Create Shipping Methods table (bổ sung từ seed data trước)
+CREATE TABLE IF NOT EXISTS shipping_methods (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    order_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    quantity INT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    fee DECIMAL(10, 2) NOT NULL,
+    estimated_days INT,
+    status VARCHAR(20) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Create Cart table
-CREATE TABLE IF NOT EXISTS cart (
+-- Create Coupons table (bổ sung từ seed data trước)
+CREATE TABLE IF NOT EXISTS coupons (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT,
+    discount_type VARCHAR(20) NOT NULL,
+    discount_value DECIMAL(10, 2) NOT NULL,
+    min_order_amount DECIMAL(10, 2),
+    max_discount_amount DECIMAL(10, 2),
+    usage_limit INT,
+    used_count INT DEFAULT 0,
+    start_date TIMESTAMP,
+    end_date TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Create Coupon Usage table
+CREATE TABLE IF NOT EXISTS coupon_usage (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    coupon_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    order_id BIGINT NOT NULL,
+    discount_amount DECIMAL(10, 2) NOT NULL,
+    used_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (coupon_id) REFERENCES coupons(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES Orders(OrderID) ON DELETE CASCADE
+);
+
+-- Create Wishlists table
+CREATE TABLE IF NOT EXISTS wishlists (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,
-    quantity INT NOT NULL DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    FOREIGN KEY (product_id) REFERENCES Products(ProductID) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_product_wishlist (user_id, product_id)
 );
