@@ -24,6 +24,14 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     
+    <!-- Debug Info Alert -->
+    <div th:if="${debugInfo}" class="alert alert-info alert-dismissible fade show" role="alert">
+      <i class="bi bi-info-circle me-1"></i>
+      <strong>DEBUG MODE:</strong><br>
+      <span th:utext="${debugInfo}"></span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
     <section class="section dashboard">
       <div class="row">
 

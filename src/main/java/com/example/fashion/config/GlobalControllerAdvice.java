@@ -11,7 +11,7 @@ import com.example.fashion.models.Category;
 import com.example.fashion.services.BrandService;
 import com.example.fashion.services.CategoryService;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.example.fashion.controller.customer")
 public class GlobalControllerAdvice {
 
     @Autowired
@@ -22,11 +22,23 @@ public class GlobalControllerAdvice {
 
     @ModelAttribute("categories")
     public List<Category> populateCategories() {
-        return categoryService.getAll();
+        try {
+            List<Category> categories = categoryService.getAll();
+            return categories != null ? categories : new java.util.ArrayList<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new java.util.ArrayList<>();
+        }
     }
 
     @ModelAttribute("listBra")
     public List<Brand> populateBrands() {
-        return brandService.getAll();
+        try {
+            List<Brand> brands = brandService.getAll();
+            return brands != null ? brands : new java.util.ArrayList<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new java.util.ArrayList<>();
+        }
     }
 }
