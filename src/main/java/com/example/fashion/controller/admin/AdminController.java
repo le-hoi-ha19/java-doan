@@ -33,33 +33,48 @@ public class AdminController {
 
     @RequestMapping("/")
     public String admin(Model model) {
-        long totalProducts = this.productService.countTotalProducts();
-        model.addAttribute("totalProducts", totalProducts);
+        try {
+            long totalProducts = this.productService.countTotalProducts();
+            model.addAttribute("totalProducts", totalProducts);
 
-        long totalUser = this.userService.countTotalUsers();
-        model.addAttribute("totalUser", totalUser);
+            long totalUser = this.userService.countTotalUsers();
+            model.addAttribute("totalUser", totalUser);
 
-        long totalPrice = this.orderService.countTotalPrice();
-        model.addAttribute("totalPrice", totalPrice);
+            long totalPrice = this.orderService.countTotalPrice();
+            model.addAttribute("totalPrice", totalPrice);
 
-        long totalOrders = this.orderService.countTotalOrders();
-        model.addAttribute("totalOrders", totalOrders);
+            long totalOrders = this.orderService.countTotalOrders();
+            model.addAttribute("totalOrders", totalOrders);
 
-        long pendingOrders = this.orderService.countPendingOrders();
-        model.addAttribute("pendingOrders", pendingOrders);
+            long pendingOrders = this.orderService.countPendingOrders();
+            model.addAttribute("pendingOrders", pendingOrders);
 
-        long shippingOrders = this.orderService.countShippingOrders();
-        model.addAttribute("shippingOrders", shippingOrders);
+            long shippingOrders = this.orderService.countShippingOrders();
+            model.addAttribute("shippingOrders", shippingOrders);
 
-        long completedOrders = this.orderService.countCompletedOrders();
-        model.addAttribute("completedOrders", completedOrders);
+            long completedOrders = this.orderService.countCompletedOrders();
+            model.addAttribute("completedOrders", completedOrders);
 
-        long outOfStockProducts = this.productService.countOutOfStockProducts();
-        model.addAttribute("outOfStockProducts", outOfStockProducts);
+            long outOfStockProducts = this.productService.countOutOfStockProducts();
+            model.addAttribute("outOfStockProducts", outOfStockProducts);
 
-        long lowStockProducts = this.productService.countLowStockProducts();
-        model.addAttribute("lowStockProducts", lowStockProducts);
+            long lowStockProducts = this.productService.countLowStockProducts();
+            model.addAttribute("lowStockProducts", lowStockProducts);
 
-        return "admin/index";
+            return "admin/index";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Lỗi khi tải dữ liệu: " + e.getMessage());
+            model.addAttribute("totalProducts", 0L);
+            model.addAttribute("totalUser", 0L);
+            model.addAttribute("totalPrice", 0L);
+            model.addAttribute("totalOrders", 0L);
+            model.addAttribute("pendingOrders", 0L);
+            model.addAttribute("shippingOrders", 0L);
+            model.addAttribute("completedOrders", 0L);
+            model.addAttribute("outOfStockProducts", 0L);
+            model.addAttribute("lowStockProducts", 0L);
+            return "admin/index";
+        }
     }
 }

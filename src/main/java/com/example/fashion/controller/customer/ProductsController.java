@@ -70,16 +70,6 @@ public class ProductsController {
             model.addAttribute("listProducts", listProducts);
         }
 
-        List<Category> categories = this.categoryService.getAll();
-        if (categories != null) {
-            model.addAttribute("categories", categories);
-        }
-
-        List<Brand> listBra = this.brandService.getAll();
-        if (listBra != null) {
-            model.addAttribute("listBra", listBra);
-        }
-
         long totalProducts = this.productService.countTotalProducts();
         model.addAttribute("totalProducts", totalProducts);
 
@@ -88,32 +78,39 @@ public class ProductsController {
 
     @GetMapping("/product-details/{ProductID}")
     public String detail(Model model, @PathVariable("ProductID") Long ProductID) {
-        Product product = this.productService.findByID(ProductID);
-        model.addAttribute("Product", product);
-        List<Category> categories = this.categoryService.getAll();
-        if (categories != null) {
-            model.addAttribute("categories", categories);
+        try {
+            Product product = this.productService.findByID(ProductID);
+            if (product == null) {
+                model.addAttribute("error", "Sản phẩm không tồn tại!");
+                return "error/404";
+            }
+            
+            model.addAttribute("Product", product);
+
+            List<Product> relatedProducts = productService.findByCategory(product.getCategory());
+            if (relatedProducts != null) {
+                relatedProducts.removeIf(p -> p.getProductID().equals(ProductID));
+            }
+            model.addAttribute("relatedProducts", relatedProducts != null ? relatedProducts : new java.util.ArrayList<>());
+
+            long totalProducts = productService.countTotalProducts();
+            if (totalProducts > 0) totalProducts--;
+            List<Product> allProducts = productService.getAll();
+            if (allProducts != null) {
+                allProducts.removeIf(p -> p.getProductID().equals(ProductID));
+            }
+            model.addAttribute("totalProducts", totalProducts);
+            model.addAttribute("listProducts", allProducts != null ? allProducts : new java.util.ArrayList<>());
+            
+            List<Comment> comments = this.commentService.getCommentByProductId(ProductID);
+            model.addAttribute("comments", comments != null ? comments : new java.util.ArrayList<>());
+            
+            return "product/detail";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Lỗi khi tải chi tiết sản phẩm: " + e.getMessage());
+            return "error/404";
         }
-
-        List<Brand> listBra = this.brandService.getAll();
-        if (listBra != null) {
-            model.addAttribute("listBra", listBra);
-        }
-
-        List<Product> relatedProducts = productService.findByCategory(product.getCategory());
-        relatedProducts.removeIf(p -> p.getProductID().equals(ProductID));
-        model.addAttribute("relatedProducts", relatedProducts);
-
-        long totalProducts = productService.countTotalProducts();
-        totalProducts--;
-        List<Product> allProducts = productService.getAll();
-        allProducts.removeIf(p -> p.getProductID().equals(ProductID));
-        model.addAttribute("totalProducts", totalProducts);
-        model.addAttribute("listProducts", allProducts);
-        
-        List<Comment> comments = this.commentService.getCommentByProductId(ProductID);
-        model.addAttribute("comments", comments);  // Add comments to the model
-        return "product/detail";
     }
 
     @GetMapping("/products-category/{slug}")
@@ -122,39 +119,16 @@ public class ProductsController {
         model.addAttribute("category", category);
         List<Product> lpro = this.productService.findByCategory(category);
         model.addAttribute("lpro", lpro);
-        List<Category> categories = this.categoryService.getAll();
-        if (categories != null) {
-            model.addAttribute("categories", categories);
-        }
-
-        List<Brand> listBra = this.brandService.getAll();
-        if (listBra != null) {
-            model.addAttribute("listBra", listBra);
-        }
         return "product/category";
     }
 
     @GetMapping("/products-branch/{slug}")
     public String brand(Model model, @PathVariable("slug") String slug) {
-        // Tìm Brand theo slug
         Brand brand = this.brandService.findBySlug(slug);
         model.addAttribute("brand", brand);
 
-        // Lấy danh sách sản phẩm theo brand
         List<Product> lpro = this.productService.findByBrand(brand);
         model.addAttribute("lpro", lpro);
-
-        // Lấy tất cả các danh mục
-        List<Category> categories = this.categoryService.getAll();
-        if (categories != null) {
-            model.addAttribute("categories", categories);
-        }
-
-        // Lấy tất cả các thương hiệu
-        List<Brand> listBra = this.brandService.getAll();
-        if (listBra != null) {
-            model.addAttribute("listBra", listBra);
-        }
 
         return "product/brand";
     }
