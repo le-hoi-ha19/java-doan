@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "CartItems")
+@Table(name = "cart_items")
 public class CartItem {
     @Id
     @Column(name = "CI_ID")

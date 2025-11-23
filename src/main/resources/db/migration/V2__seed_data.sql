@@ -23,7 +23,7 @@ INSERT INTO users_roles (userId, roleId) VALUES
 (5, 2); -- manager also has ROLE_USER
 
 -- Insert brands
-INSERT INTO Brands (BrandName, Slug, Logo) VALUES
+INSERT INTO brands (BrandName, Slug, Logo) VALUES
 ('Nike', 'nike', '/images/brands/nike.png'),
 ('Adidas', 'adidas', '/images/brands/adidas.png'),
 ('Zara', 'zara', '/images/brands/zara.png'),
@@ -32,7 +32,7 @@ INSERT INTO Brands (BrandName, Slug, Logo) VALUES
 ('Local Brand', 'local-brand', '/images/brands/local.png');
 
 -- Insert categories
-INSERT INTO Categories (CatName, Slug) VALUES
+INSERT INTO categories (CatName, Slug) VALUES
 ('Nam', 'nam'),
 ('Nữ', 'nu'),
 ('Phụ kiện', 'phu-kien'),
@@ -47,7 +47,7 @@ INSERT INTO Categories (CatName, Slug) VALUES
 ('Mũ nón', 'mu-non');
 
 -- Insert products
-INSERT INTO Products (ProductName, Description, Price, SalePrice, Quantity, CatID, BrandID, Avatar, Img1, Img2, Img3) VALUES
+INSERT INTO products (ProductName, Description, Price, SalePrice, Quantity, CatID, BrandID, Avatar, Img1, Img2, Img3) VALUES
 -- Áo thun nam
 ('Áo thun Nike Dri-FIT', 'Áo thun thể thao Nike công nghệ Dri-FIT thấm hút mồ hôi tốt', 450000, 380000, 100, 4, 1, '/images/products/ao-thun-nam-1.jpg', '/images/products/ao-thun-nam-1-2.jpg', '/images/products/ao-thun-nam-1-3.jpg', '/images/products/ao-thun-nam-1-4.jpg'),
 ('Áo thun Adidas Basic', 'Áo thun cotton 100% basic logo Adidas', 350000, 300000, 80, 4, 2, '/images/products/ao-thun-nam-2.jpg', '/images/products/ao-thun-nam-2-2.jpg', NULL, NULL),
@@ -90,13 +90,13 @@ INSERT INTO Products (ProductName, Description, Price, SalePrice, Quantity, CatI
 ('Nón len Local Brand', 'Nón len local brand mùa đông', 280000, 250000, 60, 12, 6, '/images/products/non-len-1.jpg', NULL, NULL, NULL);
 
 -- Insert Carts
-INSERT INTO Carts (userId, TotalsItem, TotalsPrice) VALUES
+INSERT INTO carts (userId, TotalsItem, TotalsPrice) VALUES
 (2, 3, 1280000),
 (3, 2, 1140000),
 (4, 2, 3200000);
 
 -- Insert CartItems
-INSERT INTO CartItems (CartID, ProductID, Quantity, TotalsPrice) VALUES
+INSERT INTO cart_items (CartID, ProductID, Quantity, TotalsPrice) VALUES
 (1, 2, 2, 600000),
 (1, 6, 1, 580000),
 (2, 11, 1, 320000),
@@ -105,14 +105,14 @@ INSERT INTO CartItems (CartID, ProductID, Quantity, TotalsPrice) VALUES
 (3, 22, 1, 2200000);
 
 -- Insert Orders
-INSERT INTO Orders (userId, OrderDate, DeliveryDate, TotalsPrice, ShippingFee, OrderStatus, Notes) VALUES
+INSERT INTO orders (userId, OrderDate, DeliveryDate, TotalsPrice, ShippingFee, OrderStatus, Notes) VALUES
 (2, '2024-01-01', '2024-01-05', 950000, 30000, 'COMPLETED', 'Giao hàng giờ hành chính'),
 (3, '2024-01-01', NULL, 1150000, 50000, 'SHIPPING', 'Gọi trước khi giao'),
 (4, '2024-01-01', NULL, 1000000, 30000, 'PENDING', NULL),
 (2, '2024-01-02', '2024-01-03', 2580000, 0, 'COMPLETED', 'Đơn hàng VIP');
 
 -- Insert OrderDetail
-INSERT INTO OrderDetail (OrderID, ProductID, Quantity, Price, TotalPrice) VALUES
+INSERT INTO order_detail (OrderID, ProductID, Quantity, Price, TotalPrice) VALUES
 (1, 1, 1, 380000, 380000),
 (1, 13, 1, 250000, 250000),
 (1, 25, 1, 320000, 320000),
@@ -123,7 +123,7 @@ INSERT INTO OrderDetail (OrderID, ProductID, Quantity, Price, TotalPrice) VALUES
 (4, 1, 1, 380000, 380000);
 
 -- Insert Comments
-INSERT INTO Comments (ProductID, fullname, email, comment, rating, createDate) VALUES
+INSERT INTO comments (ProductID, fullname, email, comment, rating, createDate) VALUES
 (1, 'Nguyen Van A', 'user1@gmail.com', 'Áo rất đẹp, chất liệu tốt, đúng như mô tả', 5, '2024-01-05 10:30:00'),
 (13, 'Nguyen Van A', 'user1@gmail.com', 'Áo đẹp nhưng hơi nhỏ, nên lấy size lớn hơn', 4, '2024-01-05 10:35:00'),
 (5, 'Tran Thi B', 'user2@gmail.com', 'Quần jean đẹp, co giãn tốt, rất hài lòng', 5, '2024-01-03 14:20:00'),
@@ -134,7 +134,7 @@ INSERT INTO Comments (ProductID, fullname, email, comment, rating, createDate) V
 (11, 'Hoang Van E', 'user5@gmail.com', 'Áo thun nữ đẹp, form chuẩn', 4, '2024-01-07 15:30:00');
 
 -- Insert Posts
-INSERT INTO Posts (Title, Slug, Description, Contents, Thumnail, CreatedDate) VALUES
+INSERT INTO posts (Title, Slug, Description, Contents, Thumnail, CreatedDate) VALUES
 ('Top 10 xu hướng thời trang 2024', 'top-10-xu-huong-thoi-trang-2024', 'Khám phá những xu hướng thời trang hot nhất năm 2024', 
 '<h2>Xu hướng thời trang 2024</h2><p>Năm 2024 hứa hẹn mang đến nhiều xu hướng thời trang mới mẻ và độc đáo...</p>', 
 '/images/posts/post-1.jpg', '2024-01-01'),
