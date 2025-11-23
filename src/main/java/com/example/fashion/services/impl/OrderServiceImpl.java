@@ -19,6 +19,8 @@ import com.example.fashion.repository.CartItemRepository;
 import com.example.fashion.repository.CartRepository;
 import com.example.fashion.repository.OrderDetailRepository;
 import com.example.fashion.repository.OrderRepository;
+import com.example.fashion.repository.UserRepository;
+import com.example.fashion.services.NotificationService;
 import com.example.fashion.services.OrderService;
 import com.example.fashion.services.ProductService;
 
