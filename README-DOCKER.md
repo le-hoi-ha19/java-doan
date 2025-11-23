@@ -45,3 +45,5 @@ docker-compose down -v
 ## Lưu ý
 - Flyway sẽ tự động migrate database khi khởi động
 - Data mẫu đã được seed sẵn
+
+docker logs --tail 100 fashion-app
