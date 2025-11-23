@@ -6,7 +6,8 @@ import com.example.fashion.models.Comment;
 
 public interface CommentService {
     List<Comment> getAll();
-
+	
+	List<Comment> getCommentByProductId(Long productId);
 	Boolean create(Comment comment);
 
 	Comment findByID(Long id);

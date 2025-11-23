@@ -18,7 +18,7 @@ public interface PostService {
 
 	Boolean delete(Long PostID);
 
-	Page<Post> getAll(Long pageNo);
+	Page<Post> getAll(Long page);
 
 	List<Post> list3Post();
 

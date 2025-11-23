@@ -19,6 +19,8 @@ public class Category {
 	private Integer CatID;
 	@Column(name = "CatName")
 	private String CatName;
+	@Column(name = "Slug", unique = true)
+	private String slug;
 
 	@OneToMany(mappedBy = "category")
 	private Set<Product> products;
@@ -39,6 +41,14 @@ public class Category {
 		this.CatName = CatName;
 	}
 
+	public String getSlug() {
+		return this.slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
 	public Set<Product> getProducts() {
 		return this.products;
 	}
@@ -53,10 +63,6 @@ public class Category {
 		this.CatName = CatName;
 		this.products = products;
 	}
-
-	
-
-	
 
 	public Category() {
 		// TODO Auto-generated constructor stub

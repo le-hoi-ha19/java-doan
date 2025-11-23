@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="layere_categorie" th:each="category : ${categories}">
                                     <ul>
-                                        <a th:href="@{'/products/' + ${category.CatID}}"
+                                        <a th:href="@{'/products-category/' + ${category.slug}}"
                                             th:text="${category.CatName}"></a>
                                     </ul>
                                 </div>
@@ -71,7 +71,7 @@
                                     <h3>Thương hiệu</h3>
                                 </div>
                                 <div class="block_tags" th:each="brand : ${listBra}">
-                                    <a th:href="@{'/product/' + ${brand.BrandID}}"  th:text="${brand.BrandName}"></a>
+                                    <a th:href="@{'/products-branch/' + ${brand.slug}}"  th:text="${brand.BrandName}"></a>
                                 </div>
                             </div>
                             <!--popular tags end-->
@@ -147,7 +147,7 @@
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="large" role="tabpanel">
                                         <div class="row">
-                                            <div class="col-lg-4 col-md-6" th:each="product : ${lpro}">
+                                            <div  class="col-lg-4 col-md-6" th:each="product : ${lpro}">
                                                 <div class="single_product">
                                                     <div class="product_thumb">
                                                         <a

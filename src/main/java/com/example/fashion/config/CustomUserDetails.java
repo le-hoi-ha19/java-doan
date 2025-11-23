@@ -7,59 +7,61 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.fashion.models.User;
 
-//Cung cấp các thông tin cần thiết cho Spring Security để thực hiện xác thực và phân quyền.
+// Lớp cung cấp thông tin người dùng cho Spring Security để xác thực và phân quyền.
 public class CustomUserDetails implements UserDetails {
-	private User user;
-	private Collection<? extends GrantedAuthority> authorities;
-	
-	public CustomUserDetails() {
-		// TODO Auto-generated constructor stub
-	}
-	public CustomUserDetails(User user, Collection<? extends GrantedAuthority> authorities) {
-		super();
-		this.user = user;
-		this.authorities = authorities;
-	}
+    private User user;
+    private Collection<? extends GrantedAuthority> authorities;
+    
+    public CustomUserDetails() {
+        // Constructor mặc định
+    }
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return authorities;
-	}
+    public CustomUserDetails(User user, Collection<? extends GrantedAuthority> authorities) {
+        super();
+        this.user = user;
+        this.authorities = authorities;
+    }
 
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return user.getPassword();
-	}
+	// Trả về quyền của người dùng
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
 
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return user.getUsername();
-	}
+	// Trả về mật khẩu của người dùng
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
+	// Trả về tên người dùng
+    @Override
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+	// Tài khoản không hết hạn
+    @Override
+    public boolean isAccountNonExpired() {
 		return true;
-	}
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	// Tài khoản không bị khóa
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	// Thông tin xác thực không hết hạn
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+	// Tài khoản được kích hoạt
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
+

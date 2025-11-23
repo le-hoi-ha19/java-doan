@@ -10,6 +10,7 @@ import com.example.fashion.models.Comment;
 import com.example.fashion.models.Post;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long>{
-   
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+    @Query(value = "SELECT * FROM comments WHERE productid = :ProductID", nativeQuery = true)
+    List<Comment> findCommentsByProductId(Long ProductID);
 }

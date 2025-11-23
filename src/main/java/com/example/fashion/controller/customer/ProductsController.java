@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.fashion.models.Brand;
 import com.example.fashion.models.Cart;
 import com.example.fashion.models.Category;
+import com.example.fashion.models.Comment;
 import com.example.fashion.models.Product;
 import com.example.fashion.models.User;
 import com.example.fashion.services.BrandService;
 import com.example.fashion.services.CategoryService;
 import com.example.fashion.services.ProductService;
+import com.example.fashion.services.CommentService;
 import com.example.fashion.services.StorageService;
 import com.example.fashion.services.UserService;
 
@@ -40,18 +42,21 @@ public class ProductsController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 
-    // @RequestMapping(value = { "/index", "/shop-detail" }, method = RequestMethod.POST)
+    // @RequestMapping(value = { "/index", "/shop-detail" }, method =
+    // RequestMethod.POST)
     // public String home(Model model, Principal principal, HttpSession session) {
-    //     if (principal != null) {
-    //         session.setAttribute("username", principal.getName());
-    //         User user = userService.findByUsername(principal.getName());
-    //         Cart cart = (Cart) user.getCarts();
-    //         session.setAttribute("totalItems", cart.getTotalsItem());
-    //     } else {
-    //         session.removeAttribute("username");
-    //     }
-    //     return "shop/detail";
+    // if (principal != null) {
+    // session.setAttribute("username", principal.getName());
+    // User user = userService.findByUsername(principal.getName());
+    // Cart cart = (Cart) user.getCarts();
+    // session.setAttribute("totalItems", cart.getTotalsItem());
+    // } else {
+    // session.removeAttribute("username");
+    // }
+    // return "shop/detail";
     // }
 
     @GetMapping("/products")
@@ -104,14 +109,17 @@ public class ProductsController {
         allProducts.removeIf(p -> p.getProductID().equals(ProductID));
         model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("listProducts", allProducts);
+        
+        List<Comment> comments = this.commentService.getCommentByProductId(ProductID);
+        model.addAttribute("comments", comments);  // Add comments to the model
         return "product/detail";
     }
 
-    @GetMapping("/products/{CatID}")
-    public String category(Model model, @PathVariable("CatID") Integer CatID){
-        Category category = this.categoryService.findByID(CatID);
+    @GetMapping("/products-category/{slug}")
+    public String category(Model model, @PathVariable("slug") String slug) {
+        Category category = this.categoryService.findBySlug(slug);
         model.addAttribute("category", category);
-        List<Product> lpro= this.productService.findByCategory(category);
+        List<Product> lpro = this.productService.findByCategory(category);
         model.addAttribute("lpro", lpro);
         List<Category> categories = this.categoryService.getAll();
         if (categories != null) {
@@ -125,21 +133,29 @@ public class ProductsController {
         return "product/category";
     }
 
-    @GetMapping("/product/{BrandID}")
-    public String category(Model model, @PathVariable("BrandID") Long BrandID){
-        Brand brand = this.brandService.findByID(BrandID);
+    @GetMapping("/products-branch/{slug}")
+    public String brand(Model model, @PathVariable("slug") String slug) {
+        // Tìm Brand theo slug
+        Brand brand = this.brandService.findBySlug(slug);
         model.addAttribute("brand", brand);
-        List<Product> lpro= this.productService.findByBrand(brand);
+
+        // Lấy danh sách sản phẩm theo brand
+        List<Product> lpro = this.productService.findByBrand(brand);
         model.addAttribute("lpro", lpro);
+
+        // Lấy tất cả các danh mục
         List<Category> categories = this.categoryService.getAll();
         if (categories != null) {
             model.addAttribute("categories", categories);
         }
 
+        // Lấy tất cả các thương hiệu
         List<Brand> listBra = this.brandService.getAll();
         if (listBra != null) {
             model.addAttribute("listBra", listBra);
         }
+
         return "product/brand";
     }
+
 }

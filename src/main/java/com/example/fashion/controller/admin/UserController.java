@@ -41,38 +41,6 @@ public class UserController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@GetMapping("/login")
-	public String login() {
-		return "admin/login";
-	}
-
-	@GetMapping("/register")
-	public String register(Model model) {
-		List<Role> listRole = this.roleService.getAll();
-		model.addAttribute("listRole", listRole);
-		List<UserRole> listUR = this.userRoleService.getAll();
-		model.addAttribute("listUR", listUR);
-		return "admin/register";
-	}
-
-	@PostMapping("/register") // Thêm đường dẫn chung
-	public String save(@ModelAttribute("user") User user,
-			@RequestParam("imaged") MultipartFile file) {
-
-		this.storageService.store(file);
-		String fileName = file.getOriginalFilename();
-		user.setImages(fileName);
-		user.setEnabled(true);
-
-		String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
-
-		if (this.userService.createWithUserRole(user)) {
-			return "redirect:admin/index";
-		}
-		return "admin/register";
-	}
-
 	@GetMapping("/user")
 	public String user(Model model) {
 		List<User> customerUsers = userService.getCustomerUsers();

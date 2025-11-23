@@ -17,6 +17,7 @@ import com.example.fashion.models.User;
 import com.example.fashion.models.UserRole;
 import com.example.fashion.services.UserService;
 
+//cung cấp thông tin người dùng (bao gồm các quyền) cho Spring Security trong quá trình xác thực người dùng.
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 	@Autowired

@@ -65,9 +65,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> getAll(Long pageNo) {
+    public Page<Post> getAll(Long page) {
         int pageSize = 6; // Số lượng sản phẩm trên mỗi trang
-        Pageable pageable = PageRequest.of(pageNo.intValue() - 1, pageSize);
+        Pageable pageable = PageRequest.of(page.intValue() - 1, pageSize);
         return this.postRepository.findAll(pageable);
     }
 
@@ -75,7 +75,5 @@ public class PostServiceImpl implements PostService {
     public List<Post> list3Post() {
         return this.postRepository.list3Post();
     }
-
-
 
 }

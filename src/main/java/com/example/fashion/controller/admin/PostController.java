@@ -3,6 +3,7 @@ package com.example.fashion.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import com.example.fashion.services.BrandService;
 import com.example.fashion.services.CategoryService;
 import com.example.fashion.services.PostService;
 import com.example.fashion.services.StorageService;
+import com.example.fashion.utils.SlugUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,8 +39,8 @@ public class PostController {
 
     @GetMapping("/post")
     public String index(Model model) {
-        List<Post> lpost = this.postService.getAll();
-        model.addAttribute("lpost", lpost);
+        List<Post> listpost = this.postService.getAll();
+        model.addAttribute("listpost", listpost);
         return "/admin/post/index";
     }
 
@@ -47,53 +49,30 @@ public class PostController {
 
         Post post = new Post();
         model.addAttribute("post", post);
-        List<Brand> listBra = this.brandService.getAll();
-        model.addAttribute("listBra", listBra);
         return "admin/post/add";
     }
 
     @PostMapping("/add-post")
     public String save(@ModelAttribute("post") Post post, BindingResult bindingResult,
-            @RequestParam("fileAvatars") MultipartFile fileAvatars,
-            @RequestParam("fileImagek") MultipartFile[] fileImagek, Model model) {
+            @RequestParam("Thumnail") MultipartFile Thumnail,
+            Model model) {
 
-        if (bindingResult.hasErrors()) {
-            List<Brand> listBra = this.brandService.getAll();
-            model.addAttribute("listBra", listBra);
-            return "admin/post/add";
-        }
-
-        if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getAbstract() == null
+        if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getDescription() == null
                 || post.getCreatedDate() == null
                 || post.getContents() == null) {
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
-            List<Brand> listBra = this.brandService.getAll();
-            model.addAttribute("listBra", listBra);
-            return "admin/product/add";
+            return "admin/post/add";
         }
 
         try {
-            // upload file và lưu vào trường avatar
-            this.storageService.store(fileAvatars);
-            String fileNameAvatars = fileAvatars.getOriginalFilename();
-            post.setAvatar(fileNameAvatars);
-
-            for (int i = 0; i < Math.min(fileImagek.length, 3); i++) {
-                this.storageService.store(fileImagek[i]);
-                String fileName = fileImagek[i].getOriginalFilename();
-
-                switch (i) {
-                    case 0:
-                        post.setImg1(fileName);
-                        break;
-                    case 1:
-                        post.setImg2(fileName);
-                        break;
-                    case 2:
-                        post.setImg3(fileName);
-                        break;
-                }
-            }
+            this.storageService.store(Thumnail);
+            String thumbnail = Thumnail.getOriginalFilename();
+            post.setThumnail(thumbnail);
+            post.setTitle(post.getTitle()); // Gán Title
+            post.setSlug(SlugUtils.createSlug(post.getTitle()));
+            post.setContents(post.getContents()); // Gán Contents
+            post.setDescription(post.getDescription()); // Gán Description
+            post.setCreatedDate(post.getCreatedDate()); // Gán CreatedDate
 
             if (this.postService.create(post)) {
                 return "redirect:/admin/post";
@@ -105,80 +84,73 @@ public class PostController {
         return "admin/post/add";
     }
 
-    // @GetMapping("/edit-product/{ProductID}")
-    // public String edit(Model model, @PathVariable("ProductID") Long ProductID) {
-    // Product product = this.productService.findByID(ProductID);
-    // model.addAttribute("Product", product);
-    // List<Category> listCat = this.categoryService.getAll();
-    // model.addAttribute("listCat", listCat);
-    // List<Brand> listBra = this.brandService.getAll();
-    // model.addAttribute("listBra", listBra);
-    // return "admin/product/edit";
-    // }
+    @GetMapping("/edit-post/{PostID}")
+    public String edit(@PathVariable("PostID") Long postId, Model model) {
+        try {
+            // Lấy bài viết từ service
+            Post post = postService.findByID(postId);
 
-    // @PostMapping("/edit-product")
-    // public String edit(@ModelAttribute("product") Product product, BindingResult
-    // bindingResult,
-    // @RequestParam("fileAvatar") MultipartFile fileAvatar,
-    // @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
+            // Kiểm tra nếu bài viết không tồn tại
+            if (post == null) {
+                model.addAttribute("error", "Bài viết không tồn tại");
+                return "redirect:/admin/post"; // Quay lại danh sách bài viết
+            }
 
-    // if (bindingResult.hasErrors()) {
-    // // Nếu có lỗi hợp lệ, trả về trang sửa sản phẩm với thông báo lỗi
-    // List<Category> listCat = this.categoryService.getAll();
-    // model.addAttribute("listCat", listCat);
-    // List<Brand> listBra = this.brandService.getAll();
-    // model.addAttribute("listBra", listBra);
-    // return "admin/product/edit";
-    // }
+            // Thêm bài viết vào model để hiển thị trong form
+            model.addAttribute("post", post);
 
-    // if (product.getProductName() == null ||
-    // product.getProductName().trim().isEmpty() ||
-    // fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice()
-    // == null
-    // || product.getQuantity() == null) {
-    // // Nếu các trường quan trọng để trống, thêm thông báo lỗi vào model và trả về
-    // // trang sửa sản phẩm
-    // model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
-    // List<Category> listCat = this.categoryService.getAll();
-    // model.addAttribute("listCat", listCat);
-    // List<Brand> listBra = this.brandService.getAll();
-    // model.addAttribute("listBra", listBra);
-    // return "admin/product/edit";
-    // }
+            // Trả về view của trang edit
+            return "admin/post/edit";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Lỗi xảy ra khi lấy bài viết");
+            return "redirect:/admin/post";
+        }
+    }
 
-    // // Tiến hành thêm sản phẩm nếu không có lỗi
-    // try {
-    // // upload file và lưu vào trường avatar
-    // this.storageService.store(fileAvatar);
-    // String fileNameAvatar = fileAvatar.getOriginalFilename();
-    // product.setAvatar(fileNameAvatar);
+    @PostMapping("/edit-post/{id}")
+    public String edit(@PathVariable("id") Long id,
+            @ModelAttribute("post") Post post, BindingResult bindingResult,
+            @RequestParam("Thumnail") MultipartFile Thumnail,
+            Model model) {
 
-    // for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
-    // this.storageService.store(fileImages[i]);
-    // String fileName = fileImages[i].getOriginalFilename();
+        // Kiểm tra các trường bắt buộc
+        if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getDescription() == null
+                || post.getCreatedDate() == null || post.getContents() == null) {
+            model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
+            return "admin/post/edit";
+        }
 
-    // switch (i) {
-    // case 0:
-    // product.setImg1(fileName);
-    // break;
-    // case 1:
-    // product.setImg2(fileName);
-    // break;
-    // case 2:
-    // product.setImg3(fileName);
-    // break;
-    // }
-    // }
+        try {
+            // Tìm bài viết cần sửa theo ID
+            Post existingPost = postService.findByID(id);
+            if (existingPost == null) {
+                model.addAttribute("error", "Bài viết không tồn tại");
+                return "admin/post/edit";
+            }
 
-    // if (this.productService.create(product)) {
-    // return "redirect:/admin/product";
-    // }
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // }
+            // Cập nhật các trường cho bài viết
+            existingPost.setTitle(post.getTitle());
+            existingPost.setContents(post.getContents());
+            existingPost.setDescription(post.getDescription());
+            existingPost.setCreatedDate(post.getCreatedDate());
 
-    // return "redirect:/admin/product/edit";
-    // }
+            // Nếu có ảnh đại diện mới, lưu ảnh
+            if (Thumnail != null && !Thumnail.isEmpty()) {
+                this.storageService.store(Thumnail);
+                String ThumnailFile = Thumnail.getOriginalFilename();
+                existingPost.setThumnail(ThumnailFile);
+            }
+            // Cập nhật bài viết
+            if (postService.update(existingPost)) {
+                return "redirect:/admin/post";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "admin/post/edit";
+    }
 
     @GetMapping("/delete-post/{PostID}")
     public String delete(@PathVariable("PostID") Long PostID) {

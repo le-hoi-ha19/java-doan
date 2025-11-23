@@ -1,137 +1,150 @@
 ﻿<!doctype html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Tin tức</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="assets\img\favicon.png">
-		
-		<!-- all css here -->
-       <link rel="stylesheet" href="assets\css\bootstrap.min.css">
-        <link rel="stylesheet" href="assets\css\plugin.css">
-        <link rel="stylesheet" href="assets\css\bundle.css">
-        <link rel="stylesheet" href="assets\css\style.css">
-        <link rel="stylesheet" href="assets\css\responsive.css">
-        <script src="assets\js\vendor\modernizr-2.8.3.min.js"></script>
-    </head>
-    <body>
-            <!-- Add your site or application content here -->
-            
-            <!--pos page start-->
-            <div class="pos_page">
-                <div class="container">
-                    <!--pos page inner-->
-                    <div class="pos_page_inner">  
-                       <!--header area -->
-                       <div th:replace="layout/header :: header"></div>
-                        <!--header end -->
-                         <!--breadcrumbs area start-->
-                        <div class="breadcrumbs_area">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="breadcrumb_content">
-                                        <ul>
-                                            <li><a href="/">Trang chủ</a></li>
-                                            <li><i class="fa fa-angle-right"></i></li>
-                                            <li>Tin tức</li>
-                                        </ul>
 
-                                    </div>
-                                </div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Tin tức</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets\img\favicon.png">
+
+    <!-- all css here -->
+    <link rel="stylesheet" href="assets\css\bootstrap.min.css">
+    <link rel="stylesheet" href="assets\css\plugin.css">
+    <link rel="stylesheet" href="assets\css\bundle.css">
+    <link rel="stylesheet" href="assets\css\style.css">
+    <link rel="stylesheet" href="assets\css\responsive.css">
+    <script src="assets\js\vendor\modernizr-2.8.3.min.js"></script>
+</head>
+
+<body>
+    <!-- Add your site or application content here -->
+
+    <!--pos page start-->
+    <div class="pos_page">
+        <div class="container">
+            <!--pos page inner-->
+            <div class="pos_page_inner">
+                <!--header area -->
+                <div th:replace="layout/header :: header"></div>
+                <!--header end -->
+                <!--breadcrumbs area start-->
+                <div class="breadcrumbs_area">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb_content">
+                                <ul>
+                                    <li><a href="/">Trang chủ</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li>Tin tức</li>
+                                </ul>
+
                             </div>
                         </div>
-                        <!--breadcrumbs area end-->
-                        
-                        <!--blog area start-->
-                        <div class="blog_area">
-                            <div class="row">   
-                                <div class="col-lg-4 col-md-6" th:each="post : ${listPost}">
-                                    <div class="single_blog">
-                                        <div class="blog_thumb">
-                                            <a  th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}"><img th:src="@{'/uploads/'+${post.Avatar}}" style="width: 250px; height: 250px;" alt=""></a>
-                                        </div>
-                                        <div class="blog_content">
-                                            <div class="blog_post">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" th:text="${post.brand.BrandName}"></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <h3><a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}" th:text="${post.Title}"></a></h3>
-                                            <p th:text="${#strings.length(post.Abstract) > 30 ? #strings.substring(post.Abstract, 0, 30) + '...' : post.Abstract}"></p>
-                                            <div class="post_footer">
-                                                <div class="post_meta">
-                                                    <ul>
-                                                        <li th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></li>
-                                                        <li>3 bình luận</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="Read_more">
-                                                    <a  th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}">Đọc thêm  <i class="fa fa-angle-double-right"></i></a>
-                                                </div> 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>    
-                        </div>
-                        <!--blog area end-->
-                        
-                        <!--pagination style start--> 
-                        <div class="blog_pagination">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="page_number">
-                                        <span>Trang: </span>
-                                        <ul>
-                                            <li>«</li>
-                                            <li th:each="i:${#numbers.sequence(1,totalPage)}"
-                                                th:classappend="${currentPage == i ? 'curren_number' :''}"><a
-                                                    th:href="@{'?pageNo='+${i}}" th:text="${i}"></a></li>
-                                            <li>»</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--pagination style end--> 
-                        
-                        <!--brand logo strat--> 
-                        <div class="brand_logo brand_about">
-                            <div class="block_title">
-                                <h3>Thương hiệu</h3>
-                            </div>
-                            <div class="row">
-                                <div class="brand_active owl-carousel">
-                                  <div class="col-lg-2" th:each="brand : ${listBra}">
-                                    <div class="single_brand">
-                                      <a href="#"><img th:src="@{'/uploads/'+${brand.logo}}" /></a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>       
-                        <!--brand logo end-->   
                     </div>
-                    <!--pos page inner end-->
                 </div>
+                <!--breadcrumbs area end-->
+
+                <!--blog area start-->
+                <div class="blog_area">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6" th:each="post : ${listPost}">
+                            <div class="single_blog">
+                                <div class="blog_thumb">
+                                    <a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}"><img
+                                            th:src="@{'/uploads/'+${post.Thumnail}}"
+                                            style="width: 250px; height: 250px;" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="blog_content">
+                                    <!-- <div class="blog_post">
+                                        <ul>
+                                            <li>
+                                                <a href="#" th:text="${post.brand.BrandName}"></a>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+                                    <h3><a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}"
+                                            th:text="${post.Title}"></a></h3>
+                                    <p
+                                        th:text="${#strings.length(post.Description) > 30 ? #strings.substring(post.Description, 0, 30) + '...' : post.Description}">
+                                    </p>
+                                    <div class="post_footer">
+                                        <div class="post_meta">
+                                            <ul>
+                                                <li th:utext="${#dates.format(post.CreatedDate, 'dd/MM/yyyy')}"></li>
+                                                <!-- <li>3 bình luận</li> -->
+                                            </ul>
+                                        </div>
+                                        <div class="Read_more">
+                                            <a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}">Đọc thêm <i
+                                                    class="fa fa-angle-double-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--blog area end-->
+
+                <!--pagination style start-->
+                <div class="blog_pagination">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page_number">
+                                <span>Trang: </span>
+                                <ul>
+                                    <li>«</li>
+                                    <li th:each="i:${#numbers.sequence(1,totalPage)}"
+                                        th:classappend="${currentPage == i ? 'curren_number' :''}"><a
+                                            th:href="@{'?pageNo='+${i}}" th:text="${i}"></a></li>
+                                    <li>»</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--pagination style end-->
+
+                <!--brand logo strat-->
+                <div class="brand_logo brand_about">
+                    <div class="block_title">
+                        <h3>Thương hiệu</h3>
+                    </div>
+                    <div class="row">
+                        <div class="brand_active owl-carousel">
+                            <div class="col-lg-2" th:each="brand : ${listBra}">
+                                <div class="single_brand">
+                                    <a href="#"><img th:src="@{'/uploads/'+${brand.logo}}" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--brand logo end-->
             </div>
-            <!--pos page end-->
-            
-            <!--footer area start-->
-            <div th:replace="layout/footer :: footer"></div>
-            <!--footer area end-->
-            
-            
-            
-            
-      
-		
-		<!-- all js here -->
-        <script th:replace="layout/script :: script"></script>
-    </body>
+            <!--pos page inner end-->
+        </div>
+    </div>
+    <!--pos page end-->
+
+    <!--footer area start-->
+    <div th:replace="layout/footer :: footer"></div>
+    <!--footer area end-->
+
+
+
+
+
+
+    <!-- all js here -->
+    <script th:replace="layout/script :: script"></script>
+</body>
+
 </html>

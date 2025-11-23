@@ -19,12 +19,12 @@ public class Brand {
     private Long BrandID;
     @Column(name = "BrandName")
     private String BrandName;
+    @Column(name = "Slug", unique = true)
+    private String slug; // Trường slug mới
     @Column(name = "Logo")
     private String Logo;
     @OneToMany(mappedBy = "brand")
     private Set<Product> products;
-    @OneToMany(mappedBy = "brand")
-	private Set<Post> posts;
 
     public Long getBrandID() {
         return this.BrandID;
@@ -40,6 +40,14 @@ public class Brand {
 
     public void setBrandName(String BrandName) {
         this.BrandName = BrandName;
+    }
+
+    public String getSlug() {
+        return this.slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getLogo() {
@@ -58,27 +66,16 @@ public class Brand {
         this.products = products;
     }
 
-    public Set<Post> getPosts() {
-        return this.posts;
-    }
-
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
-    }
-
-    public Brand(Long BrandID, String BrandName, String Logo, Set<Product> products, Set<Post> posts) {
+    public Brand(Long BrandID, String BrandName, String Logo, Set<Product> products) {
         super();
         this.BrandID = BrandID;
         this.BrandName = BrandName;
         this.Logo = Logo;
         this.products = products;
-        this.posts = posts;
     }
 
     public Brand() {
 
     }
-
-    
 
 }

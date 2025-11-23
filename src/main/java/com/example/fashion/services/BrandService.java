@@ -8,6 +8,7 @@ public interface BrandService {
 	List<Brand> getAll();
 	Boolean create(Brand Brand);
 	Brand findByID(Long BrandID);
+	Brand findBySlug(String Slug);
 	Boolean update(Brand brand);
 	Boolean delete(Long BrandID);
 }

@@ -199,7 +199,7 @@
       Category menu Activation
     ------------------------------*/
     $('.sidebar_widget.catrgorie > ul > li > a').on('click', function(){
-       $(this).removeAttr('href');
+    //    $(this).removeAttr('href');
        var element = $(this).parent('li');
         if (element.hasClass('open')) {
 

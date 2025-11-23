@@ -26,6 +26,7 @@ import com.example.fashion.services.CategoryService;
 import com.example.fashion.services.OrderService;
 import com.example.fashion.services.ProductService;
 import com.example.fashion.services.UserService;
+import com.example.fashion.services.NotificationService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -55,10 +56,13 @@ public class CheckoutController {
 	@Autowired
 	private BrandService brandService;
 
+	@Autowired
+	private NotificationService notificationService;
+
 	@GetMapping("/checkout")
 	public String index(Model model, Principal principal, HttpSession session) {
 		if (principal == null) {
-			return "redirect:admin/login";
+			return "redirect:/login";
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
@@ -82,26 +86,22 @@ public class CheckoutController {
 	public String addOrder(@RequestParam("ProductID") Long ProductID,
 			Model model, Principal principal, HttpServletRequest request) {
 		if (principal == null) {
-			return "redirect:/admin/login";
+			return "redirect:/login";
 		}
 		String username = principal.getName();
 		User user = userService.findByUsername(username);
 		Set<Cart> carts = user.getCarts();
 
-		// Kiểm tra xem người dùng có giỏ hàng hay không
 		if (!carts.isEmpty()) {
-			// Lấy ra giỏ hàng đầu tiên của người dùng (nếu có nhiều hơn một giỏ hàng)
 			Cart cart = carts.iterator().next();
-			// Tạo Order từ giỏ hàng đó
 			if (this.orderService.create(cart)) {
-				// Sau khi tạo Order thành công, xóa sản phẩm khỏi giỏ hàng
+				notificationService.createNotification(user.getId(), "Đặt hàng thành công", "Đơn hàng của bạn đã được tạo thành công!");
 				itemService.delete(ProductID, user);
-				// Xóa giỏ hàng
 				cartService.delete(cart.getCartID());
 			}
 		}
 
-		return "redirect:/"; // Chuyển hướng đến trang chính
+		return "redirect:/";
 	}
 
 }

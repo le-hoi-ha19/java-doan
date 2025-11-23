@@ -58,9 +58,9 @@ public class CommentServiceImpl implements CommentService {
         return false;
     }
 
-    // @Override
-    // public List<Comment> findbyidPost() {
-    //     return this.commentRepository.findbyidPost();
-    // }
-    
+    @Override
+    public List<Comment> getCommentByProductId(Long productId) {
+        return commentRepository.findCommentsByProductId(productId);
+    }
+
 }
