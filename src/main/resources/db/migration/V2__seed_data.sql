@@ -1,8 +1,9 @@
 -- Insert roles
 INSERT INTO role (name) VALUES
-('ROLE_ADMIN'),
-('ROLE_USER'),
-('ROLE_MANAGER');
+('CUSTOMER'),
+('ADMIN'),
+('USER'),
+('MANAGER');
 
 -- Insert sample users (password: 123456 - BCrypt encoded)
 INSERT INTO users (username, password, email, fullname, telephone, address, gender, enabled, images) VALUES
@@ -14,13 +15,13 @@ INSERT INTO users (username, password, email, fullname, telephone, address, gend
 
 -- Insert users_roles
 INSERT INTO users_roles (userId, roleId) VALUES
-(1, 1), -- admin has ROLE_ADMIN
-(1, 2), -- admin also has ROLE_USER
-(2, 2), -- user1 has ROLE_USER
-(3, 2), -- user2 has ROLE_USER
-(4, 2), -- user3 has ROLE_USER
-(5, 3), -- manager has ROLE_MANAGER
-(5, 2); -- manager also has ROLE_USER
+(1, 2), -- admin has ADMIN (roleId=2)
+(1, 3), -- admin also has USER (roleId=3)
+(2, 3), -- user1 has USER (roleId=3)
+(3, 3), -- user2 has USER (roleId=3)
+(4, 3), -- user3 has USER (roleId=3)
+(5, 4), -- manager has MANAGER (roleId=4)
+(5, 3); -- manager also has USER (roleId=3)
 
 -- Insert brands
 INSERT INTO brands (BrandName, Slug, Logo) VALUES
