@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.fashion.models.Comment;
 import com.example.fashion.models.Contact;
@@ -31,11 +32,15 @@ public class CommentController {
     private PostService postService;
 
     @PostMapping("/add-comment")
-    public String save(@ModelAttribute("comment") Comment comment, BindingResult bindingResult, Model model,
-            HttpServletRequest request,
-            @RequestParam("ProductID") Long ProductID) {
+    public String save(@ModelAttribute("comment") Comment comment, 
+                       BindingResult bindingResult, 
+                       RedirectAttributes redirectAttributes,
+                       HttpServletRequest request,
+                       @RequestParam("ProductID") Long ProductID) {
+        
+        // Validate form
         if (bindingResult.hasErrors()) {
-            // Nếu có lỗi hợp lệ, trả về trang trước đó với thông báo lỗi
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin.");
             return "redirect:" + request.getHeader("Referer");
         }
 
@@ -43,8 +48,19 @@ public class CommentController {
         Product product = this.productService.findByID(ProductID);
 
         if (product == null) {
-            // Nếu không tìm thấy sản phẩm, trả về trang trước đó với thông báo lỗi
-            model.addAttribute("errorMessage", "Không tìm thấy sản phẩm. Vui lòng thử lại.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Không tìm thấy sản phẩm. Vui lòng thử lại.");
+            return "redirect:" + request.getHeader("Referer");
+        }
+
+        // Validate rating
+        if (comment.getRating() == null || comment.getRating() < 1 || comment.getRating() > 5) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng chọn điểm đánh giá từ 1-5 sao.");
+            return "redirect:" + request.getHeader("Referer");
+        }
+
+        // Validate comment text
+        if (comment.getComment() == null || comment.getComment().trim().length() < 10) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Đánh giá phải có ít nhất 10 ký tự.");
             return "redirect:" + request.getHeader("Referer");
         }
 
@@ -54,11 +70,9 @@ public class CommentController {
 
         // Tạo bình luận và xử lý kết quả
         if (this.commentService.create(comment)) {
-            
-            model.addAttribute("successMessage", "Bình luận của bạn đã được gửi thành công!");
+            redirectAttributes.addFlashAttribute("successMessage", "✅ Cảm ơn bạn đã đánh giá! Đánh giá của bạn đã được gửi thành công.");
         } else {
-            // Thêm thông báo lỗi nếu không thể lưu bình luận
-            model.addAttribute("errorMessage", "Có lỗi xảy ra khi gửi bình luận. Vui lòng thử lại.");
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại sau.");
         }
 
         // Chuyển hướng về trang trước đó

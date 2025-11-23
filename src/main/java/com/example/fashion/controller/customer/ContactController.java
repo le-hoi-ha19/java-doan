@@ -20,6 +20,8 @@ import com.example.fashion.services.ContactService;
 import com.example.fashion.services.ProductService;
 import com.example.fashion.services.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ContactController {
 
@@ -40,6 +42,8 @@ public class ContactController {
 
     @GetMapping("/contact")
     public String index(Model model) {
+        Contact contact = new Contact();
+        model.addAttribute("contact", contact);
         List<Product> listViewsProducts = this.productService.getAll();
         model.addAttribute("listViewsProducts", listViewsProducts);
         List<Category> categories = this.categoryService.getAll();
@@ -50,28 +54,39 @@ public class ContactController {
     }
 
     @PostMapping("/contact")
-    public String save(@ModelAttribute("contact") Contact contact, BindingResult bindingResult, Model model) {
+    public String save(@ModelAttribute("contact") Contact contact, BindingResult bindingResult, 
+                      Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
-          
+            model.addAttribute("error", "Vui lòng kiểm tra lại thông tin!");
+            List<Category> categories = this.categoryService.getAll();
+            model.addAttribute("categories", categories);
+            List<Brand> listBra = this.brandService.getAll();
+            model.addAttribute("listBra", listBra);
             return "contact/index";
         }
 
         if (contact.getFullname() == null || contact.getFullname().trim().isEmpty() || contact.getEmail() == null
                 || contact.getTelephone() == null || contact.getSubject() == null || contact.getMessage() == null) {
             model.addAttribute("error", "Thông tin không được để trống");
+            List<Category> categories = this.categoryService.getAll();
+            model.addAttribute("categories", categories);
+            List<Brand> listBra = this.brandService.getAll();
+            model.addAttribute("listBra", listBra);
             return "contact/index";
         }
 
-        if (this.contactService.create(contact)) {
-    
-            model.addAttribute("successMessage", "Tin nhắn của quý khách đã được gửi thành công!");
-
-            return "redirect:/contact/index";
-        } else {
- 
-            model.addAttribute("errorMessage", "Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại.");
-
-            return "redirect:/contact/index";
+        try {
+            if (this.contactService.create(contact)) {
+                session.setAttribute("successMessage", "✅ Tin nhắn của quý khách đã được gửi thành công!");
+                return "redirect:/contact";
+            } else {
+                session.setAttribute("errorMessage", "❌ Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại.");
+                return "redirect:/contact";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.setAttribute("errorMessage", "❌ Có lỗi xảy ra: " + e.getMessage());
+            return "redirect:/contact";
         }
     }
 }

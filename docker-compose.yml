@@ -34,6 +34,8 @@ services:
       JAVA_OPTS: "-Xmx512m -Xms256m"
     ports:
       - "9090:9090"
+    volumes:
+      - uploads_data:/app/uploads
     networks:
       - fashion-network
     restart: on-failure
@@ -46,6 +48,7 @@ services:
 
 volumes:
   mysql_data:
+  uploads_data:
 
 networks:
   fashion-network:

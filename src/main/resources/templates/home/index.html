@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/head :: head"></head>
 
@@ -14,6 +14,21 @@
         <!--header area -->
         <div th:replace="layout/header :: header"></div>
         <!--header end -->
+        
+        <!-- Admin Quick Access Banner -->
+        <div sec:authorize="hasAuthority('ADMIN')" class="alert alert-info" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 10px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="color: white;">
+              <h4 style="margin: 0; font-weight: bold;">⚙️ Quản trị viên</h4>
+              <p style="margin: 5px 0 0 0; opacity: 0.9;">Xin chào <span sec:authentication="name" style="font-weight: bold;"></span>! Bạn có quyền truy cập trang quản trị.</p>
+            </div>
+            <a href="/admin" style="background: white; color: #667eea; padding: 12px 30px; border-radius: 5px; text-decoration: none; font-weight: bold; transition: all 0.3s;">
+              Vào trang Quản trị →
+            </a>
+          </div>
+        </div>
+        <!-- Admin Banner End -->
+        
         <!--pos home section-->
         <div class="pos_home_section">
           <div class="row pos_home">
@@ -134,7 +149,8 @@
                       <div class="single_product">
                         <div class="product_thumb">
                           <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img style="max-height: 250px; object-fit: cover;"
-                              th:src="@{'/uploads/'+${product.Avatar}}" /></a>
+                              th:src="@{${product.Avatar != null && product.Avatar != ''} ? '/uploads/'+${product.Avatar} : '/images/placeholder-product.svg'}" 
+                              onerror="this.src='/images/placeholder-product.svg'" /></a>
                           <div class="img_icone">
                             <img src="assets\img\cart\span-new.png" alt="" />
                           </div>
@@ -243,7 +259,8 @@
                   <div class="brand_active owl-carousel">
                     <div class="col-lg-2" th:each="brand : ${listBra}">
                       <div class="single_brand">
-                        <a href="#"><img th:src="@{'/uploads/'+${brand.logo}}" /></a>
+                        <a href="#"><img th:src="@{${brand.logo != null && brand.logo != ''} ? '/uploads/'+${brand.logo} : '/images/placeholder-brand.svg'}" 
+                                        onerror="this.src='/images/placeholder-brand.svg'" /></a>
                       </div>
                     </div>
                   </div>

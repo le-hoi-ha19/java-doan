@@ -25,6 +25,7 @@ public class AdminController {
 
     @Autowired
     private OrderService orderService;
+
     @GetMapping
     public String index() {
         return "redirect:/admin/";
@@ -34,10 +35,31 @@ public class AdminController {
     public String admin(Model model) {
         long totalProducts = this.productService.countTotalProducts();
         model.addAttribute("totalProducts", totalProducts);
+
         long totalUser = this.userService.countTotalUsers();
         model.addAttribute("totalUser", totalUser);
+
         long totalPrice = this.orderService.countTotalPrice();
         model.addAttribute("totalPrice", totalPrice);
+
+        long totalOrders = this.orderService.countTotalOrders();
+        model.addAttribute("totalOrders", totalOrders);
+
+        long pendingOrders = this.orderService.countPendingOrders();
+        model.addAttribute("pendingOrders", pendingOrders);
+
+        long shippingOrders = this.orderService.countShippingOrders();
+        model.addAttribute("shippingOrders", shippingOrders);
+
+        long completedOrders = this.orderService.countCompletedOrders();
+        model.addAttribute("completedOrders", completedOrders);
+
+        long outOfStockProducts = this.productService.countOutOfStockProducts();
+        model.addAttribute("outOfStockProducts", outOfStockProducts);
+
+        long lowStockProducts = this.productService.countLowStockProducts();
+        model.addAttribute("lowStockProducts", lowStockProducts);
+
         return "admin/index";
     }
 }

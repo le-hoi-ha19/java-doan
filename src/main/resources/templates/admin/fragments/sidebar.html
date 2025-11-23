@@ -2,7 +2,7 @@
 <aside id="sidebar" class="sidebar" th:fragment="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/admin">
+      <a class="nav-link" th:classappend="${#httpServletRequest.requestURI == '/admin' || #httpServletRequest.requestURI == '/admin/'} ? '' : 'collapsed'" href="/admin">
         <i class="bi bi-grid"></i>
         <span>Bảng điều khiển</span>
       </a>
@@ -11,7 +11,8 @@
 
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/post') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-post') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-post')} ? '' : 'collapsed'"
         data-bs-target="#components-nav"
         data-bs-toggle="collapse"
         href="#"
@@ -21,16 +22,17 @@
       </a>
       <ul
         id="components-nav"
-        class="nav-content collapse"
+        class="nav-content"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/post') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-post') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-post')} ? 'show' : 'collapse'"
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="/admin/post">
+          <a href="/admin/post" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/post') && !#strings.contains(#httpServletRequest.requestURI, 'add')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Danh sách bài viết</span>
           </a>
         </li>
         <li>
-          <a href="/admin/add-post">
+          <a href="/admin/add-post" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/add-post')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Thêm bài viết</span>
           </a>
         </li>
@@ -40,7 +42,8 @@
 
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/category') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-category') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-category')} ? '' : 'collapsed'"
         data-bs-target="#forms-nav"
         data-bs-toggle="collapse"
         href="#"
@@ -50,16 +53,17 @@
       </a>
       <ul
         id="forms-nav"
-        class="nav-content collapse"
+        class="nav-content"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/category') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-category') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-category')} ? 'show' : 'collapse'"
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="/admin/category">
+          <a href="/admin/category" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/category') && !#strings.contains(#httpServletRequest.requestURI, 'add')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Danh sách danh mục</span>
           </a>
         </li>
         <li>
-          <a href="/admin/add-category">
+          <a href="/admin/add-category" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/add-category')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Thêm danh mục</span>
           </a>
         </li>
@@ -69,7 +73,8 @@
 
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/product') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-product') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-product')} ? '' : 'collapsed'"
         data-bs-target="#tables-nav"
         data-bs-toggle="collapse"
         href="#"
@@ -79,16 +84,17 @@
       </a>
       <ul
         id="tables-nav"
-        class="nav-content collapse"
+        class="nav-content"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/product') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-product') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-product')} ? 'show' : 'collapse'"
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="/admin/product">
+          <a href="/admin/product" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/product') && !#strings.contains(#httpServletRequest.requestURI, 'add')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Danh mục sản phẩm</span>
           </a>
         </li>
         <li>
-          <a href="/admin/add-product">
+          <a href="/admin/add-product" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/add-product')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Thêm sản phẩm</span>
           </a>
         </li>
@@ -98,7 +104,8 @@
 
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/brand') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-brand') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-brand')} ? '' : 'collapsed'"
         data-bs-target="#charts-nav"
         data-bs-toggle="collapse"
         href="#"
@@ -108,16 +115,17 @@
       </a>
       <ul
         id="charts-nav"
-        class="nav-content collapse"
+        class="nav-content"
+        th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/brand') || #strings.contains(#httpServletRequest.requestURI, '/admin/add-brand') || #strings.contains(#httpServletRequest.requestURI, '/admin/edit-brand')} ? 'show' : 'collapse'"
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="/admin/brand">
+          <a href="/admin/brand" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/brand') && !#strings.contains(#httpServletRequest.requestURI, 'add')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Danh mục thương hiệu</span>
           </a>
         </li>
         <li>
-          <a href="/admin/add-brand">
+          <a href="/admin/add-brand" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/add-brand')} ? 'active' : ''">
             <i class="bi bi-circle"></i><span>Thêm thương hiệu</span>
           </a>
         </li>
@@ -126,7 +134,7 @@
     <!-- End Charts Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/admin/order">
+      <a class="nav-link" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/order')} ? '' : 'collapsed'" href="/admin/order">
         <i class="bi bi-gem"></i>
         <span>Quản lý đơn hàng</span>
       </a>
@@ -138,7 +146,7 @@
     </li>
   
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/admin/user">
+      <a class="nav-link" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/user')} ? '' : 'collapsed'" href="/admin/user">
         <i class="bi bi-person"></i>
         <span>Tài khoản khách hàng</span>
       </a>
@@ -146,7 +154,7 @@
     <!-- End Profile Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/admin/contact">
+      <a class="nav-link" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/contact')} ? '' : 'collapsed'" href="/admin/contact">
         <i class="bi bi-envelope"></i>
         <span>Lời phản hồi</span>
       </a>
@@ -154,7 +162,7 @@
     <!-- End Contact Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/admin/comment">
+      <a class="nav-link" th:classappend="${#strings.contains(#httpServletRequest.requestURI, '/admin/comment')} ? '' : 'collapsed'" href="/admin/comment">
         <i class="bi bi-chat-left-text"></i>
         <span>Bình luận </span>
       </a>

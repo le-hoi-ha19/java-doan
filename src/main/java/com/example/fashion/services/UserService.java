@@ -21,4 +21,6 @@ public interface UserService {
 
 	long countTotalUsers();
 
+    Boolean update(User user);
+
 }

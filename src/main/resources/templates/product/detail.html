@@ -131,21 +131,29 @@
                     <span class="old-price"
                       th:text="${#numbers.formatDecimal(Product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                   </div>
-                  <div class="box_quantity mb-20">
+                  <div class="box_quantity mb-20" th:if="${Product.Quantity > 0}">
                     <label>Số lượng</label>
-                    <input name="Quantity" min="1" max="100" value="1" type="number" />
+                    <input name="Quantity" min="1" th:max="${Product.Quantity}" value="1" type="number" />
                     <button type="submit">
                       <i class="fa fa-shopping-cart"></i>Thêm giỏ hàng
                     </button>
                     <a href="#" title="yêu thích"><i class="fa fa-heart" aria-hidden="true"></i></a>
                   </div>
-                  <div class="product_stock mb-20">
+                  <div class="box_quantity mb-20" th:if="${Product.Quantity <= 0}">
+                    <button type="button" disabled style="background-color: #ccc; cursor: not-allowed;">
+                      <i class="fa fa-times"></i>Hết hàng
+                    </button>
+                  </div>
+                  <div class="product_stock mb-20" th:if="${Product.Quantity > 0}">
                     <p th:text="${Product.Quantity}"></p>
                     &nbsp;&nbsp;
                     <p>sản phẩm</p>
                     <span> Trong kho </span>
                   </div>
-                  
+                  <div class="product_stock mb-20" th:if="${Product.Quantity <= 0}" style="color: red;">
+                    <span><strong>⚠️ SẢN PHẨM ĐÃ HẾT HÀNG</strong></span>
+                  </div>
+
                 </div>
               </form>
             </div>
@@ -214,7 +222,7 @@
                           <!-- Display the author's name -->
                           <strong th:text="${comment.fullname}"></strong>
                           <!-- Display the creation date -->
-                          <p class="comment-date" th:text="${comment.createDate}"></p>
+                          <p class="comment-date" th:text="${#temporals.format(comment.createDate, 'dd/MM/yyyy HH:mm')}"></p>
                           <!-- Display the comment text -->
                           <div class="product_demo">
                             <p th:text="${comment.comment}"></p>
@@ -235,7 +243,7 @@
                           <!-- Comment Section -->
                           <div class="col-12">
                             <label for="review_comment">Đánh giá của bạn</label>
-                            <textarea name="Comment" id="review_comment" class="form-control" required></textarea>
+                            <textarea name="comment" id="review_comment" class="form-control" required></textarea>
                             <div class="invalid-feedback">
                               Bạn chưa nhập đánh giá.
                             </div>
@@ -441,6 +449,9 @@
   </div>
 
   <!-- modal area end -->
+
+  <!-- Toastr notifications -->
+  <div th:replace="fragments/toast :: toast"></div>
 
   <!-- all js here -->
   <script src="\assets\js\vendor\jquery-1.12.0.min.js"></script>

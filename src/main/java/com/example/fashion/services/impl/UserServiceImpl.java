@@ -123,4 +123,15 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public Boolean update(User user) {
+        try {
+            this.userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

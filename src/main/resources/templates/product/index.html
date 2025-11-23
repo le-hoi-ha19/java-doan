@@ -57,12 +57,11 @@
                                 </div>
                                 <div class="layere_categorie" th:each="category : ${categories}">
                                     <ul>
-                                        <a th:href="@{'/products/' + ${category.CatID}}"
+                                        <a th:href="@{'/products-category/' + ${category.slug}}"
                                             th:text="${category.CatName}"></a>
                                     </ul>
                                 </div>
                             </div>
-                            
                             
 
                             <!--popular tags area-->
@@ -71,7 +70,7 @@
                                     <h3>Thương hiệu</h3>
                                 </div>
                                 <div class="block_tags" th:each="brand : ${listBra}">
-                                    <a th:href="@{'/product/' + ${brand.BrandID}}"  th:text="${brand.BrandName}"></a>
+                                    <a th:href="@{'/products-branch/' + ${brand.slug}}"  th:text="${brand.BrandName}"></a>
                                 </div>
                             </div>
                             <!--popular tags end-->
@@ -149,11 +148,16 @@
                                         <div class="row">
                                             <div class="col-lg-4 col-md-6" th:each="product : ${listProducts}">
                                                 <div class="single_product">
-                                                    <div class="product_thumb">
+                                                    <div class="product_thumb" style="position: relative;">
                                                         <a
                                                             th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"><img
-                                                                th:src="@{'/uploads/'+${product.Avatar}}" alt></a>
-                                                        <div class="img_icone">
+                                                                th:src="@{${product.Avatar != null && product.Avatar != ''} ? '/uploads/'+${product.Avatar} : '/images/placeholder-product.svg'}" 
+                                                                onerror="this.src='/images/placeholder-product.svg'" alt></a>
+                                                        <!-- Badge Hết hàng -->
+                                                        <div th:if="${product.Quantity <= 0}" style="position: absolute; top: 10px; left: 10px; background: #ff4444; color: white; padding: 5px 10px; border-radius: 3px; font-weight: bold; z-index: 10;">
+                                                            HẾT HÀNG
+                                                        </div>
+                                                        <div class="img_icone" th:if="${product.Quantity > 0}">
                                                             <img src="assets\img\cart\span-new.png" alt>
                                                         </div>
                                                     </div>

@@ -95,15 +95,14 @@
                                         <div class="blog__post">
                                             <ul>
                                                 <li class="post_author">Đăng bởi : admin</li>
-                                                <li class="post_date"
-                                                    th:utext="${#dates.format(Post.CreatedDate, 'dd/MM/yyyy')}"></li>
+                                                <li class="post_date" th:utext="${#dates.format(Post.CreatedDate, 'dd/MM/yyyy')}"></li>
                                             </ul>
                                         </div>
                                     </div>
 
                                     <div class="blog_entry_content">
-                                        <p th:text="${Post.Description}"></p>
-                                        <p th:text="${Post.Contents}"></p>
+                                        <div th:utext="${Post.Description}"></div>
+                                        <div th:utext="${Post.Contents}"></div>
                                     </div>
                                   
                                 </div>

@@ -54,7 +54,8 @@
                             <div class="single_blog">
                                 <div class="blog_thumb">
                                     <a th:href="@{/blog-detail/{PostID}(PostID=${post.PostID})}"><img
-                                            th:src="@{'/uploads/'+${post.Thumnail}}"
+                                            th:src="@{${post.Thumnail != null && post.Thumnail != ''} ? '/uploads/'+${post.Thumnail} : '/images/placeholder-post.svg'}"
+                                            onerror="this.src='/images/placeholder-post.svg'"
                                             style="width: 250px; height: 250px;" alt="">
                                     </a>
                                 </div>

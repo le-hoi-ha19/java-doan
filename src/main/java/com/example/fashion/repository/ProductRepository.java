@@ -24,4 +24,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByBrand(Brand brand);
 
+    @Query(value = "SELECT p FROM Product p ORDER BY p.ProductID DESC")
+    List<Product> findAllOrderByIdDesc();
+
+    @Query(value = "SELECT COUNT(p) FROM Product p WHERE p.Quantity <= 0")
+    long countOutOfStockProducts();
+
+    @Query(value = "SELECT COUNT(p) FROM Product p WHERE p.Quantity > 0 AND p.Quantity <= 10")
+    long countLowStockProducts();
+
 }

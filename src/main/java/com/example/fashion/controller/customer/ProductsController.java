@@ -21,8 +21,8 @@ import com.example.fashion.models.Product;
 import com.example.fashion.models.User;
 import com.example.fashion.services.BrandService;
 import com.example.fashion.services.CategoryService;
-import com.example.fashion.services.ProductService;
 import com.example.fashion.services.CommentService;
+import com.example.fashion.services.ProductService;
 import com.example.fashion.services.StorageService;
 import com.example.fashion.services.UserService;
 
@@ -35,6 +35,9 @@ public class ProductsController {
     private CategoryService categoryService;
 
     @Autowired
+    private CommentService commentService;
+
+    @Autowired
     private BrandService brandService;
 
     @Autowired
@@ -42,8 +45,6 @@ public class ProductsController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private CommentService commentService;
 
     // @RequestMapping(value = { "/index", "/shop-detail" }, method =
     // RequestMethod.POST)

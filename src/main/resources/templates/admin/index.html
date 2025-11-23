@@ -134,6 +134,93 @@
 
             </div><!-- End Customers Card -->
 
+            <!-- Total Orders Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card orders-card">
+                <div class="card-body">
+                  <h5 class="card-title">Tổng đơn hàng <span>| Tất cả</span></h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-cart-check"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 th:text="${totalOrders}"></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Orders Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card warning-card">
+                <div class="card-body">
+                  <h5 class="card-title">Chờ xử lý <span>| Đơn hàng</span></h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background: #ff9800; color: #fff;">
+                      <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 th:text="${pendingOrders}"></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shipping Orders Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card info-card">
+                <div class="card-body">
+                  <h5 class="card-title">Đang giao <span>| Đơn hàng</span></h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background: #2196F3; color: #fff;">
+                      <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 th:text="${shippingOrders}"></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Low Stock Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card danger-card">
+                <div class="card-body">
+                  <h5 class="card-title">Sắp hết hàng <span>| Sản phẩm</span></h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background: #f44336; color: #fff;">
+                      <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 th:text="${lowStockProducts}"></h6>
+                      <span class="text-danger small pt-1 fw-bold">≤ 10 sản phẩm</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Out of Stock Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card danger-card">
+                <div class="card-body">
+                  <h5 class="card-title">Hết hàng <span>| Sản phẩm</span></h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background: #e91e63; color: #fff;">
+                      <i class="bi bi-x-circle"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 th:text="${outOfStockProducts}"></h6>
+                      <span class="text-danger small pt-1 fw-bold">Cần nhập thêm</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div><!-- End Left side columns -->
       </div>

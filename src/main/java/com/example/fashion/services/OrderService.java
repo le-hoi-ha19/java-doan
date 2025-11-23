@@ -16,7 +16,19 @@ public interface OrderService {
 
     Order findByUser(User user);
 
+    long countTotalOrders();
+
+    long countPendingOrders();
+
+    long countShippingOrders();
+
+    long countCompletedOrders();
+
+    long countCancelledOrders();
+
     Order findByID(Long OrderID);
 
     Boolean update(Order order);
+
+    Boolean cancel(Long OrderID);
 }

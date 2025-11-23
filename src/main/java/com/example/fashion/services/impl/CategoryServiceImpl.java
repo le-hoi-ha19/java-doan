@@ -16,8 +16,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAll() {
-        // TODO Auto-generated method stub
-        return this.categoryRepository.findAll();  // 
+        return this.categoryRepository.findAllOrderByIdDesc();
     }
 
     @Override

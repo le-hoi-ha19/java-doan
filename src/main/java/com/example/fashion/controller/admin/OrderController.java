@@ -56,4 +56,19 @@ public class OrderController {
         return "redirect:/admin/order/edit";
     }
 
+    @GetMapping("/cancel-order/{OrderID}")
+    public String cancel(@PathVariable("OrderID") Long OrderID, Model model) {
+        try {
+            if (this.orderService.cancel(OrderID)) {
+                model.addAttribute("success", "Đơn hàng đã được hủy thành công!");
+            } else {
+                model.addAttribute("error", "Không thể hủy đơn hàng!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Lỗi khi hủy đơn hàng!");
+        }
+        return "redirect:/admin/order";
+    }
+
 }

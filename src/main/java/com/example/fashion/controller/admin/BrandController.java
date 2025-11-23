@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.fashion.models.Brand;
 import com.example.fashion.models.Category;
@@ -47,7 +48,7 @@ public class BrandController {
 
     @PostMapping("/add-brand")
     public String save(@ModelAttribute("brand") Brand brand, BindingResult bindingResult,
-            @RequestParam("fileImag") MultipartFile file, Model model) {
+            @RequestParam("fileImag") MultipartFile file, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             
@@ -68,10 +69,14 @@ public class BrandController {
             String fileName = file.getOriginalFilename();
             brand.setLogo(fileName);
             if (this.brandService.create(brand)) {
+                redirectAttributes.addFlashAttribute("successMessage", "✅ Thêm thương hiệu thành công!");
                 return "redirect:/admin/brand";
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi thêm thương hiệu.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra: " + e.getMessage());
         }
 
         return "admin/brand/add";
@@ -88,7 +93,7 @@ public class BrandController {
 
     @PostMapping("/edit-brand")
     public String update(@ModelAttribute("brand") Brand brand, BindingResult bindingResult,
-            @RequestParam("fileImage") MultipartFile file, Model model) {
+            @RequestParam("fileImage") MultipartFile file, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             
@@ -114,10 +119,14 @@ public class BrandController {
             String fileName = file.getOriginalFilename();
             brand.setLogo(fileName);
             if (this.brandService.update(brand)) {
+                redirectAttributes.addFlashAttribute("successMessage", "✅ Cập nhật thương hiệu thành công!");
                 return "redirect:/admin/brand";
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi cập nhật thương hiệu.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra: " + e.getMessage());
         }
 
         return "redirect:/admin/brand/edit";

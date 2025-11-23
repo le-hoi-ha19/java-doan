@@ -34,7 +34,7 @@
             <hr class="dropdown-divider">
           </li>
           <li>
-            <a class="dropdown-item d-flex align-items-center" style="text-align:center,display:block" href="#">Xem tất cả</a>
+            <a class="dropdown-item d-flex align-items-center" style="text-align: center; display: block;" href="/admin/notifications">Xem tất cả</a>
           </li>
         </ul><!-- End Notification Dropdown -->
       </li><!-- End Notification Nav -->
@@ -67,4 +67,71 @@
   </nav><!-- End Icons Navigation -->
 
 </header><!-- End Header -->
+
+<!-- Admin Notification Script -->
+<script>
+  function updateAdminNotificationCount() {
+    fetch('/admin/notifications/count')
+      .then(response => response.json())
+      .then(data => {
+        const badge = document.getElementById('notification-badge');
+        if (data.count > 0) {
+          badge.textContent = data.count > 99 ? '99+' : data.count;
+          badge.style.display = 'inline-block';
+        } else {
+          badge.style.display = 'none';
+        }
+      })
+      .catch(error => console.error('Error fetching admin notification count:', error));
+  }
+
+  function loadAdminNotifications() {
+    fetch('/admin/notifications/unread')
+      .then(response => response.json())
+      .then(notifications => {
+        const notificationList = document.getElementById('notification-list');
+        if (notifications.length === 0) {
+          notificationList.innerHTML = '<li class="dropdown-item text-center text-muted">Không có thông báo mới</li>';
+        } else {
+          notificationList.innerHTML = notifications.map(notif => `
+            <li class="dropdown-item" style="cursor: pointer; white-space: normal;" onclick="markNotificationRead(${notif.id})">
+              <div>
+                <strong>${notif.title}</strong>
+                <p class="mb-0 small">${notif.message}</p>
+                <small class="text-muted">${new Date(notif.createdAt).toLocaleString('vi-VN')}</small>
+              </div>
+            </li>
+            <hr class="dropdown-divider">
+          `).join('');
+        }
+      })
+      .catch(error => console.error('Error loading notifications:', error));
+  }
+
+  function markNotificationRead(notifId) {
+    fetch(`/admin/notifications/${notifId}/mark-read`, {
+      method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        updateAdminNotificationCount();
+        loadAdminNotifications();
+      }
+    });
+  }
+
+  // Load on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    updateAdminNotificationCount();
+  });
+
+  // Reload when bell icon clicked
+  document.getElementById('notification-bell').addEventListener('click', () => {
+    loadAdminNotifications();
+  });
+
+  // Auto-refresh every 30 seconds
+  setInterval(updateAdminNotificationCount, 30000);
+</script>
 

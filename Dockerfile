@@ -16,6 +16,9 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
+# Tạo thư mục uploads
+RUN mkdir -p /app/uploads && chmod 777 /app/uploads
+
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 9090

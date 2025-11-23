@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.fashion.models.Brand;
 import com.example.fashion.models.Category;
@@ -65,7 +66,7 @@ public class ProductController {
 
     @PostMapping("/add-product")
     public String save(@ModelAttribute("product") Product product, BindingResult bindingResult,@RequestParam("fileAvatar") MultipartFile fileAvatar,
-            @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
+            @RequestParam("fileImages") MultipartFile[] fileImages, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
 
@@ -110,10 +111,14 @@ public class ProductController {
             }
     
             if (this.productService.create(product)) {
+                redirectAttributes.addFlashAttribute("successMessage", "✅ Thêm sản phẩm thành công!");
                 return "redirect:/admin/product";
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi thêm sản phẩm.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra: " + e.getMessage());
         }
 
         return "admin/product/add";
@@ -133,7 +138,7 @@ public class ProductController {
     @PostMapping("/edit-product")
     public String edit(@ModelAttribute("product") Product product, BindingResult bindingResult,
             @RequestParam("fileAvatar") MultipartFile fileAvatar,
-            @RequestParam("fileImages") MultipartFile[] fileImages, Model model) {
+            @RequestParam("fileImages") MultipartFile[] fileImages, Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             List<Category> listCat = this.categoryService.getAll();
@@ -144,7 +149,7 @@ public class ProductController {
         }
 
         if (product.getProductName() == null || product.getProductName().trim().isEmpty() ||
-                fileAvatar.isEmpty() || product.getPrice() == null || product.getSalePrice() == null
+                product.getPrice() == null || product.getSalePrice() == null
                 || product.getQuantity() == null) {
             model.addAttribute("error", "Vui lòng điền đầy đủ thông tin bắt buộc");
             List<Category> listCat = this.categoryService.getAll();
@@ -154,47 +159,99 @@ public class ProductController {
             return "admin/product/edit";
         }
 
-
         try {
-            this.storageService.store(fileAvatar);
-            String fileNameAvatar = fileAvatar.getOriginalFilename();
-            product.setAvatar(fileNameAvatar);
-    
-            for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
-                this.storageService.store(fileImages[i]);
-                String fileName = fileImages[i].getOriginalFilename();
-    
-                switch (i) {
-                    case 0:
-                        product.setImg1(fileName);
-                        break;
-                    case 1:
-                        product.setImg2(fileName);
-                        break;
-                    case 2:
-                        product.setImg3(fileName);
-                        break;
+            Product existingProduct = this.productService.findByID(product.getProductID());
+            
+            if (!fileAvatar.isEmpty()) {
+                if (existingProduct.getAvatar() != null) {
+                    this.storageService.delete(existingProduct.getAvatar());
                 }
+                this.storageService.store(fileAvatar);
+                product.setAvatar(fileAvatar.getOriginalFilename());
+            } else {
+                product.setAvatar(existingProduct.getAvatar());
             }
     
-            if (this.productService.create(product)) {
+            if (fileImages != null && fileImages.length > 0) {
+                for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
+                    if (!fileImages[i].isEmpty()) {
+                        String oldImage = null;
+                        switch (i) {
+                            case 0:
+                                oldImage = existingProduct.getImg1();
+                                break;
+                            case 1:
+                                oldImage = existingProduct.getImg2();
+                                break;
+                            case 2:
+                                oldImage = existingProduct.getImg3();
+                                break;
+                        }
+                        if (oldImage != null) {
+                            this.storageService.delete(oldImage);
+                        }
+                        this.storageService.store(fileImages[i]);
+                        String fileName = fileImages[i].getOriginalFilename();
+                        switch (i) {
+                            case 0:
+                                product.setImg1(fileName);
+                                break;
+                            case 1:
+                                product.setImg2(fileName);
+                                break;
+                            case 2:
+                                product.setImg3(fileName);
+                                break;
+                        }
+                    } else {
+                        switch (i) {
+                            case 0:
+                                product.setImg1(existingProduct.getImg1());
+                                break;
+                            case 1:
+                                product.setImg2(existingProduct.getImg2());
+                                break;
+                            case 2:
+                                product.setImg3(existingProduct.getImg3());
+                                break;
+                        }
+                    }
+                }
+            } else {
+                product.setImg1(existingProduct.getImg1());
+                product.setImg2(existingProduct.getImg2());
+                product.setImg3(existingProduct.getImg3());
+            }
+    
+            if (this.productService.update(product)) {
+                redirectAttributes.addFlashAttribute("successMessage", "✅ Cập nhật sản phẩm thành công!");
                 return "redirect:/admin/product";
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi cập nhật sản phẩm.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra: " + e.getMessage());
         }
 
-        return "redirect:/admin/product/edit";
+        return "admin/product/edit";
     }
 
     @GetMapping("/delete-product/{ProductID}")
     public String delete(@PathVariable("ProductID") Long ProductID) {
-        if (this.productService.delete(ProductID)) {
-            return "redirect:/admin/product";
-        } else {
-            return "redirect:/admin/product";
+        try {
+            Product product = this.productService.findByID(ProductID);
+            if (product != null) {
+                this.storageService.delete(product.getAvatar());
+                this.storageService.delete(product.getImg1());
+                this.storageService.delete(product.getImg2());
+                this.storageService.delete(product.getImg3());
+            }
+            this.productService.delete(ProductID);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+        return "redirect:/admin/product";
     }
 
 }

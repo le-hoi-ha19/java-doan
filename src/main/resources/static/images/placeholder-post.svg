@@ -1,0 +1,12 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#eeeeee"/>
+  <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" fill="#9e9e9e">
+    Blog Post
+  </text>
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#9e9e9e">
+    Thumbnail
+  </text>
+  <rect x="300" y="120" width="200" height="140" stroke="#9e9e9e" stroke-width="4" fill="none" rx="10"/>
+  <path d="M 320 190 L 360 230 L 480 180" stroke="#9e9e9e" stroke-width="4" fill="none"/>
+  <circle cx="450" cy="150" r="15" fill="#9e9e9e"/>
+</svg>

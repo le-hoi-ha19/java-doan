@@ -84,7 +84,7 @@ public class CheckoutController {
 
 	@PostMapping("/order")
 	public String addOrder(@RequestParam("ProductID") Long ProductID,
-			Model model, Principal principal, HttpServletRequest request) {
+			Model model, Principal principal, HttpServletRequest request, HttpSession session) {
 		if (principal == null) {
 			return "redirect:/login";
 		}
@@ -94,11 +94,22 @@ public class CheckoutController {
 
 		if (!carts.isEmpty()) {
 			Cart cart = carts.iterator().next();
-			if (this.orderService.create(cart)) {
-				notificationService.createNotification(user.getId(), "Đặt hàng thành công", "Đơn hàng của bạn đã được tạo thành công!");
-				itemService.delete(ProductID, user);
-				cartService.delete(cart.getCartID());
+			try {
+				if (this.orderService.create(cart)) {
+					notificationService.createNotification(user.getId(), "Đặt hàng thành công", 
+						"Đơn hàng của bạn đã được tạo thành công! Mã đơn hàng sẽ được gửi qua email.");
+					session.setAttribute("successMessage", "✅ Đặt hàng thành công! Cảm ơn bạn đã mua hàng.");
+					itemService.delete(ProductID, user);
+					cartService.delete(cart.getCartID());
+				} else {
+					session.setAttribute("errorMessage", "❌ Đặt hàng thất bại! Vui lòng thử lại.");
+				}
+			} catch (RuntimeException e) {
+				session.setAttribute("errorMessage", "❌ " + e.getMessage());
+				return "redirect:/checkout";
 			}
+		} else {
+			session.setAttribute("errorMessage", "❌ Giỏ hàng trống!");
 		}
 
 		return "redirect:/";

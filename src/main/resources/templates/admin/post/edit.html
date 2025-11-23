@@ -166,9 +166,9 @@
           <div class="form-group col-md-6">
             <input type="text" name="CreatedDate" class="form-control mb-3" th:field="*{CreatedDate}" id="createdDate" style="display:none;" />
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-12">
             <label>Nội dung bài viết:</label>
-            <textarea name="Contents" class="form-control mb-3" th:field="*{Contents}">
+            <textarea id="editor-contents" name="Contents" class="form-control mb-3" th:field="*{Contents}" rows="10">
               </textarea>
           </div>
         </div>
@@ -190,6 +190,27 @@
 
   <!-- Vendor JS Files -->
   <div th:replace="admin/fragments/script :: script"></div>
+  
+  <!-- CKEditor CDN -->
+  <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+  <script>
+    window.onload = function() {
+      // Khởi tạo CKEditor cho textarea Contents
+      CKEDITOR.replace('editor-contents', {
+        height: 400,
+        toolbar: [
+          { name: 'document', items: ['Source'] },
+          { name: 'clipboard', items: ['Undo', 'Redo'] },
+          { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+          { name: 'colors', items: ['TextColor', 'BGColor'] },
+          { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+          { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote'] },
+          { name: 'links', items: ['Link', 'Unlink'] },
+          { name: 'insert', items: ['Image', 'Table', 'HorizontalRule'] }
+        ]
+      });
+    };
+  </script>
 </body>
 
 </html>

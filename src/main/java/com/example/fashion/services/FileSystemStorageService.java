@@ -16,7 +16,7 @@ public class FileSystemStorageService implements StorageService {
     private final Path rootlocation;
 
     public FileSystemStorageService() {
-        this.rootlocation = Paths.get("src/main/resources/static/uploads");
+        this.rootlocation = Paths.get("uploads");
     }
 
     @Override
@@ -37,7 +37,19 @@ public class FileSystemStorageService implements StorageService {
         try {
             Files.createDirectories(rootlocation);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void delete(String filename) {
+        try {
+            if (filename != null && !filename.isEmpty()) {
+                Path file = this.rootlocation.resolve(filename).normalize();
+                Files.deleteIfExists(file);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

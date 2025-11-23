@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.fashion.models.Category;
 import com.example.fashion.services.CategoryService;
@@ -38,7 +39,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add-category")
-    public String save(@ModelAttribute("category") Category category, BindingResult bindingResult, Model model) {
+    public String save(@ModelAttribute("category") Category category, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "admin/category/add";
         }
@@ -52,8 +53,10 @@ public class CategoryController {
         category.setSlug(slug);
         // Tiến hành thêm danh mục nếu không có lỗi
         if (this.categoryService.create(category)) {
+            redirectAttributes.addFlashAttribute("successMessage", "✅ Thêm danh mục thành công!");
             return "redirect:/admin/category";
         } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi thêm danh mục.");
             return "redirect:/admin/category/add";
         }
     }
@@ -66,7 +69,7 @@ public class CategoryController {
     }
 
     @PostMapping("/edit-category")
-    public String update(@ModelAttribute("category") Category category, BindingResult bindingResult, Model model) {
+    public String update(@ModelAttribute("category") Category category, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "admin/category/edit";
         }
@@ -79,8 +82,10 @@ public class CategoryController {
         category.setSlug(slug);
         // Tiến hành cập nhật danh mục nếu không có lỗi
         if (this.categoryService.update(category)) {
+            redirectAttributes.addFlashAttribute("successMessage", "✅ Cập nhật danh mục thành công!");
             return "redirect:/admin/category";
         } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi cập nhật danh mục.");
             return "redirect:/admin/category/edit";
         }
     }

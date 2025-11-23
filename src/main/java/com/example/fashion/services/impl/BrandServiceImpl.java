@@ -16,8 +16,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public List<Brand> getAll() {
-        // TODO Auto-generated method stub
-        return this.brandRepository.findAll();
+        return this.brandRepository.findAllOrderByIdDesc();
     }
 
     @Override

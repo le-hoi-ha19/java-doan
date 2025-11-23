@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.fashion.models.Brand;
 import com.example.fashion.models.Category;
@@ -55,7 +56,7 @@ public class PostController {
     @PostMapping("/add-post")
     public String save(@ModelAttribute("post") Post post, BindingResult bindingResult,
             @RequestParam("Thumnail") MultipartFile Thumnail,
-            Model model) {
+            Model model, RedirectAttributes redirectAttributes) {
 
         if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getDescription() == null
                 || post.getCreatedDate() == null
@@ -75,10 +76,14 @@ public class PostController {
             post.setCreatedDate(post.getCreatedDate()); // Gán CreatedDate
 
             if (this.postService.create(post)) {
+                redirectAttributes.addFlashAttribute("successMessage", "✅ Thêm bài viết thành công!");
                 return "redirect:/admin/post";
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi thêm bài viết.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra: " + e.getMessage());
         }
 
         return "admin/post/add";
@@ -112,7 +117,7 @@ public class PostController {
     public String edit(@PathVariable("id") Long id,
             @ModelAttribute("post") Post post, BindingResult bindingResult,
             @RequestParam("Thumnail") MultipartFile Thumnail,
-            Model model) {
+            Model model, RedirectAttributes redirectAttributes) {
 
         // Kiểm tra các trường bắt buộc
         if (post.getTitle() == null || post.getTitle().trim().isEmpty() || post.getDescription() == null
@@ -135,18 +140,25 @@ public class PostController {
             existingPost.setDescription(post.getDescription());
             existingPost.setCreatedDate(post.getCreatedDate());
 
-            // Nếu có ảnh đại diện mới, lưu ảnh
+            // Nếu có ảnh đại diện mới, xóa ảnh cũ và lưu ảnh mới
             if (Thumnail != null && !Thumnail.isEmpty()) {
+                if (existingPost.getThumnail() != null) {
+                    this.storageService.delete(existingPost.getThumnail());
+                }
                 this.storageService.store(Thumnail);
                 String ThumnailFile = Thumnail.getOriginalFilename();
                 existingPost.setThumnail(ThumnailFile);
             }
             // Cập nhật bài viết
             if (postService.update(existingPost)) {
+                redirectAttributes.addFlashAttribute("successMessage", "✅ Cập nhật bài viết thành công!");
                 return "redirect:/admin/post";
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra khi cập nhật bài viết.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "❌ Có lỗi xảy ra: " + e.getMessage());
         }
 
         return "admin/post/edit";
@@ -154,11 +166,15 @@ public class PostController {
 
     @GetMapping("/delete-post/{PostID}")
     public String delete(@PathVariable("PostID") Long PostID) {
-        if (this.postService.delete(PostID)) {
-            return "redirect:/admin/post";
-        } else {
-            return "redirect:/admin/post";
+        try {
+            Post post = this.postService.findByID(PostID);
+            if (post != null && post.getThumnail() != null) {
+                this.storageService.delete(post.getThumnail());
+            }
+            this.postService.delete(PostID);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+        return "redirect:/admin/post";
     }
 }

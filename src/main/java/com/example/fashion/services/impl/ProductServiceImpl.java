@@ -21,8 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAll() {
-        // TODO Auto-generated method stub
-        return this.productRepository.findAll();
+        return this.productRepository.findAllOrderByIdDesc();
     }
 
     @Override
@@ -78,6 +77,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public long countTotalProducts() {
         return productRepository.countTotalProducts();
+    }
+
+    @Override
+    public long countOutOfStockProducts() {
+        return productRepository.countOutOfStockProducts();
+    }
+
+    @Override
+    public long countLowStockProducts() {
+        return productRepository.countLowStockProducts();
     }
 
     @Override

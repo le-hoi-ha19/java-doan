@@ -29,15 +29,40 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public boolean markAsRead(Long notificationId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'markAsRead'");
+        try {
+            Notification notification = notificationRepository.findById(notificationId)
+                    .orElseThrow(() -> new RuntimeException("Notification not found"));
+            notification.setIsRead(true);
+            notificationRepository.save(notification);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    // @Override
-    // public void markAsRead(Long notificationId) {
-    //     Notification notification = notificationRepository.findById(notificationId)
-    //             .orElseThrow(() -> new RuntimeException("Notification not found"));
-    //     notification.setIsRead(true);
-    //     notificationRepository.save(notification);
-    // }
+    @Override
+    public long countUnreadNotifications(Long userId) {
+        return notificationRepository.countByUserIdAndIsReadFalse(userId);
+    }
+
+    @Override
+    public List<Notification> getAllNotifications(Long userId) {
+        return notificationRepository.findByUserIdOrderByCreatedAtDesc(userId);
+    }
+
+    @Override
+    public boolean markAllAsRead(Long userId) {
+        try {
+            List<Notification> unreadNotifications = notificationRepository.findByUserIdAndIsReadFalse(userId);
+            for (Notification notification : unreadNotifications) {
+                notification.setIsRead(true);
+                notificationRepository.save(notification);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

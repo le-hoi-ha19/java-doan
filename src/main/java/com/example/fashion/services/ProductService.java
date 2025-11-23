@@ -28,6 +28,10 @@ public interface ProductService {
 
 	long countTotalProducts();
 
+	long countOutOfStockProducts();
+
+	long countLowStockProducts();
+
 	List<Product> findByCategory(Category category);
 
 	List<Product> findByBrand(Brand brand);
