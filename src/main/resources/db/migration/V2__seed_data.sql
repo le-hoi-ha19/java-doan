@@ -5,13 +5,13 @@ INSERT INTO role (name) VALUES
 ('USER'),
 ('MANAGER');
 
--- Insert sample users (password: 123456 - BCrypt encoded)
+-- Insert sample users (password giống dungnhinminh - BCrypt encoded)
 INSERT INTO users (username, password, email, fullname, telephone, address, gender, enabled, images) VALUES
-('admin', '$2a$10$X5wFWtliQ/Norm8XW2TNAeRiMJNNHPyY8YfUg2wT5C/Y5tZy0E87e', 'admin@fashion.com', 'Admin User', '0123456789', '123 Nguyen Trai, Thanh Xuan, Ha Noi', TRUE, TRUE, '/images/users/admin.jpg'),
-('user1', '$2a$10$X5wFWtliQ/Norm8XW2TNAeRiMJNNHPyY8YfUg2wT5C/Y5tZy0E87e', 'user1@gmail.com', 'Nguyen Van A', '0987654321', '456 Le Loi, Quan 1, Ho Chi Minh', TRUE, TRUE, '/images/users/user1.jpg'),
-('user2', '$2a$10$X5wFWtliQ/Norm8XW2TNAeRiMJNNHPyY8YfUg2wT5C/Y5tZy0E87e', 'user2@gmail.com', 'Tran Thi B', '0912345678', '789 Tran Phu, Hai Chau, Da Nang', FALSE, TRUE, '/images/users/user2.jpg'),
-('user3', '$2a$10$X5wFWtliQ/Norm8XW2TNAeRiMJNNHPyY8YfUg2wT5C/Y5tZy0E87e', 'user3@gmail.com', 'Le Van C', '0901234567', '321 Hoang Dieu, Nha Trang, Khanh Hoa', TRUE, TRUE, NULL),
-('manager', '$2a$10$X5wFWtliQ/Norm8XW2TNAeRiMJNNHPyY8YfUg2wT5C/Y5tZy0E87e', 'manager@fashion.com', 'Manager User', '0908888888', 'Ha Noi, Vietnam', TRUE, TRUE, NULL);
+('admin', '$2a$10$K.XEb18nbVMenDLP.w1kb.nTR0YN2DjqzsRedbt/64s2l1H5dinOW', 'admin@fashion.com', 'Admin User', '0123456789', '123 Nguyen Trai, Thanh Xuan, Ha Noi', TRUE, TRUE, '/images/users/admin.jpg'),
+('user1', '$2a$10$K.XEb18nbVMenDLP.w1kb.nTR0YN2DjqzsRedbt/64s2l1H5dinOW', 'user1@gmail.com', 'Nguyen Van A', '0987654321', '456 Le Loi, Quan 1, Ho Chi Minh', TRUE, TRUE, '/images/users/user1.jpg'),
+('user2', '$2a$10$K.XEb18nbVMenDLP.w1kb.nTR0YN2DjqzsRedbt/64s2l1H5dinOW', 'user2@gmail.com', 'Tran Thi B', '0912345678', '789 Tran Phu, Hai Chau, Da Nang', FALSE, TRUE, '/images/users/user2.jpg'),
+('user3', '$2a$10$K.XEb18nbVMenDLP.w1kb.nTR0YN2DjqzsRedbt/64s2l1H5dinOW', 'user3@gmail.com', 'Le Van C', '0901234567', '321 Hoang Dieu, Nha Trang, Khanh Hoa', TRUE, TRUE, NULL),
+('manager', '$2a$10$K.XEb18nbVMenDLP.w1kb.nTR0YN2DjqzsRedbt/64s2l1H5dinOW', 'manager@fashion.com', 'Manager User', '0908888888', 'Ha Noi, Vietnam', TRUE, TRUE, NULL);
 
 -- Insert users_roles
 INSERT INTO users_roles (userId, roleId) VALUES
