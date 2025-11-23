@@ -36,23 +36,14 @@ CREATE TABLE IF NOT EXISTS Brands (
     BrandID BIGINT AUTO_INCREMENT PRIMARY KEY,
     BrandName VARCHAR(100) NOT NULL,
     Slug VARCHAR(100) UNIQUE,
-    Logo VARCHAR(255),
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    Logo VARCHAR(255)
 );
 
 -- Create Categories table
 CREATE TABLE IF NOT EXISTS Categories (
     CatID INT AUTO_INCREMENT PRIMARY KEY,
     CatName VARCHAR(100) NOT NULL,
-    Slug VARCHAR(100) UNIQUE,
-    description TEXT,
-    image_url VARCHAR(255),
-    parent_id INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (parent_id) REFERENCES Categories(CatID) ON DELETE SET NULL
+    Slug VARCHAR(100) UNIQUE
 );
 
 -- Create Products table
@@ -69,11 +60,6 @@ CREATE TABLE IF NOT EXISTS Products (
     Img2 VARCHAR(255),
     Img3 VARCHAR(255),
     Description TEXT,
-    slug VARCHAR(200) UNIQUE,
-    status VARCHAR(20) DEFAULT 'ACTIVE',
-    sku VARCHAR(50) UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (CatID) REFERENCES Categories(CatID) ON DELETE SET NULL,
     FOREIGN KEY (BrandID) REFERENCES Brands(BrandID) ON DELETE SET NULL
 );
@@ -84,8 +70,6 @@ CREATE TABLE IF NOT EXISTS Carts (
     userId BIGINT NOT NULL,
     TotalsItem INT DEFAULT 0,
     TotalsPrice DOUBLE DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -175,56 +159,3 @@ CREATE TABLE IF NOT EXISTS notifications (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Create Shipping Methods table (bổ sung từ seed data trước)
-CREATE TABLE IF NOT EXISTS shipping_methods (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    description TEXT,
-    fee DECIMAL(10, 2) NOT NULL,
-    estimated_days INT,
-    status VARCHAR(20) DEFAULT 'ACTIVE',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Create Coupons table (bổ sung từ seed data trước)
-CREATE TABLE IF NOT EXISTS coupons (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    code VARCHAR(50) NOT NULL UNIQUE,
-    description TEXT,
-    discount_type VARCHAR(20) NOT NULL,
-    discount_value DECIMAL(10, 2) NOT NULL,
-    min_order_amount DECIMAL(10, 2),
-    max_discount_amount DECIMAL(10, 2),
-    usage_limit INT,
-    used_count INT DEFAULT 0,
-    start_date TIMESTAMP,
-    end_date TIMESTAMP,
-    status VARCHAR(20) DEFAULT 'ACTIVE',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Create Coupon Usage table
-CREATE TABLE IF NOT EXISTS coupon_usage (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    coupon_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-    order_id BIGINT NOT NULL,
-    discount_amount DECIMAL(10, 2) NOT NULL,
-    used_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (coupon_id) REFERENCES coupons(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (order_id) REFERENCES Orders(OrderID) ON DELETE CASCADE
-);
-
--- Create Wishlists table
-CREATE TABLE IF NOT EXISTS wishlists (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES Products(ProductID) ON DELETE CASCADE,
-    UNIQUE KEY unique_user_product_wishlist (user_id, product_id)
-);
