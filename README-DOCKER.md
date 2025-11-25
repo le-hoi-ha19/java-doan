@@ -7,7 +7,7 @@
 ## Chạy ứng dụng
 
 ### 1. Build và chạy với Docker Compose
-```bash
+```bash(build lại và chạy khi sửa code sẽ ghi đè image cũ)
 docker-compose up --build
 ```
 

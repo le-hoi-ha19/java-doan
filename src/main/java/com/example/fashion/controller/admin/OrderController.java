@@ -20,7 +20,7 @@ import com.example.fashion.services.UserService;
 
 @Controller
 @RequestMapping("/admin")
-public class OrderController {
+public class OrderController extends BaseAdminController {
 
     @Autowired
     private OrderService orderService;

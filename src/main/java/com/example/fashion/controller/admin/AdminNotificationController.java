@@ -26,7 +26,7 @@ import com.example.fashion.services.UserService;
 
 @Controller
 @RequestMapping("/admin/notifications")
-public class AdminNotificationController {
+public class AdminNotificationController extends BaseAdminController {
 
     @Autowired
     private NotificationService notificationService;

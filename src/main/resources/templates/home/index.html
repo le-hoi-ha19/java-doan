@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="layout/head :: head"></head>
+<head th:replace="~{layout/head :: head}"></head>
 
 <body>
   <!-- Add your site or application content here -->
@@ -12,7 +12,7 @@
       <!--pos page inner-->
       <div class="pos_page_inner">
         <!--header area -->
-        <div th:replace="layout/header :: header"></div>
+        <div th:replace="~{layout/header :: header}"></div>
         <!--header end -->
         
         <!-- Admin Quick Access Banner -->
@@ -278,7 +278,7 @@
   <!--pos page end-->
 
   <!--footer area start-->
-  <div th:replace="layout/footer :: footer"></div>
+  <div th:replace="~{layout/footer :: footer}"></div>
   <!--footer area end-->
 
   <!-- modal area start -->
@@ -303,7 +303,7 @@
   <!-- modal area end -->
 
   <!-- all js here -->
-  <script th:replace="layout/script :: script"></script>
+  <script th:replace="~{layout/script :: script}"></script>
 
 </body>
 

@@ -31,7 +31,7 @@ import jakarta.persistence.Converter;
 
 @Controller
 @RequestMapping("/admin")
-public class ProductController {
+public class ProductController extends BaseAdminController {
 
     @Autowired
     private CategoryService categoryService;

@@ -24,7 +24,7 @@ import com.example.fashion.services.UserService;
 
 @Controller
 @RequestMapping("/admin")
-public class UserController {
+public class UserController extends BaseAdminController {
 
 	@Autowired
 	private RoleService roleService;

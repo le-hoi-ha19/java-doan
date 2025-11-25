@@ -15,7 +15,7 @@ import com.example.fashion.services.CommentService;
 
 @Controller
 @RequestMapping("/admin")
-public class CommentManagerController {
+public class CommentManagerController extends BaseAdminController {
 
     @Autowired
     private CommentService commentService;

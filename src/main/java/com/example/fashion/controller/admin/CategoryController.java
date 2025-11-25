@@ -18,7 +18,7 @@ import com.example.fashion.utils.SlugUtils;
 
 @Controller
 @RequestMapping("/admin")
-public class CategoryController {
+public class CategoryController extends BaseAdminController {
 
     @Autowired
     private CategoryService categoryService;

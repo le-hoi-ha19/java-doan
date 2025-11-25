@@ -16,7 +16,7 @@ import com.example.fashion.services.ContactService;
 
 @Controller
 @RequestMapping("/admin")
-public class ContactManagerController {
+public class ContactManagerController extends BaseAdminController {
 
     @Autowired
     private ContactService contactService;
