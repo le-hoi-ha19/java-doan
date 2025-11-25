@@ -1,5 +1,6 @@
 package com.example.fashion.controller.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,22 @@ public class PostController extends BaseAdminController {
 
     @GetMapping("/post")
     public String index(Model model) {
-        List<Post> listpost = this.postService.getAll();
-        model.addAttribute("listpost", listpost);
-        return "/admin/post/index";
+        try {
+            List<Post> listpost = this.postService.getAll();
+            
+            // Kiểm tra null và khởi tạo danh sách rỗng nếu cần
+            if (listpost == null) {
+                listpost = new ArrayList<>();
+            }
+            
+            model.addAttribute("listpost", listpost);
+            return "admin/post/index"; // Bỏ dấu / ở đầu
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Lỗi khi tải danh sách bài viết: " + e.getMessage());
+            model.addAttribute("listpost", new ArrayList<>());
+            return "admin/post/index"; // Bỏ dấu / ở đầu
+        }
     }
 
     @GetMapping("/add-post")
