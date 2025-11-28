@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findByID(Long ProductID) {
-        return this.productRepository.findById(ProductID).get();
+        return this.productRepository.findById(ProductID).orElse(null);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Boolean delete(Long ProductID) {
         try {
-            this.productRepository.delete(findByID(ProductID));
+            this.productRepository.deleteById(ProductID);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAll(Long pageNo) {
-        int pageSize = 9; // Số lượng sản phẩm trên mỗi trang
+        int pageSize = 9;
         Pageable pageable = PageRequest.of(pageNo.intValue() - 1, pageSize);
         return this.productRepository.findAll(pageable);
     }
@@ -90,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List <Product> findByCategory(Category category) {
+    public List<Product> findByCategory(Category category) {
         return productRepository.findByCategory(category);
     }
 

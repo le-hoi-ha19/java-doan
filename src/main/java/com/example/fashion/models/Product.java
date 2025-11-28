@@ -8,6 +8,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDa
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,10 +48,10 @@ public class Product {
 	private Set<CartItem> cartItems;
 	@OneToMany(mappedBy = "product")
 	private Set<Comment> comment;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CatID", referencedColumnName = "CatID")
 	private Category category;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "BrandID", referencedColumnName = "BrandID")
 	private Brand brand;
 

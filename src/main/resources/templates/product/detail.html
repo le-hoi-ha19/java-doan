@@ -28,7 +28,7 @@
       <!--pos page inner-->
       <div class="pos_page_inner">
         <!--header area -->
-        <div th:replace="layout/header :: header"></div>
+        <div th:replace="~{layout/header :: header}"></div>
         <!--header end -->
         <!--breadcrumbs area start-->
         <div class="breadcrumbs_area">
@@ -222,7 +222,7 @@
                           <!-- Display the author's name -->
                           <strong th:text="${comment.fullname}"></strong>
                           <!-- Display the creation date -->
-                          <p class="comment-date" th:text="${#temporals.format(comment.createDate, 'dd/MM/yyyy HH:mm')}"></p>
+                          <p class="comment-date" th:text="${comment.createDate != null ? #temporals.format(comment.createDate, 'dd/MM/yyyy HH:mm') : ''}"></p>
                           <!-- Display the comment text -->
                           <div class="product_demo">
                             <p th:text="${comment.comment}"></p>
@@ -390,7 +390,7 @@
   <!--pos page end-->
 
   <!--footer area start-->
-  <div th:replace="layout/footer :: footer"></div>
+  <div th:replace="~{layout/footer :: footer}"></div>
   <!--footer area end-->
 
   <!-- modal area start -->

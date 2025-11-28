@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import com.example.fashion.services.StorageService;
 import com.example.fashion.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
 public class ProductsController {
@@ -77,13 +79,21 @@ public class ProductsController {
     }
 
     @GetMapping("/product-details/{ProductID}")
+    @Transactional(readOnly = true)
     public String detail(Model model, @PathVariable("ProductID") Long ProductID) {
         try {
+       
+        
             Product product = this.productService.findByID(ProductID);
             if (product == null) {
+                System.out.println("ERROR: Product ID " + ProductID + " NOT FOUND!");
+                System.out.println("=========== DEBUG END ===========");
                 model.addAttribute("error", "Sản phẩm không tồn tại!");
+                model.addAttribute("message", "Sản phẩm với ID " + ProductID + " không được tìm thấy trong hệ thống.");
                 return "error/404";
             }
+            
+
             
             model.addAttribute("Product", product);
 
@@ -107,7 +117,10 @@ public class ProductsController {
             
             return "product/detail";
         } catch (Exception e) {
+            System.err.println("=========== EXCEPTION ===========");
+            System.err.println("Error in product-details: " + e.getMessage());
             e.printStackTrace();
+            System.err.println("=========== EXCEPTION END ===========");
             model.addAttribute("error", "Lỗi khi tải chi tiết sản phẩm: " + e.getMessage());
             return "error/404";
         }

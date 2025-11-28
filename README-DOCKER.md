@@ -9,6 +9,8 @@
 ### 1. Build và chạy với Docker Compose
 ```bash(build lại và chạy khi sửa code sẽ ghi đè image cũ)
 docker-compose up --build
+
+
 ```
 
 ### 2. Chỉ chạy (không build lại)

@@ -11,8 +11,8 @@ import com.example.fashion.models.Post;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query(value = "SELECT * FROM comments WHERE productid = :ProductID ORDER BY create_date DESC", nativeQuery = true)
-    List<Comment> findCommentsByProductId(Long ProductID);
+    @Query("SELECT c FROM Comment c WHERE c.product.id = :productId ORDER BY c.createDate DESC")
+    List<Comment> findCommentsByProductId(Long productId);
 
     @Query(value = "SELECT c FROM Comment c ORDER BY c.id DESC")
     List<Comment> findAllOrderByIdDesc();

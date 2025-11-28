@@ -18,8 +18,9 @@ services:
       retries: 10
 
   app:
-    build: .
+    image: maven:3.9.6-eclipse-temurin-17  # Dùng image Maven trực tiếp
     container_name: fashion-app
+    working_dir: /app
     depends_on:
       mysql:
         condition: service_healthy
@@ -27,24 +28,23 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/fashion?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Ho_Chi_Minh
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root123
-      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_FLYWAY_ENABLED: "true"
       SPRING_JPA_HIBERNATE_NAMING_PHYSICAL_STRATEGY: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       SPRING_JPA_HIBERNATE_NAMING_IMPLICIT_STRATEGY: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-      JAVA_OPTS: "-Xmx512m -Xms256m"
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+      SPRING_DEVTOOLS_LIVERELOAD_ENABLED: "true"
     ports:
       - "9090:9090"
+      - "35729:35729"  # LiveReload port
     volumes:
+      - ./:/app  # Mount toàn bộ project
+      - ~/.m2:/root/.m2  # Cache Maven dependencies
       - uploads_data:/app/uploads
     networks:
       - fashion-network
+    command: mvn spring-boot:run  # Chạy dev mode
     restart: on-failure
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9090 || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
 
 volumes:
   mysql_data:
