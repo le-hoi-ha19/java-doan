@@ -126,7 +126,7 @@
 
                   <div class="content_price mb-15">
                     <span
-                      th:text="${#numbers.formatDecimal(Product.Price - Product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"
+                      th:text="${#numbers.formatDecimal(Product.Price - (Product.SalePrice == null ? 0 : Product.SalePrice), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"
                       name="TotalsPrice"></span>
                     <span class="old-price"
                       th:text="${#numbers.formatDecimal(Product.Price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
@@ -192,24 +192,18 @@
                     </div>
                   </div>
                   <div class="tab-pane fade" id="reviews" role="tabpanel">
-                    <!-- <div class="product_info_content">
-                      <p>
-                        Fashion has been creating well-designed collections
-                        since 2010. The brand offers feminine designs
-                        delivering stylish separates and statement dresses
-                        which have since evolved into a full ready-to-wear
-                        collection in which every item is a vital part of a
-                        woman's wardrobe. The result? Cool, easy, chic looks
-                        with youthful elegance and unmistakable signature
-                        style. All the beautiful pieces are made in Italy and
-                        manufactured with the greatest attention. Now Fashion
-                        extends to a range of accessories including shoes,
-                        hats, belts and more!
-                      </p>
-                    </div> -->
-
-                    <!-- hiển thị list đánh giá -->
                     <div class="product_info_inner">
+                      <div class="product_review_summary mb-3" th:if="${totalReviews > 0}">
+                        <p>
+                          Đã có <span th:text="${totalReviews}"></span> đánh giá,
+                          điểm trung bình
+                          <span th:text="${#numbers.formatDecimal(averageRating, 1, 'COMMA', 1, 'POINT')}"></span>/5
+                        </p>
+                      </div>
+                      <div class="product_review_summary mb-3" th:if="${totalReviews == 0}">
+                        <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                      </div>
+                      <!-- hiển thị list đánh giá -->
                       <div class="product_ratting mb-10 w-100">
                         <!-- Loop through the comments and display each one -->
                         <div th:each="comment : ${comments}" class="comment-item pb-3 mb-3" style="border-bottom: 1px solid gray">
@@ -232,10 +226,15 @@
                     </div>
                     <!-- form đánh giá -->
                     <div class="product_review_form">
-                      <form role="form" method="post" th:action="@{/add-comment}" th:object="${Comment}" id="reviewForm">
+                      <form role="form" method="post" th:action="@{/add-comment}" th:object="${commentForm}" id="reviewForm">
+
+                        <div th:if="${errorMessage}" class="alert alert-danger">
+                          <p th:text="${errorMessage}"></p>
+                        </div>
                         <div th:if="${successMessage}" class="alert alert-success">
                           <p th:text="${successMessage}"></p>
                         </div>
+
                         <input type="hidden" th:value="${Product.ProductID}" name="ProductID">
                         <h2>Thêm bài đánh giá</h2>
                         <p>Địa chỉ email của bạn sẽ không được công bố</p>
@@ -318,7 +317,7 @@
                   </div>
                   <div class="product_content">
                     <span class="product_price"
-                      th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></span>
+                      th:text="${#numbers.formatDecimal(product.Price - (product.SalePrice == null ? 0 : product.SalePrice), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></span>
                     <h3 class="product_title">
                       <a th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"
                         th:text="${product.ProductName}"></a>
@@ -362,7 +361,7 @@
                     </div>
                   </div>
                   <div class="product_content">
-                    <span class="product_price" th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                    <span class="product_price" th:text="${#numbers.formatDecimal(product.Price - (product.SalePrice == null ? 0 : product.SalePrice), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                     <h3 class="product_title">
                       <a   th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}" th:text="${product.ProductName}"></a>
                     </h3>

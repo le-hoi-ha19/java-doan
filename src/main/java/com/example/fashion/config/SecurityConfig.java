@@ -37,7 +37,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeRequests(authorize -> authorize
-                .requestMatchers("/*", "/products/**", "/product/**", "/login/**","/register/**", "/contact/**", "/product-details/**","/products-category/**","/products-branch/**", "/blog-detail/**", "/blog/**").permitAll() //Các trang này được phép truy cập công khai (không cần đăng nhập).
+                .requestMatchers("/*", "/products/**", "/product/**", "/login/**","/register/**", "/contact/**", "/product-details/**","/products-category/**","/products-branch/**", "/blog-detail/**", "/blog/**", "/add-comment").permitAll() //Các trang này được phép truy cập công khai (không cần đăng nhập).
                 .requestMatchers("/admin/**", "/admin/notifications/**").hasAuthority("ADMIN") 
                 .requestMatchers("/my-profile", "/my-orders", "/update-profile", "/user/notifications/**").authenticated()
                 .anyRequest().authenticated()) 

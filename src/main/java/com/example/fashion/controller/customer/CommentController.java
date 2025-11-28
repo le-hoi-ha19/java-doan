@@ -32,7 +32,7 @@ public class CommentController {
     private PostService postService;
 
     @PostMapping("/add-comment")
-    public String save(@ModelAttribute("comment") Comment comment, 
+    public String save(@ModelAttribute("commentForm") Comment comment, 
                        BindingResult bindingResult, 
                        RedirectAttributes redirectAttributes,
                        HttpServletRequest request,

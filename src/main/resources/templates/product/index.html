@@ -171,7 +171,7 @@
                                                     </div>
                                                     <div class="product_content">
                                                         <span class="product_price"
-                                                            th:text="${#numbers.formatDecimal(product.Price - product.SalePrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                                                            th:text="${#numbers.formatDecimal(product.Price - (product.SalePrice == null ? 0 : product.SalePrice), 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                                                         <h3 class="product_title"><a
                                                                 th:href="@{/product-details/{ProductID}(ProductID=${product.ProductID})}"
                                                                 th:text="${product.ProductName}"></a></h3>

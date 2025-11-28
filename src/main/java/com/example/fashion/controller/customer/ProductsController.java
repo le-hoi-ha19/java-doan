@@ -83,7 +83,6 @@ public class ProductsController {
     public String detail(Model model, @PathVariable("ProductID") Long ProductID) {
         try {
        
-        
             Product product = this.productService.findByID(ProductID);
             if (product == null) {
                 System.out.println("ERROR: Product ID " + ProductID + " NOT FOUND!");
@@ -96,6 +95,7 @@ public class ProductsController {
 
             
             model.addAttribute("Product", product);
+            model.addAttribute("commentForm", new Comment());
 
             List<Product> relatedProducts = productService.findByCategory(product.getCategory());
             if (relatedProducts != null) {
@@ -113,7 +113,24 @@ public class ProductsController {
             model.addAttribute("listProducts", allProducts != null ? allProducts : new java.util.ArrayList<>());
             
             List<Comment> comments = this.commentService.getCommentByProductId(ProductID);
-            model.addAttribute("comments", comments != null ? comments : new java.util.ArrayList<>());
+            List<Comment> safeComments = comments != null ? comments : new java.util.ArrayList<>();
+            model.addAttribute("comments", safeComments);
+
+            int totalReviews = safeComments.size();
+            double averageRating = 0;
+            if (totalReviews > 0) {
+                int sumRating = 0;
+                for (Comment c : safeComments) {
+                    if (c.getRating() != null) {
+                        sumRating += c.getRating();
+                    }
+                }
+                if (sumRating > 0) {
+                    averageRating = (double) sumRating / totalReviews;
+                }
+            }
+            model.addAttribute("totalReviews", totalReviews);
+            model.addAttribute("averageRating", averageRating);
             
             return "product/detail";
         } catch (Exception e) {
