@@ -88,25 +88,37 @@ public class ProductController extends BaseAdminController {
             return "admin/product/add";
         }
 
+        if (fileImages == null || fileImages.length < 3
+                || fileImages[0].isEmpty() || fileImages[1].isEmpty() || fileImages[2].isEmpty()) {
+            model.addAttribute("error", "Vui lòng chọn đủ 3 hình ảnh sản phẩm");
+            List<Category> listCat = this.categoryService.getAll();
+            model.addAttribute("listCat", listCat);
+            List<Brand> listBra = this.brandService.getAll();
+            model.addAttribute("listBra", listBra);
+            return "admin/product/add";
+        }
+
         try {
             this.storageService.store(fileAvatar);
             String fileNameAvatar = fileAvatar.getOriginalFilename();
             product.setAvatar(fileNameAvatar);
-    
-            for (int i = 0; i < Math.min(fileImages.length, 3); i++) {
-                this.storageService.store(fileImages[i]);
-                String fileName = fileImages[i].getOriginalFilename();
-    
-                switch (i) {
-                    case 0:
-                        product.setImg1(fileName);
-                        break;
-                    case 1:
-                        product.setImg2(fileName);
-                        break;
-                    case 2:
-                        product.setImg3(fileName);
-                        break;
+
+            for (int i = 0; i < 3; i++) {
+                if (fileImages[i] != null && !fileImages[i].isEmpty()) {
+                    this.storageService.store(fileImages[i]);
+                    String fileName = fileImages[i].getOriginalFilename();
+
+                    switch (i) {
+                        case 0:
+                            product.setImg1(fileName);
+                            break;
+                        case 1:
+                            product.setImg2(fileName);
+                            break;
+                        case 2:
+                            product.setImg3(fileName);
+                            break;
+                    }
                 }
             }
     

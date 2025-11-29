@@ -1,6 +1,7 @@
 package com.example.fashion.controller.admin;
 
 import java.util.List;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,8 +43,12 @@ public class UserController extends BaseAdminController {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@GetMapping("/user")
-	public String user(Model model) {
+	public String user(Model model, Principal principal) {
 		List<User> customerUsers = userService.getCustomerUsers();
+		if (principal != null) {
+			String currentUsername = principal.getName();
+			customerUsers.removeIf(user -> currentUsername.equals(user.getUsername()));
+		}
 		model.addAttribute("customerUsers", customerUsers);
 		return "admin/user/index";
 	}

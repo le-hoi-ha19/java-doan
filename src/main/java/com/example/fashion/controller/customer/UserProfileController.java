@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.fashion.models.Order;
 import com.example.fashion.models.User;
@@ -88,5 +90,46 @@ public class UserProfileController {
         }
 
         return "redirect:/my-profile";
+    }
+
+    @PostMapping("/my-orders/cancel")
+    public String cancelOrder(@RequestParam("orderId") Long orderId,
+            @RequestParam("reason") String reason,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        try {
+            String username = principal.getName();
+            User user = userService.findByUsername(username);
+            if (user == null) {
+                return "redirect:/login";
+            }
+            Order order = orderService.findByID(orderId);
+            if (order == null || order.getUser() == null || !order.getUser().getId().equals(user.getId())) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Đơn hàng không hợp lệ.");
+                return "redirect:/my-orders";
+            }
+            if ("Đã hủy".equals(order.getOrderStatus()) || "Giao hàng thành công".equals(order.getOrderStatus())) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Đơn hàng này không thể hủy.");
+                return "redirect:/my-orders";
+            }
+            if (reason == null || reason.trim().isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Vui lòng nhập lý do hủy đơn hàng.");
+                return "redirect:/my-orders";
+            }
+            order.setNotes("Khách hủy: " + reason.trim());
+            orderService.update(order);
+            if (orderService.cancel(orderId)) {
+                redirectAttributes.addFlashAttribute("successMessage", "Hủy đơn hàng thành công.");
+            } else {
+                redirectAttributes.addFlashAttribute("errorMessage", "Không thể hủy đơn hàng.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Có lỗi xảy ra khi hủy đơn hàng.");
+        }
+        return "redirect:/my-orders";
     }
 }

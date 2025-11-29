@@ -15,10 +15,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByFullname(String fullname);
 
-	@Query("SELECT DISTINCT u FROM User u JOIN FETCH u.userRoles ur JOIN FETCH ur.role r WHERE r.name = 'CUSTOMER'")
+	@Query("SELECT DISTINCT u FROM User u JOIN FETCH u.userRoles ur JOIN FETCH ur.role r WHERE r.name = 'USER'")
     List<User> findCustomerUsers();
 	
-	@Query("SELECT COUNT(DISTINCT u) FROM User u JOIN u.userRoles ur JOIN ur.role r WHERE r.name = 'CUSTOMER'")
+	@Query("SELECT COUNT(DISTINCT u) FROM User u JOIN u.userRoles ur JOIN ur.role r WHERE r.name = 'USER'")
     long countCustomerUsers();
 
     @Query("SELECT u FROM User u JOIN FETCH u.userRoles ur JOIN FETCH ur.role r WHERE r.name = 'ADMIN'")

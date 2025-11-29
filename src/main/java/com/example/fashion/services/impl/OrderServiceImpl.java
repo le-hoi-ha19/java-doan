@@ -54,9 +54,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public long countTotalPrice() {
+        return orderRepository.countTotalPrice();
+    }
+
+    @Override
     public Boolean create(Cart cart) {
         try {
-            // Tạo mới Order cho User từ Cart
             Order order = new Order();
             order.setUser(cart.getUser());
             order.setOrderStatus("Chờ xử lý");
@@ -67,17 +71,13 @@ public class OrderServiceImpl implements OrderService {
             order.setTotalsPrice(cart.getTotalsPrice());
             this.orderRepository.save(order);
 
-            // Lặp qua từng mục trong giỏ hàng và lưu vào OrderDetail
             for (CartItem cartItem : cart.getCartItems()) {
                 Product product = cartItem.getProducts();
-                
                 if (product.getQuantity() < cartItem.getQuantity()) {
                     throw new RuntimeException("Sản phẩm " + product.getProductName() + " không đủ số lượng trong kho!");
                 }
-                
                 product.setQuantity(product.getQuantity() - cartItem.getQuantity());
                 this.productService.update(product);
-                
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrder(order);
                 double itemPrice = cartItem.getTotalsPrice() / cartItem.getQuantity();
@@ -88,7 +88,6 @@ public class OrderServiceImpl implements OrderService {
                 this.orderDetailRepository.save(orderDetail);
             }
 
-            // Notify tất cả admins về đơn hàng mới
             List<User> admins = userRepository.findAdminUsers();
             String orderTitle = "🛒 Đơn hàng mới #" + order.getOrderID();
             String orderMessage = String.format(
@@ -96,21 +95,23 @@ public class OrderServiceImpl implements OrderService {
                 cart.getUser().getFullname(),
                 order.getTotalsPrice()
             );
-            
             for (User admin : admins) {
                 notificationService.createNotification(admin.getId(), orderTitle, orderMessage);
             }
+
+            String customerTitle = "🧾 Đơn hàng của bạn đã được tạo";
+            String customerMessage = String.format(
+                "Đơn hàng #%d trị giá %,.0f VNĐ của bạn đã được ghi nhận và đang chờ xử lý.",
+                order.getOrderID(),
+                order.getTotalsPrice()
+            );
+            notificationService.createNotification(cart.getUser().getId(), customerTitle, customerMessage);
 
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-    }
-
-    @Override
-    public long countTotalPrice() {
-        return orderRepository.countTotalPrice();
     }
 
     @Override
@@ -151,12 +152,29 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Boolean update(Order order) {
         try {
-            this.orderRepository.save(order);
+            Order existingOrder = this.orderRepository.findById(order.getOrderID()).orElse(null);
+            if (existingOrder == null) {
+                return false;
+            }
+            String oldStatus = existingOrder.getOrderStatus();
+            String newStatus = order.getOrderStatus();
+            existingOrder.setOrderStatus(newStatus);
+            existingOrder.setNotes(order.getNotes());
+            this.orderRepository.save(existingOrder);
+            if (oldStatus == null || !oldStatus.equals(newStatus)) {
+                String title = "Cập nhật trạng thái đơn hàng #" + existingOrder.getOrderID();
+                StringBuilder messageBuilder = new StringBuilder();
+                messageBuilder.append("Trạng thái mới: ").append(newStatus);
+                if (existingOrder.getNotes() != null && !existingOrder.getNotes().isEmpty()) {
+                    messageBuilder.append(" - Lý do: ").append(existingOrder.getNotes());
+                }
+                notificationService.createNotification(existingOrder.getUser().getId(), title, messageBuilder.toString());
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -179,6 +197,13 @@ public class OrderServiceImpl implements OrderService {
             
             order.setOrderStatus("Đã hủy");
             this.orderRepository.save(order);
+            String title = "Đơn hàng #" + order.getOrderID() + " đã bị hủy";
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.append("Đơn hàng của bạn đã bị hủy.");
+            if (order.getNotes() != null && !order.getNotes().isEmpty()) {
+                messageBuilder.append(" Lý do: ").append(order.getNotes());
+            }
+            notificationService.createNotification(order.getUser().getId(), title, messageBuilder.toString());
             return true;
         } catch (Exception e) {
             e.printStackTrace();

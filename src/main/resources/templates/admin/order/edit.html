@@ -58,9 +58,13 @@
                 <input type="hidden" name="OrderDate" class="form-control mb-3" th:field="*{OrderDate}">
                 <input type="hidden" name="DeliveryDate" class="form-control mb-3" th:field="*{DeliveryDate}">
                 <input type="hidden" name="TotalsPrice" class="form-control mb-3" th:field="*{TotalsPrice}">
-                <input type="hidden" name="Notes" class="form-control mb-3" th:field="*{ShippingFee}">
+                <input type="hidden" name="ShippingFee" class="form-control mb-3" th:field="*{ShippingFee}">
                 <input type="hidden" name="user.id" class="form-control mb-3" th:field="*{user.id}">
-                <input type="hidden" name="Notes" class="form-control mb-3" th:field="*{Notes}">
+                <div class="form-group col-md-12">
+                    <label for="Notes">Ghi chú / Lý do</label>
+                    <textarea id="Notes" name="Notes" class="form-control mb-3" th:field="*{Notes}" rows="3"></textarea>
+                </div>
+
                 <div asp-validation-summary="All"></div>
                 <div class="form-row">
                     <div class="form-group col-md-6">

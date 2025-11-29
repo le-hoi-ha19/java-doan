@@ -216,7 +216,7 @@
                           <!-- Display the author's name -->
                           <strong th:text="${comment.fullname}"></strong>
                           <!-- Display the creation date -->
-                          <p class="comment-date" th:text="${comment.createDate != null ? #temporals.format(comment.createDate, 'dd/MM/yyyy HH:mm') : ''}"></p>
+                          <p class="comment-date" th:text="${#temporals.format(comment.createDate, 'dd/MM/yyyy HH:mm')}"></p>
                           <!-- Display the comment text -->
                           <div class="product_demo">
                             <p th:text="${comment.comment}"></p>
@@ -459,21 +459,6 @@
   <script src="\assets\js\ajax-mail.js"></script>
   <script src="\assets\js\plugins.js"></script>
   <script src="\assets\js\main.js"></script>
-  <script>
-    // Function to format date from yyyy-MM-dd'T'HH:mm:ss to dd-MM-yyyy
-    function formatDate(dateString) {
-      const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-      const date = new Date(dateString); // Convert the string to a Date object
-      return date.toLocaleDateString('en-GB', options); // Return the formatted date
-    }
-  
-    // Select all comment dates and format them
-    document.querySelectorAll('.comment-date').forEach(function(dateElement) {
-      const originalDate = dateElement.textContent.trim(); // Get the raw date string
-      const formattedDate = formatDate(originalDate); // Format the date
-      dateElement.textContent = formattedDate; // Set the formatted date back to the element
-    });
-  </script>
 </body>
 
 </html>

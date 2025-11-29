@@ -87,6 +87,9 @@
                             <div th:if="${errorMessage}" class="alert alert-danger">
                                 <p th:text="${errorMessage}"></p>
                             </div>
+                            <div th:if="${successMessage}" class="alert alert-success">
+                                <p th:text="${successMessage}"></p>
+                            </div>
 
                             <div th:if="${orders == null || orders.isEmpty()}" 
                                  class="alert alert-info text-center" 
@@ -102,16 +105,16 @@
                                     <div class="order-header">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <strong>Mã đơn hàng:</strong> #<span th:text="${order.OrderID}"></span><br>
-                                                <strong>Ngày đặt:</strong> <span th:text="${#dates.format(order.OrderDate, 'dd/MM/yyyy HH:mm')}"></span>
+                                                <strong>Mã đơn hàng:</strong> #<span th:text="${order.orderID}"></span><br>
+                                                <strong>Ngày đặt:</strong> <span th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy')}"></span>
                                             </div>
                                             <div class="col-md-6 text-right">
                                                 <span class="order-status"
-                                                      th:classappend="${order.OrderStatus == 'Chờ xử lý' ? 'status-pending' : 
-                                                                       (order.OrderStatus == 'Đang xử lý' ? 'status-processing' : 
-                                                                       (order.OrderStatus == 'Đang giao hàng' ? 'status-shipping' : 
-                                                                       (order.OrderStatus == 'Giao hàng thành công' ? 'status-completed' : 'status-cancelled')))}"
-                                                      th:text="${order.OrderStatus}"></span>
+                                                      th:classappend="${order.orderStatus == 'Chờ xử lý' ? 'status-pending' : 
+                                                                       (order.orderStatus == 'Đang xử lý' ? 'status-processing' : 
+                                                                       (order.orderStatus == 'Đang giao hàng' ? 'status-shipping' : 
+                                                                       (order.orderStatus == 'Giao hàng thành công' ? 'status-completed' : 'status-cancelled')))}"
+                                                      th:text="${order.orderStatus}"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -125,11 +128,18 @@
                                             </div>
                                             <div class="col-md-4 text-right">
                                                 <strong>Tổng tiền:</strong><br>
-                                                <h4 style="color: #e91e63;" th:text="${#numbers.formatDecimal(order.TotalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h4>
+                                                <h4 style="color: #e91e63;" th:text="${#numbers.formatDecimal(order.totalsPrice, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h4>
+                                                <div th:if="${order.orderStatus == 'Chờ xử lý' or order.orderStatus == 'Đang xử lý'}" style="margin-top: 10px;">
+                                                    <form th:action="@{/my-orders/cancel}" method="post" class="form-inline" style="display: flex; gap: 8px; justify-content: flex-end;">
+                                                        <input type="hidden" name="orderId" th:value="${order.orderID}">
+                                                        <input type="text" name="reason" class="form-control" placeholder="Lý do hủy đơn" required>
+                                                        <button type="submit" class="btn btn-danger btn-sm">Hủy đơn</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div th:if="${order.Notes != null && order.Notes != ''}" style="margin-top: 10px;">
-                                            <strong>Ghi chú:</strong> <span th:text="${order.Notes}"></span>
+                                        <div th:if="${order.notes != null && order.notes != ''}" style="margin-top: 10px;">
+                                            <strong>Ghi chú:</strong> <span th:text="${order.notes}"></span>
                                         </div>
                                     </div>
                                 </div>

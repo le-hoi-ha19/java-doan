@@ -43,7 +43,7 @@ services:
       - uploads_data:/app/uploads
     networks:
       - fashion-network
-    command: mvn spring-boot:run  # Chạy dev mode
+    command: mvn -q spring-boot:run  # Chạy dev mode
     restart: on-failure
 
 volumes:

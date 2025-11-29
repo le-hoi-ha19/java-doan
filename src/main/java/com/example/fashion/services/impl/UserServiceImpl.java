@@ -71,18 +71,16 @@ public class UserServiceImpl implements UserService {
             // Lưu User vào cơ sở dữ liệu
             this.userRepository.save(user);
 
-            // Tạo một đối tượng UserRole
             UserRole userRole = new UserRole();
             userRole.setUser(user);
-            userRole.setRole(roleRepository.findByName("CUSTOMER"));
+            userRole.setRole(roleRepository.findByName("USER"));
 
-            // Lưu UserRole vào cơ sở dữ liệu
             this.userRoleRepository.save(userRole);
 
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // Trả về false nếu có lỗi xảy ra
+            return false;
         }
     }
 
